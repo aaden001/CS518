@@ -1,0 +1,32 @@
+body#index
+{
+	background-image: url("schoolPic.jpg");
+	background-size: cover;
+}
+
+.selector-for-some-widget {
+  box-sizing: content-box;
+}
+#dropdown-menu{
+	color: blue;
+}
+.container{
+	width: 25%;
+	margin-right: auto;
+    margin-left: auto;
+    margin-top: 8%;
+}
+.logo{
+	 display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 10%;
+    }
+
+.logo img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+
+}
