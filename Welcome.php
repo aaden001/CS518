@@ -69,7 +69,7 @@
                         $query = $Connection->prepare("SELECT RoomsID, Name FROM UserGroups INNER JOIN Rooms ON UserGroups.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
                         $query->execute(array('tempUserId'=> $tempId));
                 while( $result = $query->fetch()){
-                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'">' .$result['Name'] .'Room'.'</a></li>'; 
+                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'">' .$result['Name'] .'Room'.'</a></li>'; 
                 }
                     $Connection = null;
 
@@ -84,7 +84,7 @@
                         $query = $Connection->prepare("SELECT RoomsID, Name FROM Administrators INNER JOIN Rooms ON Administrators.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
                         $query->execute(array('tempUserId'=> $tempId));
                 while( $result = $query->fetch()){
-                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'">' .$result['Name'] .'Room'.'</a></li>'; 
+                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'">' .$result['Name'] .'Room'.'</a></li>'; 
                 }
                     $Connection = null;
 
@@ -143,7 +143,7 @@
                 $query = $Connection->prepare("SELECT * FROM Rooms WHERE grpTyp=0");
                 $query->execute();
                 while( $result = $query->fetch()){
-                 echo '<a href="GlobalRoom.php?currentRoomID=' .$result['ID'] .'">' .$result['Name'] .' Room'.'</a>'; 
+                 echo '<a href="GlobalRoom.php?currentRoomID=' .$result['ID'] .'&page=1'.'">' .$result['Name'] .' Room'.'</a>'; 
                     echo "<br>";
                 }
                 echo '<div class="line"></div>';

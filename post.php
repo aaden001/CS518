@@ -17,7 +17,7 @@
 		$roomNameData = $roomNamequerry->fetch();
 		$roomName = $roomNameData['Name'];
 		$Header= "Location:";
-		$endFormat = "GlobalRoom.php?currentRoomID=" .$tempUserCRID;
+		$endFormat = "GlobalRoom.php?currentRoomID=" .$tempUserCRID .'&page=1';
 		$Header = $Header .$endFormat;
 		$Connection =null;		
 		///End of Querry  for redirect and room Name
