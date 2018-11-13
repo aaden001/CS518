@@ -1,44 +1,210 @@
- <?php 
-
-    ini_set('display_errors', 1);
+<?php
+     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-             
-    include 'dbconnect.php';
-    include 'ChatClass.php';
-    include 'rating.php'; 
+    session_start();
     $_SESSION['currentRoomID'] = $_GET['currentRoomID'];
-    $_SESSION['userId'] = $_GET['userId'];
-    $tempUserID = $_SESSION['userId'];
-    echo $_SESSION['currentRoomID'];
-    $dispUser = new Chat;
-    $tempUserCRID = $_SESSION['currentRoomID'];
+    $_SESSION['currentPage']   = $_GET['page'];
+   
+   if(!isset($_SESSION['userId']))
+    {
+        header("Location:index.php");
+    }else
 
+
+
+
+
+    $tempUserID = $_SESSION['userId'];
+   
+function likes_dislike_Post($rowID){
+  include_once 'rating.php'; 
+    $tempUserID = $_SESSION['userId'];
+    $FinalLikeBuild ="";
+   if(userLiked($rowID,$tempUserID)){
+      $likesS =   'class="fa fa-thumbs-up like-btn" style="font-size:36px"';
+   }else{
+     $likesS =   'class="fa fa-thumbs-o-up like-btn" style="font-size:36px"';
+   }
+
+    $likesS .=  ' data-id="' .$rowID .'" data-user="' .$tempUserID .'"';
+
+   if(userDisliked($rowID,$tempUserID)){
+      $dislikeS = 'class="fa fa-thumbs-down dislike-btn" style="font-size:36px"';
+   }else{
+       $dislikeS = 'class="fa fa-thumbs-o-down dislike-btn" style="font-size:36px"';
+   }
+   
+    $dislikeS .=  ' data-id="' .$rowID .'" data-user="' .$tempUserID .'"';
+    $FinalLikeBuild .='<div class="col">';
+    $FinalLikeBuild .='<i ' .$likesS .'></i>';
+    $FinalLikeBuild .='<span class="col likes">';
+    $FinalLikeBuild .= getusersLikes($tempUserID);
+    $FinalLikeBuild .='</span>';
+    $FinalLikeBuild .='<i ' .$dislikeS .'></i>';
+
+    $FinalLikeBuild .='<span class="col dislikes">';
+    $FinalLikeBuild .= getusersDislikes($tempUserID);
+    $FinalLikeBuild .='</span></div>';
+    $FinalLikeBuild .='<div class="col">';
+     $FinalLikeBuild .='<button id="'.$rowID .'" type="button" style="float:right"class="btn btn-success view" >Comment</button></div>';
+
+    return $FinalLikeBuild;
+}
+
+function roomName_querry(){
+    include 'dbconnect.php';
+
+    $tempUserCRID =  $_SESSION['currentRoomID'];
     $querrystatement = "SELECT Name FROM Rooms WHERE ID=:roomID";
     $roomNamequerry=$Connection->prepare($querrystatement);
     $roomNamequerry->execute(array('roomID' => $tempUserCRID));
     
     $roomNameData = $roomNamequerry->fetch();
-    $roomName = $roomNameData['Name'];
-    $Start = 0;
-    $Stop = 5;
-    echo $_SESSION['userId'];
-  
-    if($dispUser->matchCheck($_SESSION['userId'],$tempUserCRID) == true)
-    {
-        //Querry for text,user handle and time stamp
+    $Connection = null;
+    $roomName =  "You are not of the room called " .$roomNameData['Name'];
+    
+    return $roomName;        /// echo "You are not of the room called " .$roomName;
+}
+
+function sql_max_chat_per_room(){
+    include 'dbconnect.php';
+    $currentRoomChatID =  $_GET['currentRoomID'];
+    $SQL ="SELECT * FROM ChatBox WHERE RoomID=:roomIdentify";
+    $query = $Connection->prepare($SQL);
+    $query->execute(array('roomIdentify' => $currentRoomChatID));
+    $result = $query->rowCount();
+    $Connection = null;
+    return $result;
+}
+
+function postArea(){
+      $postA ='<div id="container">
+      <form id="chatArea" style="margin-top: 13%" action="post.php" method="post">
+      <label for="messages">YourMessage:</label>
+      <div class="form-group ">        
+      <textarea class="form-control" rows="2" id="messages" name="messages" form="chatArea" maxlength="400" placeholder="Write a Post"></textarea>
+      <span ><button  type="submit" class="btn btn-success" style="margin-top: 4px;">Send</button></span> 
+      </div>
+      </form>
+      </div>';
+
+      return $postA;
+}
+function commentArea($rowID){
+      $commentArea = '<div class="input-group reply"><textarea id="' .'texArea' .$rowID  .'" class="form-control custom-control" rows="1" style="resize:none" placeholder="Write a Comment"></textarea>';   
+      $commentArea .='<span id="' .'send'.$rowID .'" class="input-group-addon btn btn-primary Comment" data-userId="'.$_SESSION['userId'] .'" >Send</span></div>';
+
+      return $commentArea;
+}
+
+function sql_fecth_post($maxpostsize){
+          //Querry for text,user handle and time stamp
         $currentRoomChatID = $_SESSION['currentRoomID'];
+        $currentPage = $_SESSION['currentPage'];
+    
+
+        $StopCheck = $maxpostsize % 5;
+        $Stop = 5;
+    
+        switch ($StopCheck) {
+            case 0:
+                
+                if ($currentPage == 1){
+                $Start = 0;
+                }else{
+                $Start = ($currentPage - 1)* 5;         
+                }
+            break;
+
+            case 1:
+                
+                if ($currentPage == 1){
+                $Start = 0;
+                $Stop = $StopCheck; ///equals to 1
+                }else{
+
+                    
+                $Start = (($currentPage -1)*5) - 4;
+                $Stop = 5;
+                }
+            break;
+
+            case 2:
+                if ($currentPage == 1){
+                $Start = 0;
+                $Stop = $StopCheck; ///equals to 1
+                }else{
+
+                    
+                $Start = (($currentPage -1)*5) - 3;
+                $Stop = 5;
+                }
+            break;
+
+            case 3:if ($currentPage == 1){
+                $Start = 0;
+                $Stop = $StopCheck; ///equals to 1
+                }else{
+
+                    
+                $Start = (($currentPage -1)*5) - 2;
+                $Stop = 5;
+                }
+            break;
+
+            case 4:
+            if ($currentPage == 1){
+                $Start = 0;
+                $Stop = $StopCheck; ///equals to 1
+                }else{
+
+                    
+                $Start = (($currentPage -1)*5) - 1;
+                $Stop = 5;
+                }
+
+            break;
+
+        }
+        include 'dbconnect.php';
         $SQL ="SELECT ID, created_at, TextA, ChatBox.UserID, userHandle FROM ChatBox 
-        			INNER JOIN Users ON ChatBox.UserID = Users.userID WHERE RoomID=:roomIdentify ORDER BY ID DESC LIMIT :start ,:stop";
+                    INNER JOIN Users ON ChatBox.UserID = Users.userID WHERE RoomID=:roomIdentify ORDER BY ID DESC LIMIT :start ,:stop";
         $query = $Connection->prepare($SQL);
         $query->bindParam(':start', $Start, PDO::PARAM_INT);
         $query->bindParam(':stop', $Stop, PDO::PARAM_INT);
         $query->bindParam(':roomIdentify', $currentRoomChatID, PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetchAll();
-        ///Querry for the picture Link
-       
-        $sqlComment ="SELECT C1.`Id`as Id,`ChatBox`.`ID` as ID,
+        $Connection = null;
+
+        return $result;
+}
+
+function sql_post_profilePic($UserID){
+        include 'dbconnect.php';
+
+        $querryProfilPic= $Connection->prepare("SELECT * FROM ProfilePictures WHERE userID=:tempId");
+        $querryProfilPic->execute(array('tempId' => $UserID));
+
+        $PicLinkResult = $querryProfilPic->fetch();
+        $imgString="";
+        if($PicLinkResult['userId'] ==  $UserID){
+          $imgString ='<img  src="' .$PicLinkResult['pictureLink']  .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
+        }else{
+          $imgString = '<img  src="../ProfilePics/james.jpeg" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
+        }
+
+        return $imgString;
+}
+
+function sql_fetch_comment(){
+      include 'dbconnect.php';
+
+      
+      $currentRoomChatID = $_SESSION['currentRoomID'];
+
+     $sqlComment ="SELECT C1.`Id`as Id,`ChatBox`.`ID` as ID,
         `ChatBox`.`created_at`,
         `ChatBox`.`TextA`,
         `ChatBox`.`UserID`,
@@ -57,138 +223,229 @@
         $query = $Connection->prepare($sqlComment);
         $query->execute(array('roomIdentify' => $currentRoomChatID));
         $resultComment = $query->fetchAll();
-        /*$secificCommey = $query->fetchAll();*/
- 
-        $postID = 0;
-        if(!empty($result)){
-        ?>     
-        <?php   foreach ($result as $row): ?>
-        <?php      
-        echo '<div class="container">';        
-        echo '<div class="container-fluid post"><div class="row"><div class="col-sm-10" style="background-color:lavender;"><p>';
-        echo $row['TextA'] ;
-        echo'</p><div id= "timestamp">';
-        echo $row['created_at'];
-        echo '</div></div><div class="col-sm-2">';
-        ///Do a comparism with the session id and the chatbox user id to get distinct profile pictureLink
-    $querryProfilPic= $Connection->prepare("SELECT * FROM ProfilePictures WHERE userID=:tempId");
-    $querryProfilPic->execute(array('tempId' => $row['UserID']));
-    $PicLinkResult = $querryProfilPic->fetch();
-        if($PicLinkResult['userId'] ==  $row['UserID']){
-        echo '<img  src="'.$PicLinkResult['pictureLink'] .'" alt="Smiley face" style="float:right" width="42" height="42">';
-        echo '<br><br><br><div>';
-        }else{
-        echo '<img  src="../ProfilePics/james.jpeg" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br>
-        <div>';
+        $Connection = null;
+
+        return $resultComment;
+}
+
+
+function printPagePanel($maxPageSize)
+{
+/* $root = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";*/
+    $root = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+    $root .= "/GlobalRoom.php?currentRoomID=" .$_SESSION['currentRoomID'];
+  $page = 1;
+  if( isset($_GET['page']) )
+  {
+    $root = str_replace('&page='.$_GET['page'], '', $root);
+    $page = $_GET['page'];
+  }
+
+  $pages = pagination($page, $maxPageSize);
+$stringspan ="";
+  $stringspan= '<div style="text-align:center; font-weight: bold; font-size:16px; padding-bottom: 5px;">';
+  for($i = 0; $i<count($pages); $i++)
+  {
+    if( $pages[$i] == -1  )
+    {
+      $stringspan .= '<span>...</span>';
+     /* echo '<a href="' . $root . '&page='.$maxPageSize. '">&nbsp;'. $pages[$i] .'&nbsp;</a>&nbsp;';*/
+    }
+    else
+    {
+      $stringspan .='<a href="' . $root . '&page='. $pages[$i] . '">&nbsp;'. $pages[$i] .'&nbsp;</a>&nbsp;';
+    }
+  }
+ $stringspan .='</div>';  
+
+    return  $stringspan;
+}
+
+//credit: https://gist.github.com/kottenator/9d936eb3e4e3c3e02598
+function pagination($c, $m) 
+{
+    $current = $c;
+    $last = $m;
+    $delta = 2;
+    $left = $current - $delta;
+    $right = $current + $delta + 1;
+    $range = array();
+    $rangeWithDots = array();
+    $l = -1;
+
+    for ($i = 1; $i <= $last; $i++) 
+    {
+        if ($i == 1 || $i == $last || $i >= $left && $i < $right) 
+        {
+            array_push($range, $i);
         }
-        echo $row['userHandle'];
-        echo '</div></div></div><br><div class="row"><div class="col"><div>';
-        echo "UserID:" .$row['UserID'] ."</div>";
-       $stringD = '<i';
-
-    ?> 
-    <?php if(userLiked($row['ID'],$tempUserID)): ?>
-    <?php  $stringD .='class="fa fa-thumbs-up like-btn" style="font-size:36px"';?>
-        <?php else: ?>
-    <?php $stringD .='class="fa fa-thumbs-o-up like-btn" style="font-size:36px"';?>
-        <?php endif ?>
-    <?php 
-        $stringD .='data-id="' .$row['ID'] .'" data-user="$tempUserID" >'; 
-        $stringD .='</i><span class="col likes">';
-        echo $stringD;
-       echo getusersLikes($row['ID']);
-       echo '</span>';
-       $stringL = '<i';
-    ?>
-    <?php if(userDisliked($row['ID'],$tempUserID)): ?>
-    <?php  $stringL .='class="fa fa-thumbs-down dislike-btn" style="font-size:36px"';?>
-        <?php else: ?>
-    <?php $stringL .='class="fa fa-thumbs-o-down dislike-btn" style="font-size:36px"'; ?>        
-        <?php endif ?>
-        <?php  $stringL .='data-id="' .$row['ID'] .'" data-user="$tempUserID"'; ?>
-    <?php 
-        $stringL .='></i><span class="col dislikes">';
-        echo $stringL;
-        echo getusersDislikes($row['ID']); 
-        echo '</span></div><div class="col"><div>';
-        echo "UserID:" .$row['UserID'] ;
-        echo '</div>';
-        echo '<button id="';
-        ?>
-        <?php echo $row['ID']?>"
-    <?php echo 'type="button" style="float:right"class="btn btn-success view" >Comment</button>'; 
-        echo "</div></div>";
-
-        /*Replies to comment div */
-        echo '<div id="div"'.$row['ID'] .'class="comment-div" style="display: none" ';
-        echo '<div class="posts-wrapper"><div class="container"><div class="container-fluid comment">';
-        foreach ($resultComment as $value) 
-            {
-                if(!empty($resultComment)) 
-            {
-
-    ?> 
-    <?php if($value['ID'] == $row['ID'] ): ?>
-    <?php 
-        echo '<div class="posts-wrapper"><div class="row"><div class="col-sm-10" style="background-color:lavender;"><p>';
-        echo $value['TextArea'];
-        echo '</p><div id= "timestampcomment">';
-        echo $value['Ccreated_at'];
-        echo '</div></div><div class="col-sm-2">';
-        /*this will have the profile pic to te replying user*/
-    
-        ///Do a comparism with the session id and the chatbox user id to get distinct profile pictureLink
-        $querryProfilPic= $Connection->prepare("SELECT * FROM ProfilePictures WHERE userID=:tempId");
-        $querryProfilPic->execute(array('tempId' => $value['userId']));
-        $PicLinkResult = $querryProfilPic->fetch();
-
-
-        if($PicLinkResult['userId'] ==  $value['userId']){ ///compares with user commnent user Id
-        echo '<img  src="'.$PicLinkResult['pictureLink'] .'" alt="Smiley face" style="float:right" width="42" height="42">';
-        echo '<br><br><br>';
-        echo '<div>';
-
-    }else{
-
-    echo '<img  src="../ProfilePics/james.jpeg" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
-   
-
     }
-        echo "<div>"; 
-        /*<!-- The handle of the user replying user goes here -->*/
-        echo $value['t3userHandle'];
-        echo '</div></div></div></div></div>';    
-    ?>
-    <?php endif ?>
-    <?php 
+
+    for($i = 0; $i<count($range); $i++) 
+    {
+        if ($l != -1) 
+        {
+            if ($range[$i] - $l === 2) 
+            {
+                array_push($rangeWithDots, $l + 1);
+            } 
+            else if ($range[$i] - $l !== 1) 
+            {
+              //-1 is used to mark ...
+                array_push($rangeWithDots, -1);
+            }
+        }
+        
+        array_push($rangeWithDots, $range[$i]);
+        $l = $range[$i];
+    }
+
+    return $rangeWithDots;
+}
+
+
+    include 'dbconnect.php';
+    include 'ChatClass.php';
+    $dispUser = new Chat;
+    $tempUserCRID = $_SESSION['currentRoomID'];
+    $buildString = '';
+
+    if($dispUser->matchCheck($_SESSION['userId'],$tempUserCRID) == true)
+    {
+
+        $postID = 0;
+        $maxpage = sql_max_chat_per_room();
+        $post = sql_fecth_post($maxpage);
+
+        switch ($maxpage) {
+        case $maxpage < 5:
+        $PanelSize = 1;
+        break;
+        case $maxpage > 4:
+        $PanelSize =  round(($maxpage / 5));
+        break;
+
+        }
+
+
+        if (!empty($post)){
+
+            $buildString = printPagePanel($PanelSize);
+            $buildString .= '<div id="display" class="pre-scrollable">';
+
+            foreach ($post as $row) {
+                 $postID++; 
+                 $buildString .= ' <div id="' .$postID .'" class="posts-wrapper row">'; 
+                 $buildString .=  '<div class="col-sm-10" style="background-color:lavender;">';
+                 $buildString .=  "<p> {$row['TextA']}</p>";
+                 $buildString .= '<p style="background-color:blue;"' .'>' .$row['created_at'] .'</p></div><div class="col-sm-2">';
+
+                 $buildString .=  sql_post_profilePic($row['UserID']);
+                 $buildString .= $row['userHandle'];
+
+                 $buildString .=  $row['ID'];
+                 $buildString .= '</div><br></div>';
+                 $buildString .=  likes_dislike_Post($row['ID']);
+
+                 $comment = sql_fetch_comment();
+
+
+
+                 $buildString .= '<div   id="'.'div'.$row['ID'] .'" class="comment-div row" style="display: none" >';
+                 $buildString .= '<div " class="comment-wrapper row">';
+
+                  foreach($comment as $value){
+
+                         if($value['ID'] == $row['ID'] ){
+                              if (!empty($comment)){
+                                $buildString .='<div class="col-sm-10" style="background-color:lavender;">';
+                                $buildString .="<p> {$value['TextArea']}</p>";
+                                $buildString .='<p style="background-color:blue;"' .'>' .$value['Ccreated_at'] .'</p></div>';
+                                $buildString .='<div class="col-sm-2">';
+                                $buildString .=  sql_post_profilePic($value['userId']);
+                                $buildString .= $value['t3userHandle']; 
+                                $buildString .= '</div><br></div>';
+                               
+
+
+                              }
+
+                         }
+
+                  }
+                $buildString .= commentArea($row['ID']);
+                $buildString .= '</div></div><div></div></div>';
+            }
+            $buildString .=  "</div>";
+            echo $buildString;
+     /*
+
+            printPagePanel($PanelSize);
+            echo '<div id="display" class="pre-scrollable">';
+            foreach ($post as $row) {
+            # code...
+            $postID++; 
+           echo ' <div id="' .$postID .'" class="posts-wrapper row">'; 
+
+            
+            echo '<div class="col-sm-10" style="background-color:lavender;">';
+            echo "<p> {$row['TextA']}</p>";
+            echo '<p style="background-color:blue;"' .'>' .$row['created_at'] .'</p>';
+
+
+            echo '</div>';  // end of col-sm- 10
+
+            echo '<div class="col-sm-2">';
+
+            sql_post_profilePic($row['UserID']);
+            echo $row['userHandle'];       echo $row['ID'];
+            echo '</div><br></div>';
+            // end o* col-sm-2
+
+            likes_dislike_Post($row['ID']);
+            $comment = sql_fetch_comment();
+            echo '<div   id="'.'div'.$row['ID'] .'" class="comment-div row" style="display: none" >';
+            echo '<div " class="comment-wrapper row">';
+
+            foreach($comment as $value){
+
+                if($value['ID'] == $row['ID'] ){
+
+                    if (!empty($comment)){
+
+                    echo '<div class="col-sm-10" style="background-color:lavender;">';
+                    echo "<p> {$value['TextArea']}</p>";
+                    echo '<p style="background-color:blue;"' .'>' .$value['Ccreated_at'] .'</p>';
+                   echo '</div>';//end of col-sm- 10
+                    echo '<div class="col-sm-2">';
+                    sql_post_profilePic($value['userId']);  ///reused for comment picture
+                    echo $value['t3userHandle']; 
+                   echo '</div><br></div>'; //end o* col-sm-2
+                    }
+
+                }
+
+            }
+            commentArea($row['ID']);
+            echo '</div></div><div></div></div>'; //row  and post warrapper
+            }
+            echo "</div>";
+*/
+
         }else{
-		echo "No comment"; 
-		} 
-     }
-    ?>
-	<?php 
-    echo '</div></div></div>';
-    echo '<div class="input-group reply">';
 
-    echo '<textarea id="texArea"'.$row['ID'] .'class="form-control custom-control" rows="1" style="resize:none" placeholder="Write a Comment"></textarea>';  
-    echo '<span id="send"'.$row['ID'] .'class="input-group-addon btn btn-primary Comment" data-userId="'.$_SESSION['userId'] .'">Send</span>';
-    echo '</div></div></div></div></div>';
-    ?> 
-    <?php endforeach ?>
-
-    <?php                 
-    }else{
-    echo "Welcome to link, link with other people in the room by chatting <br>";
-    }
+        $NochatInRomm = "Welcome to link, link with other people in the room by chatting <br>";
+        echo $NochatInRomm;
+        }
 
     }else{
-    echo "You are not of the room called " .$roomName;
+    echo roomName_querry();
     }
 
-    $Connection= null; 
 
-    ?>
-    </div></div>
-?>
-<script type="text/javascript" src="rating.js"></script>
-<script type="text/javascript" src="comment.js"></script>
+
+    echo postArea();
+    echo ' <script type="text/javascript" src="rating.js"></script>
+    <script type="text/javascript" src="comment.js"></script>';
+?>  
+ 

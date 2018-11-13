@@ -38,7 +38,7 @@
 <body>
 
     <div class="wrapper">
-        <nav id="sidebar">
+       <nav id="sidebar">
             <div class="sidebar-header">
                 <h3 style="color: orange; font-family: tahoma; font-size: 25px;">Welcome 
                     <span>
@@ -66,10 +66,11 @@
                             <?php 
                         require 'dbconnect.php';
                         $tempId = $_SESSION['userId'];
+                        ///used the user Id to display the users list of rooms to them
                         $query = $Connection->prepare("SELECT RoomsID, Name FROM UserGroups INNER JOIN Rooms ON UserGroups.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
                         $query->execute(array('tempUserId'=> $tempId));
                 while( $result = $query->fetch()){
-                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'">' .$result['Name'] .'Room'.'</a></li>'; 
+                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1'.'">' .$result['Name'] .'Room'.'</a></li>'; 
                 }
                     $Connection = null;
 
@@ -81,10 +82,11 @@
                         <?php 
                         require 'dbconnect.php';
                         $tempId = $_SESSION['userId'];
+                        ///used the Admin(user) Id to display the users list of rooms to them
                         $query = $Connection->prepare("SELECT RoomsID, Name FROM Administrators INNER JOIN Rooms ON Administrators.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
                         $query->execute(array('tempUserId'=> $tempId));
                 while( $result = $query->fetch()){
-                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'">' .$result['Name'] .'Room'.'</a></li>'; 
+                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'">' .$result['Name'] .'Room'.'</a></li>'; 
                 }
                     $Connection = null;
 

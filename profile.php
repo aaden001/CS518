@@ -43,7 +43,7 @@
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar">
+       <nav id="sidebar">
             <div class="sidebar-header">
                 <h3 style="color: orange; font-family: tahoma; font-size: 25px;">Welcome 
                     <span>
@@ -75,7 +75,7 @@
                         $query = $Connection->prepare("SELECT RoomsID, Name FROM UserGroups INNER JOIN Rooms ON UserGroups.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
                         $query->execute(array('tempUserId'=> $tempId));
                 while( $result = $query->fetch()){
-                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'">' .$result['Name'] .'Room'.'</a></li>'; 
+                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1'.'">' .$result['Name'] .'Room'.'</a></li>'; 
                 }
                     $Connection = null;
 
@@ -91,7 +91,7 @@
                         $query = $Connection->prepare("SELECT RoomsID, Name FROM Administrators INNER JOIN Rooms ON Administrators.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
                         $query->execute(array('tempUserId'=> $tempId));
                 while( $result = $query->fetch()){
-                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'">' .$result['Name'] .'Room'.'</a></li>'; 
+                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'">' .$result['Name'] .'Room'.'</a></li>'; 
                 }
                     $Connection = null;
 
@@ -102,6 +102,18 @@
                     <li>
                         <a href="profile.php">View My Profile</a>
                     </li>
+                    <?php 
+                        require 'dbconnect.php';
+                        $tempId = $_SESSION['userId'];
+                        $query = $Connection->prepare("SELECT * FROM Administrators WHERE UserID=:tempUserId AND RoomsID=:tempRoomID");
+                        $query->execute(array('tempUserId'=> $tempId,'tempRoomID' => $_SESSION['currentRoomID']));
+                        $result = $query->fetch();
+                if($query->rowCount() > 0){
+                    echo '<li><a href="sendInvitation.php?currentRoomID=' .$result['RoomsID'] .'">' .'Invite' .'</a></li>'; 
+                }
+                    $Connection = null;
+
+                             ?>
             </ul>
         </nav>
 
