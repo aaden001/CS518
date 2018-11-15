@@ -9,7 +9,7 @@
 		include 'dbconnect.php';
 		///Querry for redirect and room Name 
 		$roomName;
-		$tempUserCRID = $_SESSION['currentRoomID'];
+		$tempUserCRID =$_POST['roomId'];
 
 		$querrystatement = "SELECT Name FROM Rooms WHERE ID=:roomID";
 		$roomNamequerry=$Connection->prepare($querrystatement);
@@ -23,7 +23,7 @@
 		///End of Querry  for redirect and room Name
 
 		$_SESSION['ChatText'] = stripslashes(htmlspecialchars($_POST['messages']));
-		$tempUserID = $_SESSION['userId'];
+		$tempUserID = $_POST['userId'];
 	
 		$tempChtxt = $_SESSION['ChatText']; 
 
@@ -34,11 +34,21 @@
 
 		
 		if($chatMsg->matchCheck($chatMsg->getUserId(),$chatMsg->getRoomId()) == true){
-			$chatMsg->insertMessegeDB();
-			header($Header);
+			if ($chatMsg->insertMessegeDB()){
+				$success = "success";
+				echo $success;
+				/*echo $chatMsg->getUserId();
+				echo $chatMsg->getRoomId();
+				echo $chatMsg->getText();*/
+			}else{
+				echo "error occurred in querry";
+			}
+			
+			/*echo $chatMsg->insertMessegeDB();*/
+		/*	header($Header);*/
 		}else{
 			echo "You are not in the " .$RoomName;
-			header($Header);
+		/*	header($Header);*/
 		}
 	}
 

@@ -3,9 +3,9 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
     session_start();
-    $_SESSION['currentRoomID'] = $_GET['currentRoomID'];
-    $_SESSION['currentPage']   = $_GET['page'];
-   
+    $_SESSION['currentRoomID'] = $_POST['currentRoomID'];
+    $_SESSION['currentPage']   = $_POST['page'];
+    $_SESSION['userId'] = $_POST['userId'];
    if(!isset($_SESSION['userId']))
     {
         header("Location:index.php");
@@ -69,7 +69,7 @@ function roomName_querry(){
 
 function sql_max_chat_per_room(){
     include 'dbconnect.php';
-    $currentRoomChatID =  $_GET['currentRoomID'];
+    $currentRoomChatID =  $_POST['currentRoomID'];
     $SQL ="SELECT * FROM ChatBox WHERE RoomID=:roomIdentify";
     $query = $Connection->prepare($SQL);
     $query->execute(array('roomIdentify' => $currentRoomChatID));
@@ -80,11 +80,11 @@ function sql_max_chat_per_room(){
 
 function postArea(){
       $postA ='<div id="container">
-      <form id="chatArea" style="margin-top: 13%" action="post.php" method="post">
+      <form id="chatArea" style="margin-top: 47%" action="post.php" method="POST">
       <label for="messages">YourMessage:</label>
       <div class="form-group ">        
-      <textarea class="form-control" rows="2" id="messages" name="messages" form="chatArea" maxlength="400" placeholder="Write a Post"></textarea>
-      <span ><button  type="submit" class="btn btn-success" style="margin-top: 4px;">Send</button></span> 
+      <textarea class="form-control" rows="2" id="messages" name="messages" form="chatArea" maxlength="200" placeholder="Write a Post"></textarea>
+      <span ><button  type="submit" id= "post-submit" class="btn btn-success" style="margin-top: 4px;">Send</button></span> 
       </div>
       </form>
       </div>';
@@ -243,7 +243,7 @@ function printPagePanel($maxPageSize)
 
   $pages = pagination($page, $maxPageSize);
 $stringspan ="";
-  $stringspan= '<div style="text-align:center; font-weight: bold; font-size:16px; padding-bottom: 5px;">';
+  $stringspan= '<div id="pagePanel" style="text-align:center; font-weight: bold; font-size:16px; padding-bottom: 5px;">';
   for($i = 0; $i<count($pages); $i++)
   {
     if( $pages[$i] == -1  )
@@ -309,20 +309,34 @@ function pagination($c, $m)
     $dispUser = new Chat;
     $tempUserCRID = $_SESSION['currentRoomID'];
     $buildString = '';
+    $buildPageString = '';
+    $maxpage = sql_max_chat_per_room();
 
     if($dispUser->matchCheck($_SESSION['userId'],$tempUserCRID) == true)
     {
 
         $postID = 0;
-        $maxpage = sql_max_chat_per_room();
+       
         $post = sql_fecth_post($maxpage);
 
+        $remainder = $maxpage % 5;
         switch ($maxpage) {
         case $maxpage < 5:
         $PanelSize = 1;
         break;
         case $maxpage > 4:
-        $PanelSize =  round(($maxpage / 5));
+              switch ($remainder ) {
+                case $remainder < 3:
+                $PanelSize =  round(($maxpage / 5)) + 1 ;
+                $PanelSize = 1 +$PanelSize;
+                  break;
+                
+                case $remainder > 2:
+                  $PanelSize =  round(($maxpage / 5));
+                  break;
+             
+              }
+
         break;
 
         }
@@ -330,8 +344,8 @@ function pagination($c, $m)
 
         if (!empty($post)){
 
-            $buildString = printPagePanel($PanelSize);
-            $buildString .= '<div id="display" class="pre-scrollable">';
+            $buildPageString = printPagePanel($PanelSize);
+         /*   $buildString .= '<div id="display" class="pre-scrollable">';*/
 
             foreach ($post as $row) {
                  $postID++; 
@@ -377,75 +391,29 @@ function pagination($c, $m)
                 $buildString .= '</div></div><div></div></div>';
             }
             $buildString .=  "</div>";
-            echo $buildString;
-     /*
+         
 
-            printPagePanel($PanelSize);
-            echo '<div id="display" class="pre-scrollable">';
-            foreach ($post as $row) {
-            # code...
-            $postID++; 
-           echo ' <div id="' .$postID .'" class="posts-wrapper row">'; 
-
-            
-            echo '<div class="col-sm-10" style="background-color:lavender;">';
-            echo "<p> {$row['TextA']}</p>";
-            echo '<p style="background-color:blue;"' .'>' .$row['created_at'] .'</p>';
-
-
-            echo '</div>';  // end of col-sm- 10
-
-            echo '<div class="col-sm-2">';
-
-            sql_post_profilePic($row['UserID']);
-            echo $row['userHandle'];       echo $row['ID'];
-            echo '</div><br></div>';
-            // end o* col-sm-2
-
-            likes_dislike_Post($row['ID']);
-            $comment = sql_fetch_comment();
-            echo '<div   id="'.'div'.$row['ID'] .'" class="comment-div row" style="display: none" >';
-            echo '<div " class="comment-wrapper row">';
-
-            foreach($comment as $value){
-
-                if($value['ID'] == $row['ID'] ){
-
-                    if (!empty($comment)){
-
-                    echo '<div class="col-sm-10" style="background-color:lavender;">';
-                    echo "<p> {$value['TextArea']}</p>";
-                    echo '<p style="background-color:blue;"' .'>' .$value['Ccreated_at'] .'</p>';
-                   echo '</div>';//end of col-sm- 10
-                    echo '<div class="col-sm-2">';
-                    sql_post_profilePic($value['userId']);  ///reused for comment picture
-                    echo $value['t3userHandle']; 
-                   echo '</div><br></div>'; //end o* col-sm-2
-                    }
-
-                }
-
-            }
-            commentArea($row['ID']);
-            echo '</div></div><div></div></div>'; //row  and post warrapper
-            }
-            echo "</div>";
-*/
 
         }else{
 
-        $NochatInRomm = "Welcome to link, link with other people in the room by chatting <br>";
-        echo $NochatInRomm;
+        $buildString .= "Welcome to link, link with other people in the room by chatting <br>";
+        /*echo $NochatInRomm;*/
         }
-
-    }else{
-    echo roomName_querry();
+    
+ /*   $buildString postArea();*/
     }
+/*else{
+    $buildString roomName_querry();
+    }
+*/
 
 
-
-    echo postArea();
-    echo ' <script type="text/javascript" src="rating.js"></script>
+   $buildString .=' <script type="text/javascript" src="rating.js"></script>
     <script type="text/javascript" src="comment.js"></script>';
+    $result = array('pagination' => $buildPageString, 'buildpage' =>$buildString);
+   
+
+      echo json_encode($result);
+
+
 ?>  
- 
