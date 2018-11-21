@@ -114,8 +114,8 @@ function sql_fecth_post($maxpostsize){
           //Querry for text,user handle and time stamp
         $currentRoomChatID = $_SESSION['currentRoomID'];
         $currentPage = $_SESSION['currentPage'];
-        echo 'max post size ->' .$maxpostsize .'<br>';
-
+/*        echo 'max post size ->' .$maxpostsize .'<br>';
+*/
 
         $StopCheck = $maxpostsize % 5;
         $Stop = 5;
@@ -434,7 +434,7 @@ i {
                 $query = $Connection->prepare("SELECT RoomsID, Name FROM Administrators INNER JOIN Rooms ON Administrators.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
                 $query->execute(array('tempUserId'=> $tempId));
                 while( $result = $query->fetch()){
-                echo '<li class="row"><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'"  class="col-8" style="margin-left: 7%">' .$result['Name'] .'Room'.'</a><i class="fa fa-archive col-3" style="font-size:36px; color:black;"></i></li>'; 
+                echo '<li class="row"><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'"  class="col-8" style="margin-left: 7%">' .$result['Name'] .'Room'.'</a><i id="' .$result['RoomsID'] .'" class="fa fa-archive col-3" style="font-size:36px; color:black;"></i></li>'; 
                 }
                 $Connection = null;
                 echo '</ul></li>';
