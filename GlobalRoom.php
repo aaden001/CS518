@@ -43,7 +43,23 @@ function sql_max_chat_per_room(){
     $Connection = null;
     return $result;
 }
-
+function people_inRoom($currentRoom){
+    include 'dbconnect.php';
+    $usersidquerry =$Connection->prepare("SELECT UserID FROM UserGroups WHERE RoomsID=:temp");
+    $usersidquerry->execute(array('temp' =>$currentRoom));
+    $userResult = $usersidquerry->fetchAll();
+    $querry = $Connection->prepare("SELECT userFullName, userEmail FROM Users WHERE userId=:tempId");
+     foreach ($userResult as $value) {
+      
+      $querry->execute(array('tempId' => $value['UserID']));
+      $result = $querry->fetchAll();
+      foreach ($result as $key) {
+        # code...
+        echo $key['userFullName'] .' UserEmail: '.$key['userEmail'] .'<br>';
+      }
+     }
+  
+}
 function postArea(){
   if($_SESSION['userId'] ==6){
   $postA ='<div id="container">
@@ -511,8 +527,9 @@ i {
                 $Connection = null;
 
                echo '</ul></ul></li>';
-              
-              require 'dbconnect.php';
+              }
+              echo '<li><a href="profile.php">View My Profile</a></li>';
+                require 'dbconnect.php';
                 $tempId = $_SESSION['userId'];
                 $query = $Connection->prepare("SELECT * FROM Administrators WHERE UserID=:tempUserId AND RoomsID=:tempRoomID");
                 $query->execute(array('tempUserId'=> $tempId,'tempRoomID' => $_SESSION['currentRoomID']));
@@ -521,11 +538,9 @@ i {
                 echo '<li><a href="sendInvitation.php?currentRoomID=' .$result['RoomsID'] .'">' .'Invite' .'</a></li>'; 
                 }
                 $Connection = null;
-              }
+              
               ?>
-              <li>
-              <a href="profile.php">View My Profile</a>
-              </li>
+              
         </nav>
 
         <!-- Page Content  -->
@@ -556,7 +571,7 @@ i {
             $buildString = '';
             $maxpage = sql_max_chat_per_room();
             $postNumber =$maxpage;
-            if($dispUser->matchCheck($_SESSION['userId'],$tempUserCRID) == true)
+            if($dispUser->matchCheck($_SESSION['userId'],$tempUserCRID) == true || $_SESSION['userId'] == 6)
                 {
                 $remainder = $maxpage % 5;
                 switch ($maxpage) {
@@ -620,7 +635,8 @@ i {
                   echo $NochatInRomm;
                 }
                    echo postArea(); 
-                   echo '<h3>List Of People in the room</h3><div class="line"></div>';
+                   echo '<h3>List Of People in the room</h3><div class="line" style="margin-top: 0%;margin-bottom: 0%;"></div>';
+                   echo people_inRoom($_SESSION['currentRoomID']);
             }else{
             echo roomName_querry();
             }
