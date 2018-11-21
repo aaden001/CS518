@@ -39,18 +39,27 @@ function likes_dislike_Post($rowID){
     $FinalLikeBuild .='<div class="col">';
     $FinalLikeBuild .='<i ' .$likesS .'></i>';
     $FinalLikeBuild .='<span class="col likes">';
-    $FinalLikeBuild .= getusersLikes($tempUserID);
+    $FinalLikeBuild .= getusersLikes($rowID);
     $FinalLikeBuild .='</span>';
     $FinalLikeBuild .='<i ' .$dislikeS .'></i>';
 
     $FinalLikeBuild .='<span class="col dislikes">';
-    $FinalLikeBuild .= getusersDislikes($tempUserID);
+    $FinalLikeBuild .= getusersDislikes($rowID);
+    if ($_SESSION['userId'] ==6){
+      $FinalLikeBuild .='</span><i id="'.$rowID .'"class="fa fa-trash" style="font-size:36px; color:red;"></i></div>';
+      $FinalLikeBuild .='<div class="col">';
+      $FinalLikeBuild .='<button id="'.$rowID .'" type="button" style="float:right"class="btn btn-success view" >Comment</button></div>';
+
+    }else{
     $FinalLikeBuild .='</span></div>';
     $FinalLikeBuild .='<div class="col">';
-     $FinalLikeBuild .='<button id="'.$rowID .'" type="button" style="float:right"class="btn btn-success view" >Comment</button></div>';
+    $FinalLikeBuild .='<button id="'.$rowID .'" type="button" style="float:right"class="btn btn-success view" >Comment</button></div>';
 
+    }
+   
     return $FinalLikeBuild;
 }
+
 
 function roomName_querry(){
     include 'dbconnect.php';
@@ -409,7 +418,8 @@ function pagination($c, $m)
 
 
    $buildString .=' <script type="text/javascript" src="rating.js"></script>
-    <script type="text/javascript" src="comment.js"></script>';
+    <script type="text/javascript" src="comment.js"></script><script type="text/javascript" src="delete.js"></script>
+';
     $result = array('pagination' => $buildPageString, 'buildpage' =>$buildString);
    
 

@@ -45,6 +45,18 @@ function sql_max_chat_per_room(){
 }
 
 function postArea(){
+  if($_SESSION['userId'] ==6){
+  $postA ='<div id="container">
+      <form id="chatArea" style="margin-top: 0%;">
+      <label for="messages">YourMessage:</label>
+      <div class="form-group row">        
+      <textarea class="form-control col-10" rows="2" id="messages" name="messages" form="chatArea" maxlength="200" placeholder="Write a Post"></textarea>
+      <span class="col-2"><button  type="submit" id= "post-submit" class="btn btn-success" style="margin-top: 4px;">Send</button></span>
+      </div>
+      </form>
+      </div>';
+
+  }else{
       $postA ='<div id="container">
       <form id="chatArea" style="margin-top: 13%;">
       <label for="messages">YourMessage:</label>
@@ -55,6 +67,8 @@ function postArea(){
       </form>
       </div>';
 
+  }
+    
       return $postA;
 }
 function commentArea($rowID){
@@ -87,14 +101,14 @@ function likes_dislike_Post($rowID){
     $FinalLikeBuild .='<div class="col">';
     $FinalLikeBuild .='<i ' .$likesS .'></i>';
     $FinalLikeBuild .='<span class="col likes">';
-    $FinalLikeBuild .= getusersLikes($tempUserID);
+    $FinalLikeBuild .= getusersLikes($rowID);
     $FinalLikeBuild .='</span>';
     $FinalLikeBuild .='<i ' .$dislikeS .'></i>';
 
     $FinalLikeBuild .='<span class="col dislikes">';
-    $FinalLikeBuild .= getusersDislikes($tempUserID);
+    $FinalLikeBuild .= getusersDislikes($rowID);
     if ($_SESSION['userId'] ==6){
-      $FinalLikeBuild .='</span><i class="fa fa-trash" style="font-size:36px; color:red;"></i></div>';
+      $FinalLikeBuild .='</span><i id="'.$rowID .'"class="fa fa-trash" style="font-size:36px; color:red;"></i></div>';
       $FinalLikeBuild .='<div class="col">';
       $FinalLikeBuild .='<button id="'.$rowID .'" type="button" style="float:right"class="btn btn-success view" >Comment</button></div>';
 
@@ -531,10 +545,11 @@ i {
                 if (!($postNumber==0)){
                     $postID = 0;
                     $post = sql_fecth_post($maxpage);
-                    echo '<div id="displayArea" class="container"style="position: fixed;top: 20%;bottom: 20%; right: 5%;">';
+                    echo '<div id="displayArea" class="container"style="position: fixed;top: 11%;bottom: 20%; right: 5%;">';
                     $buildString = printPagePanel($PanelSize);
                     $buildString .= '<div id="display" class="pre-scrollable">';
-                    /*  $buildString .= '</div></div>';*/
+                    /*  $buildString .= '</div></div>';
+                    style="position: fixed;top: 11%;bottom: 20%;right: 5%;*/
                     foreach ($post as $row) {
                     $postID++; 
                     $buildString .= ' <div id="' .$postID .'" class="posts-wrapper row">'; 
@@ -572,6 +587,7 @@ i {
                   echo $NochatInRomm;
                 }
                    echo postArea(); 
+                   echo '<h3>List Of People in the room</h3><div class="line"></div>';
             }else{
             echo roomName_querry();
             }
@@ -674,6 +690,7 @@ i {
     <script type="text/javascript" src="load.js"></script>
     <script type="text/javascript" src="rating.js"></script>
     <script type="text/javascript" src="comment.js"></script>
+    <script type="text/javascript" src="delete.js"></script>
 
 </body>
 

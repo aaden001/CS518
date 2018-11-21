@@ -1,6 +1,6 @@
 <?php 
 	class Room{
-		private $userId, $Id,$Name,$roomTyp;
+		private $userId, $Id,$Name,$roomTyp,$status;
 
 		public function setUserId($tempUserId){
 			$this->userId = $tempUserId;
@@ -11,9 +11,14 @@
 		public function setRoomTyp($tempTyp){
 			$this->roomTyp = $tempTyp;
 		}
-
+		public function setStatus($temp){
+			$this->status = $temp;
+		}
 		public function setRoomName($tempRoomName){
 			$this->Name = $tempRoomName;
+		}
+		public function getStatus(){
+			return $this->status;
 		}
 		public function getUserId(){
 			return $this->userId;
@@ -45,8 +50,8 @@
 			include 'UserClass.php';
 
 			///Rooms table auto increments
-			$SqlAddNewRoom =  $Connection->prepare("INSERT INTO Rooms(Name,grpTyp) VALUES(:tempName, :tempRoomTyp)");
-			$SqlAddNewRoom->execute(array('tempName' => $this->getRoomName(), 'tempRoomTyp' => $this->getRoomTyp()));
+			$SqlAddNewRoom =  $Connection->prepare("INSERT INTO Rooms(Name,grpTyp,active) VALUES(:tempName, :tempRoomTyp, :tempActive)");
+			$SqlAddNewRoom->execute(array('tempName' => $this->getRoomName(), 'tempRoomTyp' => $this->getRoomTyp(), 'tempActive' => $this->getStatus()));
 
 			$findRoom = $Connection->prepare("SELECT ID FROM Rooms WHERE Name=:tempName");
 			$findRoom->execute(array('tempName' => $this->getRoomName()));
@@ -55,7 +60,7 @@
 			
 			$this->setRoomId($result['ID']);
 			
-			$this->AddAdministrator(); ///Add room creator as an administrator 		
+		/*	$this->AddAdministrator(); ///Add room creator as an administrator 		*/
 		}
 
 		public function AddAdministrator(){

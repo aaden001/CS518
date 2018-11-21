@@ -29,6 +29,7 @@
         $NewRoom->setRoomName($roomName);
         $NewRoom->setRoomTyp($GroupTypeInt);
         $NewRoom->setUserId($tempUserId);
+        $NewRoom->setStatus(1);
         if($NewRoom->checkRoomDuplicate()){
             $NewRoom->CreateNewRoom(); /// creates room and add as an admistrator of that room
           require_once 'UserClass.php';///Add room creator as a user of the group
