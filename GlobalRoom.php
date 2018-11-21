@@ -57,13 +57,20 @@ function postArea(){
       </div>';
 
   }else{
+    include_once 'roomClass.php';
+    $newRoomObj = new Room();
       $postA ='<div id="container">
       <form id="chatArea" style="margin-top: 13%;">
       <label for="messages">YourMessage:</label>
       <div class="form-group ">        
-      <textarea class="form-control" rows="2" id="messages" name="messages" form="chatArea" maxlength="200" placeholder="Write a Post"></textarea>
-      <span ><button  type="submit" id= "post-submit" class="btn btn-success" style="margin-top: 4px;">Send</button></span> 
-      </div>
+      <textarea class="form-control" rows="2" id="messages" name="messages" form="chatArea" maxlength="200" placeholder="Write a Post"></textarea>';
+      if($newRoomObj->check_room_status($_SESSION['currentRoomID']) == 1){
+         $postA .='<span ><button  type="submit" id= "post-submit" class="btn btn-success" style="margin-top: 4px;">Send</button></span>';
+      }else{
+         $postA .='<br><h3> Room has been archived by admin</h3>';
+      }
+     
+      $postA .='</div>
       </form>
       </div>';
 
@@ -72,8 +79,16 @@ function postArea(){
       return $postA;
 }
 function commentArea($rowID){
-      $commentArea = '<div class="input-group reply"><textarea id="' .'texArea' .$rowID  .'" class="form-control custom-control" rows="1" style="resize:none" placeholder="Write a Comment"></textarea>';   
-      $commentArea .='<span id="' .'send'.$rowID .'" class="input-group-addon btn btn-primary Comment" data-userId="'.$_SESSION['userId'] .'" >Send</span></div>';
+       include_once 'roomClass.php';
+         $newRoomObj = new Room();
+    
+      $commentArea = '<div class="input-group reply"><textarea id="' .'texArea' .$rowID  .'" class="form-control custom-control" rows="1" style="resize:none" placeholder="Write a Comment"></textarea>'; 
+      if($newRoomObj->check_room_status($_SESSION['currentRoomID']) == 1){
+          $commentArea .='<span id="' .'send'.$rowID .'" class="input-group-addon btn btn-primary Comment" data-userId="'.$_SESSION['userId'] .'" >Send</span>';
+      }else{
+        
+      }
+    $commentArea .='</div>';
 
       return $commentArea;
 }
@@ -254,16 +269,7 @@ function sql_fetch_comment(){
 
         return $resultComment;
 }
- 
-function check_room_status($rooID){
-   include 'dbconnect.php';
-   $query = $Connection->prepare('SELECT active FROM Rooms WHERE ID=:temp');
-   $query->execute(array('temp' => $rooID));
-   $result = $query->fetch();
-   $res = $result['active'];
 
-   return $res;
-}
 
 function printPagePanel($maxPageSize)
 {
@@ -448,7 +454,7 @@ i {
                 <?php 
 
               if($_SESSION['userId'] == 6){
-                include 'roomClass.php';
+                include_once 'roomClass.php';
                 $newRoomObj = new Room();
                 echo '<li>
                 <a href="#roomSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Rooms</a>
@@ -603,6 +609,7 @@ i {
                     }
                     }
                     }
+                 
                     $buildString .= commentArea($row['ID']);
                     $buildString .= '</div></div><div></div></div>';
                     }
@@ -693,7 +700,7 @@ i {
           }
         }
     
-     
+          
         ?>
             </div>   <!-- End of Container -->
 
@@ -714,9 +721,22 @@ i {
     <script type="text/javascript" src="toggle.js"></script>
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="load.js"></script>
-    <script type="text/javascript" src="rating.js"></script>
+   
     <script type="text/javascript" src="comment.js"></script>
     <script type="text/javascript" src="delete.js"></script>
+
+    <?php
+      include_once 'roomClass.php';
+      $obj = new Room();
+
+       if( $obj->check_room_status($_SESSION['currentRoomID']) ==1){
+        echo ' <script type="text/javascript" src="rating.js"></script>';
+       }else{
+        echo '';
+       }
+    ?>
+   
+    
 
 </body>
 
