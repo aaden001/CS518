@@ -93,10 +93,18 @@ function likes_dislike_Post($rowID){
 
     $FinalLikeBuild .='<span class="col dislikes">';
     $FinalLikeBuild .= getusersDislikes($tempUserID);
+    if ($_SESSION['userId'] ==6){
+      $FinalLikeBuild .='</span><i class="fa fa-trash" style="font-size:36px; color:red;"></i></div>';
+      $FinalLikeBuild .='<div class="col">';
+      $FinalLikeBuild .='<button id="'.$rowID .'" type="button" style="float:right"class="btn btn-success view" >Comment</button></div>';
+
+    }else{
     $FinalLikeBuild .='</span></div>';
     $FinalLikeBuild .='<div class="col">';
-     $FinalLikeBuild .='<button id="'.$rowID .'" type="button" style="float:right"class="btn btn-success view" >Comment</button></div>';
+    $FinalLikeBuild .='<button id="'.$rowID .'" type="button" style="float:right"class="btn btn-success view" >Comment</button></div>';
 
+    }
+   
     return $FinalLikeBuild;
 }
 
@@ -406,65 +414,72 @@ i {
         
             <!-- <ul class="list-unstyled components"> -->
             <ul class="list-unstyled CTAs" >
-                <p></p>
-                <li>
-                        <a href="Welcome.php">Home</a>
-                    </li>
-                <li>
-                        <a href="notify.php">Notification</a>
-                </li>
-                    <li>
-                        <a href="#roomSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Rooms</a>
-                        <ul class="collapse list-unstyled" id="roomSubmenu">
-                        <a href="#JoinSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Joined Room</a>
-                        <ul class="collapse list-unstyled" id="JoinSubmenu">
-                            <?php 
-                        require 'dbconnect.php';
-                        $tempId = $_SESSION['userId'];
-                        ///used the user Id to display the users list of rooms to them
-                        $query = $Connection->prepare("SELECT RoomsID, Name FROM UserGroups INNER JOIN Rooms ON UserGroups.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
-                        $query->execute(array('tempUserId'=> $tempId));
+              <p></p>
+              <li>
+              <a href="Welcome.php">Home</a>
+              </li>
+              <li>
+              <a href="notify.php">Notification</a>
+              </li>
+              
+                <?php 
+
+              if($_SESSION['userId'] == 6){
+                echo '<li>
+                <a href="#roomSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Rooms</a>
+                <ul class="collapse list-unstyled" id="roomSubmenu">';
+                 require 'dbconnect.php';
+                $tempId = $_SESSION['userId'];
+                ///used the Admin(user) Id to display the users list of rooms to them
+                $query = $Connection->prepare("SELECT RoomsID, Name FROM Administrators INNER JOIN Rooms ON Administrators.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
+                $query->execute(array('tempUserId'=> $tempId));
                 while( $result = $query->fetch()){
-                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1'.'">' .$result['Name'] .'Room'.'</a></li>'; 
+                echo '<li class="row"><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'"  class="col-8" style="margin-left: 7%">' .$result['Name'] .'Room'.'</a><i class="fa fa-archive col-3" style="font-size:36px; color:black;"></i></li>'; 
                 }
-                    $Connection = null;
+                $Connection = null;
+                echo '</ul></li>';
 
-                             ?>
-                        </ul>
-
-                        <a href="#ownSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Own Room</a>
-                        <ul class="collapse list-unstyled" id="ownSubmenu">
-                        <?php 
-                        require 'dbconnect.php';
-                        $tempId = $_SESSION['userId'];
-                        ///used the Admin(user) Id to display the users list of rooms to them
-                        $query = $Connection->prepare("SELECT RoomsID, Name FROM Administrators INNER JOIN Rooms ON Administrators.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
-                        $query->execute(array('tempUserId'=> $tempId));
+            }else{  
+                echo '<li>
+                <a href="#roomSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Rooms</a>
+                <ul class="collapse list-unstyled" id="roomSubmenu">
+                <a href="#JoinSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Joined Room</a>
+                <ul class="collapse list-unstyled" id="JoinSubmenu">';
+               
+                require 'dbconnect.php';
+                $tempId = $_SESSION['userId'];
+                ///used the user Id to display the users list of rooms to them
+                $query = $Connection->prepare("SELECT RoomsID, Name FROM UserGroups INNER JOIN Rooms ON UserGroups.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
+                $query->execute(array('tempUserId'=> $tempId));
                 while( $result = $query->fetch()){
-                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'">' .$result['Name'] .'Room'.'</a></li>'; 
+                echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1'.'">' .$result['Name'] .'Room'.'</a></li>'; 
                 }
-                    $Connection = null;
+                $Connection = null;
 
-                             ?>
-                        </ul>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="profile.php">View My Profile</a>
-                    </li>
-                    <?php 
-                        require 'dbconnect.php';
-                        $tempId = $_SESSION['userId'];
-                        $query = $Connection->prepare("SELECT * FROM Administrators WHERE UserID=:tempUserId AND RoomsID=:tempRoomID");
-                        $query->execute(array('tempUserId'=> $tempId,'tempRoomID' => $_SESSION['currentRoomID']));
-                        $result = $query->fetch();
+                echo '</ul><a href="#ownSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Own Room</a>
+                <ul class="collapse list-unstyled" id="ownSubmenu">';
+                require 'dbconnect.php';
+                $tempId = $_SESSION['userId'];
+                ///used the Admin(user) Id to display the users list of rooms to them
+                $query = $Connection->prepare("SELECT RoomsID, Name FROM Administrators INNER JOIN Rooms ON Administrators.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
+                $query->execute(array('tempUserId'=> $tempId));
+                while( $result = $query->fetch()){
+                echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'">' .$result['Name'] .'Room'.'</a></li>'; 
+                }
+                $Connection = null;
+
+               echo '</ul></ul></li>';
+              
+              }require 'dbconnect.php';
+                $tempId = $_SESSION['userId'];
+                $query = $Connection->prepare("SELECT * FROM Administrators WHERE UserID=:tempUserId AND RoomsID=:tempRoomID");
+                $query->execute(array('tempUserId'=> $tempId,'tempRoomID' => $_SESSION['currentRoomID']));
+                $result = $query->fetch();
                 if($query->rowCount() > 0){
-                    echo '<li><a href="sendInvitation.php?currentRoomID=' .$result['RoomsID'] .'">' .'Invite' .'</a></li>'; 
+                echo '<li><a href="sendInvitation.php?currentRoomID=' .$result['RoomsID'] .'">' .'Invite' .'</a></li>'; 
                 }
-                    $Connection = null;
-
-                             ?>
-            </ul>
+                $Connection = null;
+              ?>
         </nav>
 
         <!-- Page Content  -->
@@ -487,121 +502,156 @@ i {
          
             <div id="container" >
         <?php   
-        include 'dbconnect.php';
-        include 'ChatClass.php';
-        $dispUser = new Chat;
-        $tempUserCRID = $_SESSION['currentRoomID'];
-        $buildString = '';
-
-
-        $maxpage = sql_max_chat_per_room();
-        $postNumber =$maxpage;
-
-        if($dispUser->matchCheck($_SESSION['userId'],$tempUserCRID) == true)
-        {
-
+        if($_SESSION['userId'] == 6){
+            include 'dbconnect.php';
+            include 'ChatClass.php';
+            $dispUser = new Chat;
+            $tempUserCRID = $_SESSION['currentRoomID'];
+            $buildString = '';
+            $maxpage = sql_max_chat_per_room();
+            $postNumber =$maxpage;
+            if($dispUser->matchCheck($_SESSION['userId'],$tempUserCRID) == true)
+                {
+                $remainder = $maxpage % 5;
+                switch ($maxpage) {
+                case $maxpage < 5:
+                $PanelSize = 1;
+                break;
+                case $maxpage > 4:
+                switch ($remainder ) {
+                case $remainder < 3:
+                $PanelSize =  round(($maxpage / 5)) + 1 ;
+                break;
+                case $remainder > 2:
+                $PanelSize =  round(($maxpage / 5));
+                break;
+                }
+                break;
+                }
+                if (!($postNumber==0)){
+                    $postID = 0;
+                    $post = sql_fecth_post($maxpage);
+                    echo '<div id="displayArea" class="container"style="position: fixed;top: 20%;bottom: 20%; right: 5%;">';
+                    $buildString = printPagePanel($PanelSize);
+                    $buildString .= '<div id="display" class="pre-scrollable">';
+                    /*  $buildString .= '</div></div>';*/
+                    foreach ($post as $row) {
+                    $postID++; 
+                    $buildString .= ' <div id="' .$postID .'" class="posts-wrapper row">'; 
+                    $buildString .=  '<div class="col-sm-10" style="background-color:lavender;">';
+                    $buildString .=  "<p> {$row['TextA']}</p>";
+                    $buildString .= '<p style="background-color:blue;"' .'>' .$row['created_at'] .'</p></div><div class="col-sm-2">';
+                    $buildString .=  sql_post_profilePic($row['UserID']);
+                    $buildString .= $row['userHandle'];
+                    $buildString .=  $row['ID'];
+                    $buildString .= '</div><br></div>';
+                    $buildString .=  likes_dislike_Post($row['ID']);
+                    $comment = sql_fetch_comment();
+                    $buildString .= '<div   id="'.'div'.$row['ID'] .'" class="comment-div row" style="display: none" >';
+                    $buildString .= '<div " class="comment-wrapper row">';
+                    foreach($comment as $value){
+                    if($value['ID'] == $row['ID'] ){
+                    if (!empty($comment)){
+                    $buildString .='<div class="col-sm-10" style="background-color:lavender;">';
+                    $buildString .="<p> {$value['TextArea']}</p>";
+                    $buildString .='<p style="background-color:blue;"' .'>' .$value['Ccreated_at'] .'</p></div>';
+                    $buildString .='<div class="col-sm-2">';
+                    $buildString .=  sql_post_profilePic($value['userId']);
+                    $buildString .= $value['t3userHandle']; 
+                    $buildString .= '</div><br></div>';
+                    }
+                    }
+                    }
+                    $buildString .= commentArea($row['ID']);
+                    $buildString .= '</div></div><div></div></div>';
+                    }
+                    $buildString .=  "</div>";
+                    echo $buildString;
+                }else{
+                  $NochatInRomm = "<h3>Welcome to link, link with other people in the room by chatting</h3><br>";
+                  echo $NochatInRomm;
+                }
+                   echo postArea(); 
+            }else{
+            echo roomName_querry();
+            }
+           
+        }else{
+          include 'dbconnect.php';
+          include 'ChatClass.php';
+          $dispUser = new Chat;
+          $tempUserCRID = $_SESSION['currentRoomID'];
+          $buildString = '';
+          $maxpage = sql_max_chat_per_room();
+          $postNumber =$maxpage;
+          if($dispUser->matchCheck($_SESSION['userId'],$tempUserCRID) == true)
+          {
           $remainder = $maxpage % 5;
           switch ($maxpage) {
           case $maxpage < 5:
           $PanelSize = 1;
           break;
           case $maxpage > 4:
-                switch ($remainder ) {
-                  case $remainder < 3:
-                  $PanelSize =  round(($maxpage / 5)) + 1 ;
-                    break;
-                  
-                  case $remainder > 2:
-                    $PanelSize =  round(($maxpage / 5));
-                    break;
-               
-                }
-         
+          switch ($remainder ) {
+          case $remainder < 3:
+          $PanelSize =  round(($maxpage / 5)) + 1 ;
           break;
-
+          case $remainder > 2:
+          $PanelSize =  round(($maxpage / 5));
+          break;
           }
-      
-
-
+          break;
+          }
           if (!($postNumber==0)){
-
-              $postID = 0;
-       
-              $post = sql_fecth_post($maxpage);
-
-            echo '<div id="displayArea" class="container"style="position: fixed;top: 20%;bottom: 20%; right: 5%;">';
-
-            $buildString = printPagePanel($PanelSize);
-            $buildString .= '<div id="display" class="pre-scrollable">';
+          $postID = 0;
+          $post = sql_fecth_post($maxpage);
+          echo '<div id="displayArea" class="container"style="position: fixed;top: 20%;bottom: 20%; right: 5%;">';
+          $buildString = printPagePanel($PanelSize);
+          $buildString .= '<div id="display" class="pre-scrollable">';
           /*  $buildString .= '</div></div>';*/
-           
-
-
-
-
-              foreach ($post as $row) {
-                   $postID++; 
-                   $buildString .= ' <div id="' .$postID .'" class="posts-wrapper row">'; 
-                   $buildString .=  '<div class="col-sm-10" style="background-color:lavender;">';
-                   $buildString .=  "<p> {$row['TextA']}</p>";
-                   $buildString .= '<p style="background-color:blue;"' .'>' .$row['created_at'] .'</p></div><div class="col-sm-2">';
-
-                   $buildString .=  sql_post_profilePic($row['UserID']);
-                   $buildString .= $row['userHandle'];
-
-                   $buildString .=  $row['ID'];
-                   $buildString .= '</div><br></div>';
-                   $buildString .=  likes_dislike_Post($row['ID']);
-
-                   $comment = sql_fetch_comment();
-
-
-
-                   $buildString .= '<div   id="'.'div'.$row['ID'] .'" class="comment-div row" style="display: none" >';
-                   $buildString .= '<div " class="comment-wrapper row">';
-
-                    foreach($comment as $value){
-
-                           if($value['ID'] == $row['ID'] ){
-                                if (!empty($comment)){
-                                  $buildString .='<div class="col-sm-10" style="background-color:lavender;">';
-                                  $buildString .="<p> {$value['TextArea']}</p>";
-                                  $buildString .='<p style="background-color:blue;"' .'>' .$value['Ccreated_at'] .'</p></div>';
-                                  $buildString .='<div class="col-sm-2">';
-                                  $buildString .=  sql_post_profilePic($value['userId']);
-                                  $buildString .= $value['t3userHandle']; 
-                                  $buildString .= '</div><br></div>';
-                                 
-
-
-                                }
-
-                           }
-
-                    }
-                  $buildString .= commentArea($row['ID']);
-                  $buildString .= '</div></div><div></div></div>';
+          foreach ($post as $row) {
+          $postID++; 
+          $buildString .= ' <div id="' .$postID .'" class="posts-wrapper row">'; 
+          $buildString .=  '<div class="col-sm-10" style="background-color:lavender;">';
+          $buildString .=  "<p> {$row['TextA']}</p>";
+          $buildString .= '<p style="background-color:blue;"' .'>' .$row['created_at'] .'</p></div><div class="col-sm-2">';
+          $buildString .=  sql_post_profilePic($row['UserID']);
+          $buildString .= $row['userHandle'];
+          $buildString .=  $row['ID'];
+          $buildString .= '</div><br></div>';
+          $buildString .=  likes_dislike_Post($row['ID']);
+          $comment = sql_fetch_comment();
+          $buildString .= '<div   id="'.'div'.$row['ID'] .'" class="comment-div row" style="display: none" >';
+          $buildString .= '<div " class="comment-wrapper row">';
+          foreach($comment as $value){
+          if($value['ID'] == $row['ID'] ){
+              if (!empty($comment)){
+                $buildString .='<div class="col-sm-10" style="background-color:lavender;">';
+                $buildString .="<p> {$value['TextArea']}</p>";
+                $buildString .='<p style="background-color:blue;"' .'>' .$value['Ccreated_at'] .'</p></div>';
+                $buildString .='<div class="col-sm-2">';
+                $buildString .=  sql_post_profilePic($value['userId']);
+                $buildString .= $value['t3userHandle']; 
+                $buildString .= '</div><br></div>';
               }
-              $buildString .=  "</div>";
-           
-
- 
-                 echo $buildString;
+          }
+          }
+          $buildString .= commentArea($row['ID']);
+          $buildString .= '</div></div><div></div></div>';
+          }
+          $buildString .=  "</div>";
+          echo $buildString;
           }else{
-
-          $NochatInRomm = "Welcome to link, link with other people in the room by chatting <br>";
+          $NochatInRomm = "<h3>Welcome to link, link with other people in the room by chatting</h3><br>";
           echo $NochatInRomm;
           }
-       
-        echo postArea(); 
-
-        }else{
-        echo roomName_querry();
+          echo postArea(); 
+          }else{
+          echo roomName_querry();
+          }
         }
-
-
-
-       
+    
+     
         ?>
             </div>   <!-- End of Container -->
 
