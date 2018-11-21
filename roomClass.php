@@ -43,6 +43,24 @@
 			}
 			$Connection = null;
 		}
+		public	function check_room_status($rooID){
+			include 'dbconnect.php';
+			$query = $Connection->prepare('SELECT active FROM Rooms WHERE ID=:temp');
+			$query->execute(array('temp' => $rooID));
+			$result = $query->fetch();
+			$res = $result['active'];
+			$Connection = null;
+
+			return $res;
+		}
+		public	function change_room_status($rooID,$status){
+			include 'dbconnect.php';
+			$query = $Connection->prepare('UPDATE Rooms SET active=:stat WHERE ID=:temp');
+			$query->execute(array('temp' => $rooID,'stat' => $status));
+			$Connection = null;
+
+			return $query;
+		}
 		public function CreateNewRoom(){
 			/*We want to be able to create a new room 
 			and add the room creator to as admistrator of that room*/

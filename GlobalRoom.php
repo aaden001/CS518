@@ -448,6 +448,8 @@ i {
                 <?php 
 
               if($_SESSION['userId'] == 6){
+                include 'roomClass.php';
+                $newRoomObj = new Room();
                 echo '<li>
                 <a href="#roomSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Rooms</a>
                 <ul class="collapse list-unstyled" id="roomSubmenu">';
@@ -461,7 +463,7 @@ i {
 
                 echo '<li class="row"><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'"  class="col-8" style="margin-left: 7%">' .$result['Name'] .'Room'.'</a>';
 
-                  if( check_room_status($result['RoomsID'] ) ==1){
+                  if($newRoomObj->check_room_status($result['RoomsID'] ) ==1){
                  echo '<i id="' .$result['RoomsID'] .'" class="fa fa-archive col-3" style="font-size:36px; color:black;"></i></li>'; 
                   }else{
                   echo '<i id="' .$result['RoomsID'] .'" class="fa fa-archive col-3" style="font-size:36px; color:red;"></i></li>'; 

@@ -39,7 +39,11 @@ $(document).ready(function(){
 				}else{
 					alert(result);
 				}
-			}
+			},
+			error: function(xhr, ajaxOptions, thrownError){
+					alert(xhr.status);
+					alert(thrownError);
+				}
 		});
   		
 		
@@ -48,17 +52,28 @@ $(document).ready(function(){
 
 
 
-  $('fa-archive').on('click',function(){
-  	var roodId =  $(this).attr('id');
+  $('.fa-archive').on('click',function(){
+  	var roomId =  $(this).attr('id');
 
   			$.ajax({
 			url : 'delete.php',
 			type : 'post',
 			data :{
-				'postId' : postId,
+				'roomId' : roomId,
 				'userId' : userID,
 			},success: function(data){
-
+				var result = $.trim(data);
+				if(result =="1"){
+					
+					$('i#'+roomId).css('color','black');
+				}else{
+					
+					$('i#'+roomId).css('color','red');	
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError){
+			alert(xhr.status);
+			alert(thrownError);
 			}
   });
 
