@@ -38,7 +38,7 @@
 <body>
 
     <div class="wrapper">
-       <nav id="sidebar">
+      <nav id="sidebar">
             <div class="sidebar-header">
                 <h3 style="color: orange; font-family: tahoma; font-size: 25px;">Welcome 
                     <span>
@@ -51,52 +51,68 @@
         
             <!-- <ul class="list-unstyled components"> -->
             <ul class="list-unstyled CTAs" >
-                <p></p>
+              <p></p>
+              <li>
+              <a href="Welcome.php">Home</a>
+              </li>
+              <li>
+              <a href="notify.php">Notification</a>
+              </li>
+              <?php 
+
+              if($_SESSION['userId'] == 6){
+                   echo '<li>
+                <a href="#roomSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Rooms</a>
+                <ul class="collapse list-unstyled" id="roomSubmenu">';
+                 require 'dbconnect.php';
+                $tempId = $_SESSION['userId'];
+                ///used the Admin(user) Id to display the users list of rooms to them
+                $query = $Connection->prepare("SELECT RoomsID, Name FROM Administrators INNER JOIN Rooms ON Administrators.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
+                $query->execute(array('tempUserId'=> $tempId));
+                while( $result = $query->fetch()){
+                echo '<li class="row"><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'"  class="col-8" style="margin-left: 7%">' .$result['Name'] .'Room'.'</a><i class="fa fa-archive col-3" style="font-size:36px; color:black;"></i></li>'; 
+                }
+                $Connection = null;
+                echo '</ul></li>';
+
+
+            }else{  
+                echo '<li>
+                <a href="#roomSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Rooms</a>
+                <ul class="collapse list-unstyled" id="roomSubmenu">
+                <a href="#JoinSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Joined Room</a>
+                <ul class="collapse list-unstyled" id="JoinSubmenu">';
+               
+                require 'dbconnect.php';
+                $tempId = $_SESSION['userId'];
+                ///used the user Id to display the users list of rooms to them
+                $query = $Connection->prepare("SELECT RoomsID, Name FROM UserGroups INNER JOIN Rooms ON UserGroups.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
+                $query->execute(array('tempUserId'=> $tempId));
+                while( $result = $query->fetch()){
+                echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1'.'">' .$result['Name'] .'Room'.'</a></li>'; 
+                }
+                $Connection = null;
+
+                echo '</ul><a href="#ownSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Own Room</a>
+                <ul class="collapse list-unstyled" id="ownSubmenu">';
+                require 'dbconnect.php';
+                $tempId = $_SESSION['userId'];
+                ///used the Admin(user) Id to display the users list of rooms to them
+                $query = $Connection->prepare("SELECT RoomsID, Name FROM Administrators INNER JOIN Rooms ON Administrators.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
+                $query->execute(array('tempUserId'=> $tempId));
+                while( $result = $query->fetch()){
+                echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'">' .$result['Name'] .'Room'.'</a></li>'; 
+                }
+                $Connection = null;
+
+               echo '</ul></ul></li>';
+              
+              }
+              ?>
                 <li>
-                        <a href="Welcome.php">Home</a>
-                    </li>
-                <li>
-                        <a href="notify.php">Notification</a>
+                <a href="profile.php">View My Profile</a>
                 </li>
-                    <li>
-                        <a href="#roomSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Rooms</a>
-                        <ul class="collapse list-unstyled" id="roomSubmenu">
-                        <a href="#JoinSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Joined Room</a>
-                        <ul class="collapse list-unstyled" id="JoinSubmenu">
-                            <?php 
-                        require 'dbconnect.php';
-                        $tempId = $_SESSION['userId'];
-                        ///used the user Id to display the users list of rooms to them
-                        $query = $Connection->prepare("SELECT RoomsID, Name FROM UserGroups INNER JOIN Rooms ON UserGroups.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
-                        $query->execute(array('tempUserId'=> $tempId));
-                while( $result = $query->fetch()){
-                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1'.'">' .$result['Name'] .'Room'.'</a></li>'; 
-                }
-                    $Connection = null;
-
-                             ?>
-                        </ul>
-
-                        <a href="#ownSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Own Room</a>
-                        <ul class="collapse list-unstyled" id="ownSubmenu">
-                        <?php 
-                        require 'dbconnect.php';
-                        $tempId = $_SESSION['userId'];
-                        ///used the Admin(user) Id to display the users list of rooms to them
-                        $query = $Connection->prepare("SELECT RoomsID, Name FROM Administrators INNER JOIN Rooms ON Administrators.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
-                        $query->execute(array('tempUserId'=> $tempId));
-                while( $result = $query->fetch()){
-                    echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'">' .$result['Name'] .'Room'.'</a></li>'; 
-                }
-                    $Connection = null;
-
-                             ?>
-                        </ul>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="profile.php">View My Profile</a>
-                    </li>
+               
             </ul>
         </nav>
         <!-- Page Content  -->
