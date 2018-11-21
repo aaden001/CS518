@@ -33,7 +33,6 @@ $(document).ready(function(){
 						/*	$('div#displayArea #pagePanel').remove();*/
 						$('div#displayArea').prepend(page);
 						$('div#display').append(buildpage);
-						$('#messages').val('');
 						}
 
 						});

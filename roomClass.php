@@ -62,7 +62,7 @@
 			
 		/*	$this->AddAdministrator(); ///Add room creator as an administrator 		*/
 		}
-
+/*
 		public function AddAdministrator(){
 			include 'dbconnect.php';
 
@@ -70,7 +70,7 @@
 			$sqlAdd->execute(array('tempUserId' => $this->getUserId(),'tempRoomId' => $this->getRoomId()));
 
 			$Connection = null;
-		}
+		}*/
 		public function CheckAdminPrivilage($userID,$roomID){
 			include 'dbconnect.php';
 			 $querry = $Connection->prepare("SELECT * FROM Administrators WHERE UserID=:tempUserId AND RoomsID=:tempRoomId");

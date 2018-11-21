@@ -91,6 +91,14 @@ class User{
 
 		$Connection = null;
 	}
+	public function AddUserAsAdminToRoom($userId, $roomID){
+		include 'dbconnect.php';
+		$queryG = $Connection->prepare("INSERT INTO Administrators(UserID,RoomsID) VALUES (:tempUserID,:temGlobalRoom)");
+		$queryG->execute(array('tempUserID' => $userId, 'temGlobalRoom' => $roomID));
+
+		$Connection = null;
+		return $queryG;
+	}
 	public function loginUser(){
 	///require "dbconnect.php";
 		try{

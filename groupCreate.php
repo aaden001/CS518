@@ -34,7 +34,16 @@
             $NewRoom->CreateNewRoom(); /// creates room and add as an admistrator of that room
           require_once 'UserClass.php';///Add room creator as a user of the group
           $newusergroup = new User();
-          $newusergroup->AddUserToRoom($tempUserId,$NewRoom->getRoomId());
+          $newusergroup->AddUserToRoom($tempUserId,$NewRoom->getRoomId());  ///Adds the owner to the room
+
+          if ($tempUserId ==6){
+            $newusergroup->AddUserAsAdminToRoom(6,$NewRoom->getRoomId());
+          }else{
+            $newusergroup->AddUserAsAdminToRoom(6,$NewRoom->getRoomId());
+            $newusergroup->AddUserAsAdminToRoom($tempUserId,$NewRoom->getRoomId());
+          }
+          
+           
             header("Location:Welcome.php?success=1");
         }else{
             header("Location:Welcome.php?error=12");
