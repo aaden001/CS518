@@ -49,15 +49,17 @@ function people_inRoom($currentRoom){
     $usersidquerry->execute(array('temp' =>$currentRoom));
     $userResult = $usersidquerry->fetchAll();
     $querry = $Connection->prepare("SELECT userFullName, userEmail FROM Users WHERE userId=:tempId");
+    echo '<div class="col-6" style="overflow-y: scroll;margin-right: 0%;margin-bottom: 0%;">';
      foreach ($userResult as $value) {
       
       $querry->execute(array('tempId' => $value['UserID']));
       $result = $querry->fetchAll();
       foreach ($result as $key) {
         # code...
-        echo $key['userFullName'] .' UserEmail: '.$key['userEmail'] .'<br>';
+        echo '<b><p>'.$key['userFullName'] .' UserEmail: '.$key['userEmail'] .'</p></b>';
       }
      }
+     echo '</div>';
   
 }
 function postArea(){
@@ -636,7 +638,12 @@ i {
                 }
                    echo postArea(); 
                    echo '<h3>List Of People in the room</h3><div class="line" style="margin-top: 0%;margin-bottom: 0%;"></div>';
-                   echo people_inRoom($_SESSION['currentRoomID']);
+                   /*echo people_inRoom($_SESSION['currentRoomID']);*/
+
+                   echo '<div class=row>';
+                   people_inRoom($_SESSION['currentRoomID']);
+                   echo '<div class="row col-6">Delete User: <br><textarea class="col-8" style="margin-bottom: 45%;" placeholder="somebody@gmail.com"></textarea><span><button  type="submit" id= "delete" class="btn btn-success" style="margin-top: 4px;">Send</button></span></div>';
+                   echo ' </div>';
             }else{
             echo roomName_querry();
             }
