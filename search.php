@@ -60,9 +60,6 @@
               <li>
               <a href="notify.php">Notification</a>
               </li>
-              <li>
-                  <a href="search.php">Search</a>
-              </li>
               
                 <?php 
 
@@ -131,7 +128,6 @@
               <li>
               <a href='profile.php?userId=<?php echo $_SESSION['userId'] ?>'>View My Profile</a>
               </li>
-              
         </nav>
         <!-- Page Content  -->
         <div id="content">
@@ -149,43 +145,15 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <button type="button" id="creatGroup" class="btn btn-primary">Create New Group</button>
                             
-                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
 
-                <div class="dialogForm" id="dialogDiv">
-                    <form action="groupCreate.php" method="POST">
-                    <label for="groupName">Create New Group Name</label>
-                    <input type="text" name="groupName" maxlength="50"><br>
-                    <span>
-                    Public:<input type="radio" name="GroupType" value="0">
-                    Private:<input type="radio" name="GroupType" value="1">
-                    </span><br>
-                    <button  type="submit" class="btn btn-success" style="margin-top: 4px">Create Group</button>
-                    </form>
-                </div>
+              
     <!--     /// Decore -->
    
-                <?php 
-               echo "All Public Rooms links <br>";
-
-                require 'dbconnect.php';
-                // $tempId = $_SESSION['userId']; 0 stands for public group
-                $query = $Connection->prepare("SELECT * FROM Rooms WHERE grpTyp=0");
-                $query->execute();
-                while( $result = $query->fetch()){
-                 echo '<a href="GlobalRoom.php?currentRoomID=' .$result['ID'] .'&page=1'.'">' .$result['Name'] .' Room'.'</a>'; 
-                    echo "<br>";
-                }
-                echo '<div class="line"></div>';
-                
-                $Connection = null;
-                ?>
             </div>
      
      
@@ -199,12 +167,8 @@
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type="text/javascript" src="toggle.js"></script>
-    <script type="text/javascript" src="groupCreate.js"></script>
-    <!-- For dialog box -->
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 
+ 
     
     
 
