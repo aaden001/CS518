@@ -60,10 +60,13 @@
               <li>
               <a href="notify.php">Notification</a>
               </li>
-              <?php 
+              
+                <?php 
 
               if($_SESSION['userId'] == 6){
-                   echo '<li>
+                include_once 'roomClass.php';
+                $newRoomObj = new Room();
+                echo '<li>
                 <a href="#roomSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Rooms</a>
                 <ul class="collapse list-unstyled" id="roomSubmenu">';
                  require 'dbconnect.php';
@@ -72,11 +75,19 @@
                 $query = $Connection->prepare("SELECT RoomsID, Name FROM Administrators INNER JOIN Rooms ON Administrators.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
                 $query->execute(array('tempUserId'=> $tempId));
                 while( $result = $query->fetch()){
-                echo '<li class="row"><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'"  class="col-8" style="margin-left: 7%">' .$result['Name'] .'Room'.'</a><i class="fa fa-archive col-3" style="font-size:36px; color:black;"></i></li>'; 
+
+
+                echo '<li class="row"><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'"  class="col-8" style="margin-left: 7%">' .$result['Name'] .'Room'.'</a>';
+
+                  if($newRoomObj->check_room_status($result['RoomsID'] ) ==1){
+                 echo '<i id="' .$result['RoomsID'] .'" class="fa fa-archive col-3" style="font-size:36px; color:black;"></i></li>'; 
+                  }else{
+                  echo '<i id="' .$result['RoomsID'] .'" class="fa fa-archive col-3" style="font-size:36px; color:red;"></i></li>'; 
+                  }
+              
                 }
                 $Connection = null;
                 echo '</ul></li>';
-
 
             }else{  
                 echo '<li>
@@ -103,21 +114,20 @@
                 $query = $Connection->prepare("SELECT RoomsID, Name FROM Administrators INNER JOIN Rooms ON Administrators.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
                 $query->execute(array('tempUserId'=> $tempId));
                 while( $result = $query->fetch()){
-                echo '<li><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'">' .$result['Name'] .'Room'.'</a></li>'; 
-                }
+          echo '<li class="row"><a href="GlobalRoom.php?currentRoomID=' .$result['RoomsID'] .'&page=1' .'"  class="col-8" style="margin-left: 7%">' .$result['Name'] .'Room'.'</a></li>'; 
+/*<i id="' .$result['RoomsID'] .'" class="fa fa-archive col-3" style="font-size:36px; color:black;"></i>*/
+
+                }               
                 $Connection = null;
 
                echo '</ul></ul></li>';
-              
               }
+              echo '<li> <a href="upload.php">Upload Picture</a></li>';
+                         
               ?>
-                <li>
-                <a href="upload.php">Upload Picture</a>
-                </li>
-                 <li>
-                <a href='profile.php?userId=<?php echo $_SESSION['userId'] ?>'>View Profile</a>
-                </li>
-            </ul>
+              <li>
+              <a href='profile.php?userId=<?php echo $_SESSION['userId'] ?>'>View My Profile</a>
+              </li>
         </nav>
         <!-- Page Content  -->
         <div id="content">

@@ -542,7 +542,9 @@ i {
                 $Connection = null;
               
               ?>
-              
+              <li>
+              <a href='profile.php?userId=<?php echo $_SESSION['userId'] ?>'>View My Profile</a>
+              </li>
         </nav>
 
         <!-- Page Content  -->
