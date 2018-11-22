@@ -114,7 +114,9 @@
                 <li>
                 <a href="upload.php">Upload Picture</a>
                 </li>
-               
+                 <li>
+                <a href='profile.php?userId=<?php echo $_SESSION['userId'] ?>'>View Profile</a>
+                </li>
             </ul>
         </nav>
         <!-- Page Content  -->

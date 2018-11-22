@@ -62,10 +62,10 @@ if ($uploadOk == 0) {
 			$sqlquerry->execute(array('tempAdminID' => $_SESSION['userId'],'tempLinkAddress' =>$link, 'tempUser' => $_SESSION['userId'] ));
 
 			
-			header("Refresh:5; url=profile.php",true, 303);
+			header("Refresh:5; url=upload.php",true, 303);
 			} else {
 			echo "Sorry, there was an error uploading your file.";
-			header("Refresh:5; url=profile.php",true, 303);
+			header("Refresh:5; url=upload.php",true, 303);
 
 			}
 		}else{
@@ -82,10 +82,10 @@ if ($uploadOk == 0) {
 			$sqlquerry->execute(array('tempAdminID' => $_SESSION['userId'],'tempLinkAddress' =>$link, 'tempUser' => $_SESSION['userId'] ));
 
 			
-			header("Refresh:5; url=profile.php",true, 303);
+			header("Refresh:5; url=upload.php",true, 303);
 			} else {
 			echo "Sorry, there was an error uploading your file.";
-			header("Refresh:5; url=profile.php",true, 303);
+			header("Refresh:5; url=upload.php",true, 303);
 
 			}
 
