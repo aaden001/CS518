@@ -84,11 +84,13 @@
 			header("Refresh:5; url=Welcome.php",true, 303);
 
 		}
-		public function CheckForDoubleInvite($adminId,$inviteeID){
+		
+		public function CheckForDoubleInvite($adminId,$inviteeID,$room){
 			/*From A specific admin to user*/
 			include 'dbconnect.php';
-			$Sql = $Connection->prepare("SELECT * FROM InviteLinks WHERE AdminID=:tempAdmin AND userID=:tempUserID");
-			$Sql->execute(array('tempAdmin' => $adminId, 'tempUserID' => $inviteeID));
+			$flag = 0; /*Checking that notification is not sent again unless wghen used*/
+			$Sql = $Connection->prepare("SELECT * FROM InviteLinks WHERE AdminID=:tempAdmin AND userID=:tempUserID AND RoomID=:tempRoom AND flag=:tempFlag");
+			$Sql->execute(array('tempAdmin' => $adminId, 'tempUserID' => $inviteeID, 'tempRoom' => $room,'tempFlag' => $flag));
 			if($Sql->rowCount() == 1)
 			{
 			header("Location:sendInvitation.php?error=16&currentRoomID=".$this->getRoomID());

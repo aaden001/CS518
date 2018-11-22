@@ -116,6 +116,19 @@ class User{
 		$Connection = null;
 		return $queryG;
 	}
+	public function CheckUserInRoom($inviteeID,$roomId){
+			include 'dbconnect.php';
+			
+			$querry = $Connection->prepare("SELECT UserID FROM UserGroups WHERE UserID=:tempUserID AND RoomsID=:tempRoomId");
+			$querry->execute(array('tempUserID' => $inviteeID,'tempRoomId' => $roomId));
+			$count = $querry->rowCount();
+			if($count == 0){
+				return false;
+			}else{
+				return true;
+			}
+
+	}
 	public function loginUser(){
 	///require "dbconnect.php";
 		try{

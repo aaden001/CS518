@@ -52,12 +52,19 @@
 		if($userId == 6){
 			if(!empty($Object->GetUserIdFromEmail($email))){
 				$changeID = $Object->GetUserIdFromEmail($email);
-				if($Object->RemoveUserFromRoom($changeID,$roomId))
-				{	
+
+				if($Object->CheckUserInRoom($changeID,$roomId) == true){
+					if($Object->RemoveUserFromRoom($changeID,$roomId))
+					{	
 					echo 'success';
-				}else{
+					}else{
 					echo 'errror';
+					}
+				}else{
+					echo 'That user is not in the room';
 				}
+				
+
 			}else{
 				echo 'That user do not exist';
 			}

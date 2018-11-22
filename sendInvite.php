@@ -17,30 +17,37 @@
 		{	
 
 			require_once 'roomClass.php';
+			require_once 'UserClass.php';
 			$newRoom = new Room();
 			$tempAdminID = $_SESSION['userId'];///need for user priveledges 
 			$roomID =$_SESSION['currentRoomID'];
 			if($newRoom->CheckAdminPrivilage($tempAdminID,$roomID)){
 				$NewInvite  = new Invite();
+				$CheckUserObject = new User();
 				$Email = stripslashes(htmlspecialchars($_POST['email']));
 				$NewInvite->setAdminID($tempAdminID);
 				$NewInvite->setInvitedEmail($Email);
 				$NewInvite->setRoomID($roomID);
 				if($NewInvite->CheckEmail()){
 					///send an Invited
-					if($NewInvite->CheckForDoubleInvite($NewInvite->getAdminID(),$NewInvite->getInvitedID())){
-					$NewInvite->SendInvite();	
+					if($NewInvite->CheckForDoubleInvite($NewInvite->getAdminID(),$NewInvite->getInvitedID(),$roomID)){
+						if($CheckUserObject->CheckUserInRoom($NewInvite->getInvitedID(),$roomID) == false){
+							$NewInvite->SendInvite();			
+						}else{
+							header("Location:sendInvitation.php?error=17&&currentRoomID=".$roomID);
+						}
+					
 					}
 					
 				}
 				
 			}else{
-				header("Location:sendInvitation.php?error=14");
+				header("Location:sendInvitation.php?error=14&&currentRoomID=".$roomID);
 			}
 		}
 	}else{
 
-		header("Location:sendInvitation.php?error=3");
+		header("Location:sendInvitation.php?error=3&&currentRoomID=".$roomID);
 	}
 
 	/*
@@ -64,8 +71,8 @@
     13. Email Not In database
     14. Not an Administrator to send invite
     15. Admin cant invite themselve
-    16.
-    17.
+    16. Prevents Double Invite to the same person
+    17. User Already in that room so dont send invite
     18.
 */
  ?>
