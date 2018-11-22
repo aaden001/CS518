@@ -234,7 +234,7 @@
 
                         $totalIndividaul = $postIndividual + $commentIndividual + $ratingIndividual;
                         $ratingScore = round((($totalIndividaul / $sumTotal)*5),2);
-                        echo 'sumtotal: ' .$sumTotal .'<br> individual: ' .$totalIndividaul .'<br>rating: ' .$ratingScore .'<br>';
+                        echo 'sumtotal: ' .$sumTotal .'<br> individual count: ' .$totalIndividaul .'<br>rating: ' .$ratingScore .'<br>';
                         $minStar = 1;
                         $maxStar = 5;
                         echo '<div class="row" style="margin-left: 0%;"><div class="col-13"><span>';
