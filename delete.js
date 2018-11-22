@@ -53,6 +53,7 @@ $(document).ready(function(){
 
 
   $('.fa-archive').on('click',function(){
+  	event.preventDefault();
   	var roomId =  $(this).attr('id');
 
   			$.ajax({
@@ -79,6 +80,32 @@ $(document).ready(function(){
 
 
 });
+
+  $('button#delete').on('click',function(){
+  	event.preventDefault();
+  	var textArea = $.trim($('textarea#deleteUser').val());
+
+  			$.ajax({
+  				url: 'delete.php',
+  				type: 'post',
+  				data: {
+  					'userId' :userID,
+  					'emailDel': textArea,
+  					'roomIdD': roomID,
+  				},success: function(data){
+  						alert(data);
+  						$('textarea#deleteUser').val('');
+  				},
+			error: function(xhr, ajaxOptions, thrownError){
+			alert(xhr.status);
+			alert(thrownError);
+			}
+
+  			});
+
+  
+
+  });
 
 
 });

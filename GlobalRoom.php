@@ -642,7 +642,7 @@ i {
 
                    echo '<div class=row>';
                    people_inRoom($_SESSION['currentRoomID']);
-                   echo '<div class="row col-6">Delete User: <br><textarea class="col-8" style="margin-bottom: 45%;" placeholder="somebody@gmail.com"></textarea><span><button  type="submit" id= "delete" class="btn btn-success" style="margin-top: 4px;">Send</button></span></div>';
+                   echo '<div class="row col-6">Delete User: <br><textarea id="deleteUser" class="col-8" style="margin-bottom: 45%;" placeholder="somebody@gmail.com"></textarea><span><button  type="submit" id= "delete" class="btn btn-success" style="margin-top: 4px;">Send</button></span></div>';
                    echo ' </div>';
             }else{
             echo roomName_querry();

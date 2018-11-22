@@ -39,7 +39,33 @@
 					}
 				}
 
+			}else{
+			echo "You can not perform this not an admin";
+		}
+	}else{
+		include 'UserClass.php';
+		$email = $_POST['emailDel'];
+		$userId = $_POST['userId'];
+		$roomId = $_POST['roomIdD'];
+		$Object = new User();
+
+		if($userId == 6){
+			if(!empty($Object->GetUserIdFromEmail($email))){
+				$changeID = $Object->GetUserIdFromEmail($email);
+				if($Object->RemoveUserFromRoom($changeID,$roomId))
+				{	
+					echo 'success';
+				}else{
+					echo 'errror';
+				}
+			}else{
+				echo 'That user do not exist';
 			}
+
+		}else{
+			echo "You can not perform this, not an admin";
+		}
+
 	}
 
 

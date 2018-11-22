@@ -91,6 +91,23 @@ class User{
 
 		$Connection = null;
 	}
+	public function GetUserIdFromEmail($email){
+		include 'dbconnect.php';
+
+		$query = $Connection->prepare("SELECT userId FROM Users WHERE userEmail=:tempEmail");
+		$query->execute(array('tempEmail' => $email));
+		$result = $query->fetch();
+
+		return $result['userId'];
+	}
+	public function RemoveUserFromRoom($userId, $roomID){
+		include 'dbconnect.php';
+		$queryG = $Connection->prepare("DELETE FROM UserGroups WHERE UserID=:tempUser AND RoomsID=:tempRoom");
+		$queryG->execute(array('tempUser' => $userId, 'tempRoom' => $roomID));
+
+		$Connection = null;
+		return $queryG;
+	}
 	public function AddUserAsAdminToRoom($userId, $roomID){
 		include 'dbconnect.php';
 		$queryG = $Connection->prepare("INSERT INTO Administrators(UserID,RoomsID) VALUES (:tempUserID,:temGlobalRoom)");
