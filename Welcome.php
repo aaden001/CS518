@@ -112,7 +112,7 @@
               }
               ?>
                 <li>
-                <a href="profile.php">View My Profile</a>
+                <a href="upload.php">Upload Picture</a>
                 </li>
                
             </ul>

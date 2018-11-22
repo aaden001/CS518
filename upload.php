@@ -1,15 +1,13 @@
 <?php
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-
     session_start();
 
-    if(!isset($_SESSION['userId']))
-    {
-        header("Location:index.php");
-    }else
+
+     require 'dbconnect.php';
+   $tempId = $_SESSION['userId'];
+   $query = $Connection->prepare("SELECT RoomsID, Name FROM UserGroups INNER JOIN Rooms ON UserGroups.RoomsID = Rooms.ID WHERE UserID=:tempUserId");
+    $query->execute(array('tempUserId'=> $tempId));
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -18,26 +16,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" type="text/css" href="stylewelcome.css">
-   
-    <title>Get Together </title>
+    <title>Collapsible sidebar using Bootstrap 4</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <!-- Our Custom CSS -->
-<!--     <link rel="stylesheet" href="style2.css">
-     -->    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="style2.css">
+    <!-- Scrollbar Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+<style>
+    
+ @media (min-width: 1200px) {
+    .container-fluid{
+        max-width: 50%;
+    }
+}
 
- 
+</style>
 </head>
 
 <body>
 
     <div class="wrapper">
+        <!-- Sidebar  -->
        <nav id="sidebar">
             <div class="sidebar-header">
                 <h3 style="color: orange; font-family: tahoma; font-size: 25px;">Welcome 
@@ -97,8 +102,10 @@
                     <li>
                          <a href="upload.php">Upload Picture</a>
                     </li>
+                   
             </ul>
         </nav>
+
         <!-- Page Content  -->
         <div id="content">
 
@@ -114,36 +121,66 @@
                     </button>
                 </div>
             </nav>
-            <a href=""></a>
-   
-                <?php 
-                include 'dbconnect.php';
-                $flag = 0; $tempUserID = $_SESSION['userId'];
-                $Sql = $Connection->prepare("SELECT  AdminID,RoomID,link,flag,userFullName ,Name FROM InviteLinks 
-                INNER JOIN Users ON InviteLinks.AdminID =Users.userId
-                INNER JOIN Rooms ON InviteLinks.RoomID =Rooms.ID
-                WHERE flag=:tempFlag AND InviteLinks.userID=:tempUserId");
-                $Sql->execute(array('tempFlag' => $flag, 'tempUserId' => $tempUserID));
-                $count  = $Sql->rowCount();
-                if($Sql->rowCount() > 0)
-                {
-                echo "You have " . $count ." New Room Chat Invite" ."<br>"; 
-                echo '<div class="line"></div>';
-                    while ( $result = $Sql->fetch()) {
-                        # code...
-                        echo '<div>
-                            You Have received an Invitation from <b>' .$result['userFullName'] .'</b> To Join the room called <b style="blue">' .$result['Name'] .'</b><br>'
-                            .'Click <a href="' .$result['link'].'&roomID=' .$result['RoomID'] .'&accept=1' .'">' .'<b>Here</b></a>' .' to Join' .' Or Click <a href="' .$result['link'] .'&roomID=' .$result['RoomID'] .'&accept=0' .'">' .'<b>Here</b></a>'  .'To turn down Invitation'
-                         .'</div><br>';
-                    }
-                }else{
-                     echo "You have No New Room Chat Invite"; 
-                }
-                $Connection = null;
-
-                ?>
-            </div>
             
+            <div class="line"></div>
+            <div class="col-sm-9">
+                <!-- User Profile Goes in here -->
+                <div class="container">
+  
+                    <div class="container-fluid">
+                    <div>
+                    <?php 
+                        ///Do a comparism with the session id and the chatbox user id to get distinct profile pictureLink
+                     require 'dbconnect.php';
+                    $querryProfilPic= $Connection->prepare("SELECT * FROM ProfilePictures WHERE userID=:tempId");
+                    $querryProfilPic->execute(array('tempId' => $_SESSION['userId']));
+                    $PicLinkResult = $querryProfilPic->fetch();
+                        if($querryProfilPic->rowCount() == 1){
+                    ?>
+                    <img  src="<?php echo $PicLinkResult['pictureLink'] ?>" alt="Smiley face" style="float:left" width="42" height="42">
+                    <?php  
+                        }else{
+                    ?>        
+                     <img  src="../ProfilePics/james.jpeg" alt="Smiley face" style="float:left" width="42" height="42">
+
+                    <?php } ?>
+                    </div>
+                    <div>
+                    <p>
+                    <?php 
+                        echo "FullName: " .$_SESSION['userName']; echo "<br>";
+                        echo "Your Hand is: " .$_SESSION['userHandle']; echo "<br>";
+                        echo "You email address is: " .$_SESSION['userEmail']; echo "<br>";
+                       
+                    ?>
+                    </p>
+                    <p>
+
+                    </p>
+                    </div>
+                    <h3>
+                    List Of channels you are on the side bar
+                    </h3>
+                    </div><br><br><br>
+
+                    <div class="container-fluid">
+                    <form class="form-horizonatl" action="uploadPP.php" method="post" enctype="multipart/form-data">
+                    Select image to upload:
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <br>
+                    <input type="submit" value="Upload Image" name="submit">
+                    
+
+                    </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -153,13 +190,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-    
-    
-    <!-- For dialog box -->
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
     <script type="text/javascript" src="toggle.js"></script>
+
 </body>
 
 </html> 

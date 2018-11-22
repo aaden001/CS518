@@ -530,7 +530,7 @@ i {
 
                echo '</ul></ul></li>';
               }
-              echo '<li><a href="profile.php">View My Profile</a></li>';
+              echo '<li> <a href="upload.php">Upload Picture</a></li>';
                 require 'dbconnect.php';
                 $tempId = $_SESSION['userId'];
                 $query = $Connection->prepare("SELECT * FROM Administrators WHERE UserID=:tempUserId AND RoomsID=:tempRoomID");
