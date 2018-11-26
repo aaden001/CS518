@@ -14,22 +14,24 @@ INSERT INTO `Chat`.`Users` (`userFullName`, `userEmail`, `userHandle`, `userPass
 ('Sally Carrera', 'porsche@rsprings.gov', '@sally', '@sally'),
 ('Doc Hudson', 'hornet@rsprings.gov', '@doc', '@doc'),
 ( 'Finn McMissile', 'topsecret@agent.org', '@mcmissle', '@mcmissle'),
-( 'Lightning McQueen', 'kachow@rusteze.com', '@mcqueen', '@mcmqueen');
+( 'Lightning McQueen', 'kachow@rusteze.com', '@mcqueen', '@mcmqueen'),
+( 'Adeniran Adeniyi', 'aaden001@odu.edu', '@aaden001', 'root');
 
 
 CREATE TABLE `Chat`.`Rooms` (
   `ID` int(11) NOT NULL  AUTO_INCREMENT,
   `Name` varchar(50) NOT NULL,
 `grpTyp` int(1) NOT NULL,
+`active` int (1) NOT NULL,
 PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-INSERT INTO `Chat`.`Rooms` (`Name`,`grpTyp`) VALUES
-('Global',0),
-( 'Teens',1),
-( 'FootBall',1),
-( 'Music',1);
+INSERT INTO `Chat`.`Rooms` (`Name`,`grpTyp`,`active`) VALUES
+('Global',0,1),
+( 'Teens',1,1),
+( 'FootBall',1, 1),
+( 'Music',1,1);
 
 
 CREATE TABLE `Chat`.`UserGroups` (
@@ -93,6 +95,12 @@ ALTER TABLE `Chat`.`Administrators`
   ADD CONSTRAINT `Administrators_Users_fk` FOREIGN KEY (`UserID`) REFERENCES `Users` (`userId`);
 
 
+INSERT INTO `Chat`.`Administrators` (`UserID`, `RoomsID`) VALUES
+(6, 1),
+(6, 2),
+(6, 3),
+(6, 4);
+
 CREATE TABLE `Chat`.`InviteLinks` (
   `AdminID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
@@ -106,19 +114,7 @@ ALTER TABLE `Chat`.`InviteLinks`
   ADD CONSTRAINT `InviteLinks_InviteeUsers_fk` FOREIGN KEY (`userID`) REFERENCES `Users` (`userId`),
   ADD CONSTRAINT `InviteLinks_roomID_fk` FOREIGN KEY (`RoomID`) REFERENCES `Rooms`(`ID`);
 
-
-CREATE TABLE `Chat`.`ChatLikes` (
-
- `chatID` INT(11) NOT NULL ,
- `userRateID` INT(11) NOT NULL ,
- `rating` VARCHAR(20) NOT NULL ,
- UNIQUE (`chatID`, `userRateID`)
-) ENGINE = InnoDB DEFAULT CHARSET=latin1;
-
-
-ALTER TABLE `Chat`.`ChatLikes`
-  ADD CONSTRAINT `ChatLikes_ChatMsgId_fk` FOREIGN KEY (`chatID`) REFERENCES `ChatBox` (`ID`),
-  ADD CONSTRAINT `ChatLikes_UserID_fk` FOREIGN KEY (`userRateID`) REFERENCES `Users` (`userId`);
+CREATE TABLE `Chat`.`ChatLikes` ( `chatID` INT(11) NOT NULL , `userRateID` INT(11) NOT NULL , `rating` VARCHAR(20) NOT NULL , UNIQUE (`chatID`, `userRateID`), CONSTRAINT `ChatLikes_ChatMsgId_fk` FOREIGN KEY (`chatID`) REFERENCES `ChatBox` (`ID`) ON DELETE CASCADE, CONSTRAINT `ChatLikes_UserID_fk` FOREIGN KEY (`userRateID`) REFERENCES `Users` (`userId`) ON DELETE CASCADE ) ENGINE = InnoDB DEFAULT CHARSET=latin1;
 
 
 CREATE TABLE `Chat`.`ProfilePictures` (
@@ -132,16 +128,4 @@ ALTER TABLE `Chat`.`ProfilePictures`
 ALTER TABLE `Chat`.`ProfilePictures`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
-CREATE TABLE   `Chat`.`Comment` (
-  `Id` int(11)  NOT NULL AUTO_INCREMENT,
-`ChatBoxID` int(11) NOT NULL,
-  `userId` int(11) NOT NULL,
-  `TextArea` varchar(400) NOT NULL,
-  `Ccreated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-`thread` int(11)  NOT NULL,
-    PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-ALTER TABLE `Chat`.`Comment`
-  ADD CONSTRAINT `Comment_ChatMsgId_fk` FOREIGN KEY (`ChatBoxID`) REFERENCES `ChatBox` (`ID`),
-  ADD CONSTRAINT `Comment_UserId_fk` FOREIGN KEY (`userId`) REFERENCES `Users` (`userId`);
+CREATE TABLE `Chat`.`Comment` ( `Id` int(11) NOT NULL AUTO_INCREMENT, `ChatBoxID` int(11) NOT NULL, `userId` int(11) NOT NULL, `TextArea` varchar(400) NOT NULL, `Ccreated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `thread` int(11) NOT NULL, PRIMARY KEY (`ID`), CONSTRAINT `Comment_ChatMsgId_fk` FOREIGN KEY (`ChatBoxID`) REFERENCES `ChatBox` (`ID`) ON DELETE CASCADE, CONSTRAINT `Comment_UserId_fk` FOREIGN KEY (`userId`) REFERENCES `Users` (`userId`) ON DELETE CASCADE ) ENGINE=InnoDB DEFAULT CHARSET=latin1
