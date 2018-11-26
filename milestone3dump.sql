@@ -156,7 +156,7 @@ INSERT INTO `Chat`.`InviteLinks` (`AdminID`, `userID`, `RoomID`, `link`, `flag`)
 -- Table structure for table `ProfilePictures`
 --
 
-CREATE TABLE `ProfilePictures` (
+CREATE TABLE `Chat`.`ProfilePictures` (
   `ID` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
   `pictureLink` varchar(150) NOT NULL
