@@ -25,8 +25,9 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `Administrators`
 --
+CREATE DATABASE Chat;
 
-CREATE TABLE `Administrators` (
+CREATE TABLE `Chat`.`Administrators` (
   `UserID` int(11) NOT NULL,
   `RoomsID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -35,7 +36,7 @@ CREATE TABLE `Administrators` (
 -- Dumping data for table `Administrators`
 --
 
-INSERT INTO `Administrators` (`UserID`, `RoomsID`) VALUES
+INSERT INTO `Chat`.`Administrators` (`UserID`, `RoomsID`) VALUES
 (6, 1),
 (6, 2),
 (6, 3),
@@ -49,7 +50,7 @@ INSERT INTO `Administrators` (`UserID`, `RoomsID`) VALUES
 -- Table structure for table `ChatBox`
 --
 
-CREATE TABLE `ChatBox` (
+CREATE TABLE `Chat`.`ChatBox` (
   `ID` int(11) NOT NULL,
   `RoomID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
@@ -61,7 +62,7 @@ CREATE TABLE `ChatBox` (
 -- Dumping data for table `ChatBox`
 --
 
-INSERT INTO `ChatBox` (`ID`, `RoomID`, `UserID`, `TextA`, `created_at`) VALUES
+INSERT INTO `Chat`.`ChatBox` (`ID`, `RoomID`, `UserID`, `TextA`, `created_at`) VALUES
 (1, 1, 1, '&lt;b&gt; This is my Real Face O&lt;/b&gt;', '2018-10-14 03:57:04'),
 (2, 1, 1, '&lt;b&gt; This is my Real Face O&lt;/b&gt; !@#$%%()&lt;&gt;?/}{}^', '2018-10-14 04:04:58'),
 (3, 1, 1, '&lt;b&gt; This is my Real Face O&lt;/b&gt; !@#$%%()&lt;&gt;?/}{}^', '2018-10-14 04:05:31'),
@@ -86,7 +87,7 @@ INSERT INTO `ChatBox` (`ID`, `RoomID`, `UserID`, `TextA`, `created_at`) VALUES
 -- Table structure for table `ChatLikes`
 --
 
-CREATE TABLE `ChatLikes` (
+CREATE TABLE `Chat`.`ChatLikes` (
   `chatID` int(11) NOT NULL,
   `userRateID` int(11) NOT NULL,
   `rating` varchar(20) NOT NULL
@@ -96,7 +97,7 @@ CREATE TABLE `ChatLikes` (
 -- Dumping data for table `ChatLikes`
 --
 
-INSERT INTO `ChatLikes` (`chatID`, `userRateID`, `rating`) VALUES
+INSERT INTO `Chat`.`ChatLikes` (`chatID`, `userRateID`, `rating`) VALUES
 (6, 1, 'like'),
 (16, 1, 'like'),
 (17, 1, 'like'),
@@ -108,7 +109,7 @@ INSERT INTO `ChatLikes` (`chatID`, `userRateID`, `rating`) VALUES
 -- Table structure for table `Comment`
 --
 
-CREATE TABLE `Comment` (
+CREATE TABLE `Chat`.`Comment` (
   `Id` int(11) NOT NULL,
   `ChatBoxID` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
@@ -121,7 +122,7 @@ CREATE TABLE `Comment` (
 -- Dumping data for table `Comment`
 --
 
-INSERT INTO `Comment` (`Id`, `ChatBoxID`, `userId`, `TextArea`, `Ccreated_at`, `thread`) VALUES
+INSERT INTO `Chat`.`Comment` (`Id`, `ChatBoxID`, `userId`, `TextArea`, `Ccreated_at`, `thread`) VALUES
 (1, 16, 1, 'chicken shit', '2018-11-22 20:55:48', 1);
 
 -- --------------------------------------------------------
@@ -130,7 +131,7 @@ INSERT INTO `Comment` (`Id`, `ChatBoxID`, `userId`, `TextArea`, `Ccreated_at`, `
 -- Table structure for table `InviteLinks`
 --
 
-CREATE TABLE `InviteLinks` (
+CREATE TABLE `Chat`.`InviteLinks` (
   `AdminID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `RoomID` int(11) NOT NULL,
@@ -142,7 +143,7 @@ CREATE TABLE `InviteLinks` (
 -- Dumping data for table `InviteLinks`
 --
 
-INSERT INTO `InviteLinks` (`AdminID`, `userID`, `RoomID`, `link`, `flag`) VALUES
+INSERT INTO `Chat`.`InviteLinks` (`AdminID`, `userID`, `RoomID`, `link`, `flag`) VALUES
 (6, 1, 3, 'getInvite.php?adminID=6&userId=1', 1),
 (6, 6, 1, 'getInvite.php?adminID=6&userId=6', 1),
 (6, 1, 1, 'getInvite.php?adminID=6&userId=1', 1),
@@ -165,7 +166,7 @@ CREATE TABLE `ProfilePictures` (
 -- Dumping data for table `ProfilePictures`
 --
 
-INSERT INTO `ProfilePictures` (`ID`, `userId`, `pictureLink`) VALUES
+INSERT INTO `Chat`.`ProfilePictures` (`ID`, `userId`, `pictureLink`) VALUES
 (1, 1, '../ProfilePics/test.jpeg');
 
 -- --------------------------------------------------------
@@ -174,7 +175,7 @@ INSERT INTO `ProfilePictures` (`ID`, `userId`, `pictureLink`) VALUES
 -- Table structure for table `Rooms`
 --
 
-CREATE TABLE `Rooms` (
+CREATE TABLE `Chat`.`Rooms` (
   `ID` int(11) NOT NULL,
   `Name` varchar(50) NOT NULL,
   `grpTyp` int(1) NOT NULL,
@@ -185,7 +186,7 @@ CREATE TABLE `Rooms` (
 -- Dumping data for table `Rooms`
 --
 
-INSERT INTO `Rooms` (`ID`, `Name`, `grpTyp`, `active`) VALUES
+INSERT INTO `Chat`.`Rooms` (`ID`, `Name`, `grpTyp`, `active`) VALUES
 (1, 'Global', 0, 1),
 (2, 'Teens', 1, 1),
 (3, 'FootBall', 1, 1),
@@ -198,7 +199,7 @@ INSERT INTO `Rooms` (`ID`, `Name`, `grpTyp`, `active`) VALUES
 -- Table structure for table `UserGroups`
 --
 
-CREATE TABLE `UserGroups` (
+CREATE TABLE `Chat`.`UserGroups` (
   `UserID` int(11) NOT NULL,
   `RoomsID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -207,7 +208,7 @@ CREATE TABLE `UserGroups` (
 -- Dumping data for table `UserGroups`
 --
 
-INSERT INTO `UserGroups` (`UserID`, `RoomsID`) VALUES
+INSERT INTO `Chat`.`UserGroups` (`UserID`, `RoomsID`) VALUES
 (2, 1),
 (3, 1),
 (5, 1),
@@ -225,7 +226,7 @@ INSERT INTO `UserGroups` (`UserID`, `RoomsID`) VALUES
 -- Table structure for table `Users`
 --
 
-CREATE TABLE `Users` (
+CREATE TABLE `Chat`.`Users` (
   `userId` int(11) NOT NULL,
   `userFullName` varchar(50) NOT NULL,
   `userEmail` varchar(30) NOT NULL,
@@ -237,7 +238,7 @@ CREATE TABLE `Users` (
 -- Dumping data for table `Users`
 --
 
-INSERT INTO `Users` (`userId`, `userFullName`, `userEmail`, `userHandle`, `userPassword`) VALUES
+INSERT INTO `Chat`.`Users` (`userId`, `userFullName`, `userEmail`, `userHandle`, `userPassword`) VALUES
 (1, 'Tow Mater', 'mater@rsprings.gov', '@mater', 'mater'),
 (2, 'Sally Carrera', 'porsche@rsprings.gov', '@sally', '@sally'),
 (3, 'Doc Hudson', 'hornet@rsprings.gov', '@doc', '@doc'),
@@ -252,14 +253,14 @@ INSERT INTO `Users` (`userId`, `userFullName`, `userEmail`, `userHandle`, `userP
 --
 -- Indexes for table `Administrators`
 --
-ALTER TABLE `Administrators`
+ALTER TABLE `Chat`.`Administrators`
   ADD KEY `Administrators_Rooms_fk` (`RoomsID`),
   ADD KEY `Administrators_Users_fk` (`UserID`);
 
 --
 -- Indexes for table `ChatBox`
 --
-ALTER TABLE `ChatBox`
+ALTER TABLE `Chat`.`ChatBox`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `ChatBox_Rooms_fk` (`RoomID`),
   ADD KEY `ChatBox_UserID_fk` (`UserID`);
@@ -267,14 +268,14 @@ ALTER TABLE `ChatBox`
 --
 -- Indexes for table `ChatLikes`
 --
-ALTER TABLE `ChatLikes`
+ALTER TABLE `Chat`.`ChatLikes`
   ADD UNIQUE KEY `chatID` (`chatID`,`userRateID`),
   ADD KEY `ChatLikes_UserID_fk` (`userRateID`);
 
 --
 -- Indexes for table `Comment`
 --
-ALTER TABLE `Comment`
+ALTER TABLE `Chat`.`Comment`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `Comment_ChatMsgId_fk` (`ChatBoxID`),
   ADD KEY `Comment_UserId_fk` (`userId`);
@@ -282,7 +283,7 @@ ALTER TABLE `Comment`
 --
 -- Indexes for table `InviteLinks`
 --
-ALTER TABLE `InviteLinks`
+ALTER TABLE `Chat`.`InviteLinks`
   ADD KEY `InviteLinks_AdminUsers_fk` (`AdminID`),
   ADD KEY `InviteLinks_InviteeUsers_fk` (`userID`),
   ADD KEY `InviteLinks_roomID_fk` (`RoomID`);
@@ -290,26 +291,26 @@ ALTER TABLE `InviteLinks`
 --
 -- Indexes for table `ProfilePictures`
 --
-ALTER TABLE `ProfilePictures`
+ALTER TABLE `Chat`.`ProfilePictures`
   ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `Rooms`
 --
-ALTER TABLE `Rooms`
+ALTER TABLE `Chat`.`Rooms`
   ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `UserGroups`
 --
-ALTER TABLE `UserGroups`
+ALTER TABLE `Chat`.`UserGroups`
   ADD KEY `UserGroups_Rooms_fk` (`RoomsID`),
   ADD KEY `UserGroups_Users_fk` (`UserID`);
 
 --
 -- Indexes for table `Users`
 --
-ALTER TABLE `Users`
+ALTER TABLE `Chat`.`Users`
   ADD PRIMARY KEY (`userId`);
 
 --
@@ -319,27 +320,27 @@ ALTER TABLE `Users`
 --
 -- AUTO_INCREMENT for table `ChatBox`
 --
-ALTER TABLE `ChatBox`
+ALTER TABLE `Chat`.`ChatBox`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `Comment`
 --
-ALTER TABLE `Comment`
+ALTER TABLE `Chat`.`Comment`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `ProfilePictures`
 --
-ALTER TABLE `ProfilePictures`
+ALTER TABLE `Chat`.`ProfilePictures`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `Rooms`
 --
-ALTER TABLE `Rooms`
+ALTER TABLE `Chat`.`Rooms`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `Users`
 --
-ALTER TABLE `Users`
+ALTER TABLE `Chat`.`Users`
   MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- Constraints for dumped tables
@@ -348,35 +349,35 @@ ALTER TABLE `Users`
 --
 -- Constraints for table `Administrators`
 --
-ALTER TABLE `Administrators`
+ALTER TABLE `Chat`.`Administrators`
   ADD CONSTRAINT `Administrators_Rooms_fk` FOREIGN KEY (`RoomsID`) REFERENCES `Rooms` (`ID`),
   ADD CONSTRAINT `Administrators_Users_fk` FOREIGN KEY (`UserID`) REFERENCES `Users` (`userId`);
 
 --
 -- Constraints for table `ChatBox`
 --
-ALTER TABLE `ChatBox`
+ALTER TABLE `Chat`.`ChatBox`
   ADD CONSTRAINT `ChatBox_Rooms_fk` FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`ID`),
   ADD CONSTRAINT `ChatBox_UserID_fk` FOREIGN KEY (`UserID`) REFERENCES `Users` (`userId`);
 
 --
 -- Constraints for table `ChatLikes`
 --
-ALTER TABLE `ChatLikes`
+ALTER TABLE `Chat`.`ChatLikes`
   ADD CONSTRAINT `ChatLikes_ChatMsgId_fk` FOREIGN KEY (`chatID`) REFERENCES `ChatBox` (`ID`) ON DELETE CASCADE,
   ADD CONSTRAINT `ChatLikes_UserID_fk` FOREIGN KEY (`userRateID`) REFERENCES `Users` (`userId`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `Comment`
 --
-ALTER TABLE `Comment`
+ALTER TABLE `Chat`.`Comment`
   ADD CONSTRAINT `Comment_ChatMsgId_fk` FOREIGN KEY (`ChatBoxID`) REFERENCES `ChatBox` (`ID`) ON DELETE CASCADE,
   ADD CONSTRAINT `Comment_UserId_fk` FOREIGN KEY (`userId`) REFERENCES `Users` (`userId`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `InviteLinks`
 --
-ALTER TABLE `InviteLinks`
+ALTER TABLE `Chat`.`InviteLinks`
   ADD CONSTRAINT `InviteLinks_AdminUsers_fk` FOREIGN KEY (`AdminID`) REFERENCES `Users` (`userId`),
   ADD CONSTRAINT `InviteLinks_InviteeUsers_fk` FOREIGN KEY (`userID`) REFERENCES `Users` (`userId`),
   ADD CONSTRAINT `InviteLinks_roomID_fk` FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`ID`);
@@ -384,7 +385,7 @@ ALTER TABLE `InviteLinks`
 --
 -- Constraints for table `UserGroups`
 --
-ALTER TABLE `UserGroups`
+ALTER TABLE `Chat`.`UserGroups`
   ADD CONSTRAINT `UserGroups_Rooms_fk` FOREIGN KEY (`RoomsID`) REFERENCES `Rooms` (`ID`),
   ADD CONSTRAINT `UserGroups_Users_fk` FOREIGN KEY (`UserID`) REFERENCES `Users` (`userId`);
 
