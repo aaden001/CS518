@@ -81,9 +81,11 @@ function postArea(){
       <form id="chatArea" style="margin-top: 13%;">
       <label for="messages">YourMessage:</label>
       <div class="form-group ">        
-      <textarea class="form-control" rows="2" id="messages" name="messages" form="chatArea" maxlength="200" placeholder="Write a Post"></textarea>';
+      <textarea class="form-control" rows="2" id="messages" name="messages" form="chatArea" maxlength="300" placeholder="Write a Post"></textarea>';
       if($newRoomObj->check_room_status($_SESSION['currentRoomID']) == 1){
-         $postA .='<span ><button  type="submit" id= "post-submit" class="btn btn-success" style="margin-top: 4px;">Send</button></span>';
+         $postA .='<span ><input  type="code" id= "code" class="btn btn-success" style="margin-top: 4px;">Code</input>
+         <input  type="submit" id= "Picture" class="btn btn-success" style="margin-top: 4px;">Picture</input>
+         <button  type="submit" id= "post-submit" class="btn btn-success" style="margin-top: 4px;">Send</button></span>';
       }else{
          $postA .='<br><h3> Room has been archived by admin</h3>';
       }
