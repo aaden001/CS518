@@ -599,8 +599,7 @@ i {
             <?php  gravatarImage_display( $_SESSION['userId']);?>
           </span>
             
-            
-            <div class="line"></div>
+        
          
             <div id="container" >
         <?php   
