@@ -365,6 +365,38 @@ function pagination($c, $m)
     return $rangeWithDots;
 }
 
+function gravatarImage_display($UserID){
+
+       include 'dbconnect.php';
+        $getuserEmailquerry = $Connection->prepare("SELECT userEmail FROM Users WHERE userId=:tempId");
+        $getuserEmailquerry->execute(array('tempId' => $UserID));
+        $EmailResult = $getuserEmailquerry->fetch();
+        $email = $EmailResult['userEmail'];
+
+        $querryProfilPic= $Connection->prepare("SELECT * FROM ProfilePictures WHERE userID=:tempId");
+        $querryProfilPic->execute(array('tempId' => $UserID));
+
+        $PicLinkResult = $querryProfilPic->fetch();
+        $root = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+     
+        $imgString= $root;
+
+        if($PicLinkResult['userId'] ==  $UserID){
+          $imgString .= $PicLinkResult['pictureLink'];
+        }else{
+          $imgString .= 'james.jpeg';
+        }
+        $Connection = null;
+        $size = 40;
+      
+        $imgString = str_replace('..', '',$imgString);
+       $default = $imgString;
+   
+
+    $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
+
+   echo '<img col-1 src="'.$grav_url .'" alt="" />';
+}
 
 
 
@@ -551,8 +583,8 @@ i {
 
         <!-- Page Content  -->
         <div id="content" style="position: fixed;">
-
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <span class="row">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light col-11">
                 <div class="container-fluid">
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
@@ -564,6 +596,9 @@ i {
                     </button>
                 </div>
             </nav>
+            <?php  gravatarImage_display( $_SESSION['userId']);?>
+          </span>
+            
             
             <div class="line"></div>
          
