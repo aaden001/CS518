@@ -384,7 +384,7 @@ function gravatarImage_display($UserID){
         if($PicLinkResult['userId'] ==  $UserID){
           $imgString .= $PicLinkResult['pictureLink'];
         }else{
-          $imgString .= 'james.jpeg';
+          $imgString .= '../ProfilePics/james.jpeg';
         }
         $Connection = null;
         $size = 40;
