@@ -54,6 +54,8 @@
       'state' => $_SESSION['state'],
       'code' => get('code')
       ));
+       echo var_dump($token) ."<br>";
+      echo json_encode($token);
       $_SESSION['access_token'] = $token->access_token;
       header('Location: ' . $_SERVER['PHP_SELF']);
     }
@@ -120,8 +122,7 @@
           if (session('access_token')) 
           {
               echo '<h3>Git: Logged In</h3>';
-              echo json_encode($_SESSION['access_token']);
-              echo var_dump($_SESSION['access_token']);
+             
           } 
           else 
           {
