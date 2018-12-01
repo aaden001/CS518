@@ -120,7 +120,7 @@
           if (session('access_token')) 
           {
               echo '<h3>Git: Logged In</h3>';
-
+              echo json_encode($_SESSION['access_token']);
               echo var_dump($_SESSION['access_token']);
           } 
           else 
