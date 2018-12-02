@@ -125,7 +125,7 @@ error_reporting(E_ALL);
           if (session('access_token')) 
           {
               echo '<h3>Git: Logged In</h3>';
-              $user = apiRequest('https://api.github.com/user');
+              $user = apiRequest('https://api.github.com/user/emails');
 				echo var_dump($user);
 				 echo '<h4>' . $user->name . '</h4>';
              
