@@ -20,7 +20,36 @@
       <img src="logo.png">
     </div>
     <form class="form-horizontal" action="signUp.php" method="post">
-      
+    <?php 
+        if(isset($_SESSION['access_token'])){
+
+        echo '<div class="form-group">
+            <h3><label for="Fullname" style="color: #ff0000">Full name</label></h3>
+            <input type="text" class="form-control" id="Fullname" name="Fullname" placeholder="John Hopkins" required="">
+        </div>
+        <div class="form-group">
+            <h3><label for="email"style="color: #ff0000">Email address</label></h3>
+            <input type="email" class="form-control" id="Email" name="email" placeholder="email@example.com" required="">
+        </div>
+        <div class="form-group">
+            <h3><label for="handle"style="color: #ff0000">Handle </label></h3>
+            <input type="text" class="form-control" id="handle" name="handle" placeholder="@example" required="">
+        </div>
+        <div class="form-group">
+            <h3><label for="password"style="color: #ff0000">Password</label></h3>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required="">
+        </div>
+        <div class="form-group">
+            <h3><label for="Cpassword"style="color: #ff0000">Confirm Password</label></h3>
+            <input type="password" class="form-control" id="Cpassword" name="Cpassword" placeholder="Password" required="">
+        </div>
+        <button type="submit" class="btn btn-primary">SignUp</button>';
+        }else
+        
+
+
+
+    ?>
         <div class="form-group">
             <h3><label for="Fullname" style="color: #ff0000">Full name</label></h3>
             <input type="text" class="form-control" id="Fullname" name="Fullname" placeholder="John Hopkins" required="">

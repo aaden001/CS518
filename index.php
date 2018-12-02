@@ -54,8 +54,9 @@
       'state' => $_SESSION['state'],
       'code' => get('code')
       ));
-       echo var_dump($token) ."<br>";
-      echo json_encode($token);
+       echo $user = apiRequest('https://api.github.com/user');
+		echo var_dump($user);
+     /* 	echo json_encode($token);*/
       $_SESSION['access_token'] = $token->access_token;
       header('Location: ' . $_SERVER['PHP_SELF']);
     }
@@ -69,6 +70,7 @@
       if ($post)
           curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
       $headers[] = 'Accept: application/json';
+      $headers[] = 'User-Agent: PHP Api Call';
       if (session('access_token'))
           $headers[] = 'Authorization: Bearer ' . session('access_token');
       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
