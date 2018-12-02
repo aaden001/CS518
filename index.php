@@ -126,8 +126,7 @@ error_reporting(E_ALL);
           {
               echo '<h3>Git: Logged In</h3>';
               $user = apiRequest('https://api.github.com/user/emails');
-				echo var_dump($user);
-				 echo '<h4>' . $user->name . '</h4>';
+	      echo '<h4>' . $user->email . '</h4>';
              
           } 
           else 
