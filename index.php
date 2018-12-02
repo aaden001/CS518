@@ -32,7 +32,7 @@ error_reporting(E_ALL);
         $params = array(
             'client_id' => OAUTH2_CLIENT_ID,
             'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'],
-            'scope' => 'user',
+            'scope' => 'user:email',
             'state' => $_SESSION['state']
         );
         // Redirect the user to Github's authorization page
@@ -56,8 +56,7 @@ error_reporting(E_ALL);
       'state' => $_SESSION['state'],
       'code' => get('code')
       ));
-        $user = apiRequest('https://api.github.com/user');
-		echo var_dump($user);
+      
      /* 	echo json_encode($token);*/
       $_SESSION['access_token'] = $token->access_token;
       header('Location: ' . $_SERVER['PHP_SELF']);
@@ -126,7 +125,12 @@ error_reporting(E_ALL);
           if (session('access_token')) 
           {
               echo '<h3>Git: Logged In</h3>';
-             
+			$user= apiRequest('https://api.github.com/user');
+			echo "User Name:" .$user->name ."Or User Login Handle: " .$user->login ."<br>";
+			echo "User Avatar Link" .$user->avatar_url ."<br>";
+			$useremail = apiRequest('https://api.github.com/user/emails');
+			echo  json_encode($useremail) ."<br>";
+			echo var_dump($useremail);
           } 
           else 
           {
