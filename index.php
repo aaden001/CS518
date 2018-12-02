@@ -132,9 +132,10 @@ error_reporting(E_ALL);
 		  echo "Getting email Arrays: " .$useremail[0] ."<br>";
 		  
 		$tempEmail =  json_encode($useremail);
-		  
+		  echo var_dump($useremail);
 		  $email = json_decode($tempEmail);
-	      echo "Json decode Email:" .$email->email  ."<br>";
+		echo var_dump($email);
+		 echo "Json decode Email:" .$email->email  ."<br>";
              
           } 
           else 
