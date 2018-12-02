@@ -126,10 +126,13 @@ error_reporting(E_ALL);
           {
               echo '<h3>Git: Logged In</h3>';
 		$user= apiRequest('https://api.github.com/user');
+		  echo "User Name:" .$user->name ."Or User Login Handle: " .$user->login ."<br>";
+		  echo "User Avatar Link" .$user->avatar_url ."<br>";
 		 echo  var_dump($user);
               $useremail = apiRequest('https://api.github.com/user/emails');
-		   echo  var_dump($useremail);
-	      echo '<h4>' . $user[0]->email . '</h4>';
+		   echo  json_encode($useremail);
+		$email =  json_encode($useremail);
+	      echo '<h4>' . $email['email'] . '</h4>';
              
           } 
           else 
