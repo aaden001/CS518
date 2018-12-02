@@ -129,7 +129,7 @@ error_reporting(E_ALL);
 		  echo "User Name:" .$user->name ."Or User Login Handle: " .$user->login ."<br>";
 		  echo "User Avatar Link" .$user->avatar_url ."<br>";
               $useremail = apiRequest('https://api.github.com/user/emails');
-		  echo "Getting email Arrays: " .$useremail ."<br>";
+		  echo "Getting email Arrays: " .$useremail[0] ."<br>";
 		  
 		$tempEmail =  json_encode($useremail);
 		  
