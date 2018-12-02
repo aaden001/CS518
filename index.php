@@ -56,7 +56,7 @@ error_reporting(E_ALL);
       'state' => $_SESSION['state'],
       'code' => get('code')
       ));
-       echo $user = apiRequest('https://api.github.com/user');
+        $user = apiRequest('https://api.github.com/user');
 		echo var_dump($user);
      /* 	echo json_encode($token);*/
       $_SESSION['access_token'] = $token->access_token;
