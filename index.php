@@ -125,12 +125,18 @@ error_reporting(E_ALL);
           if (session('access_token')) 
           {
               echo '<h3>Git: Logged In</h3>';
-			$user= apiRequest('https://api.github.com/user');
-			echo "User Name:" .$user->name ."Or User Login Handle: " .$user->login ."<br>";
-			echo "User Avatar Link" .$user->avatar_url ."<br>";
-			$useremail = apiRequest('https://api.github.com/user/emails');
-			echo  json_encode($useremail) ."<br>";
-			echo var_dump($useremail);
+
+              echo '<h3>Git: Logged In</h3>';
+		$user= apiRequest('https://api.github.com/user');
+		  echo "User Name:" .$user->name ."Or User Login Handle: " .$user->login ."<br>";
+		  echo "User Avatar Link" .$user->avatar_url ."<br>";
+              $useremail = apiRequest('https://api.github.com/user/emails');
+		echo  json_encode($useremail) ."<br>";
+		echo var_dump($useremail);
+		/*  json_decode(json_encode($useremail));
+		echo var_dump($email);
+		 echo "Json decode Email:" .$email->email  ."<br>";*/
+             
           } 
           else 
           {
