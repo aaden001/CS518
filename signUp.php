@@ -3,7 +3,7 @@
 	ini_set('display_startup_errors', 1);
 	error_reporting(E_ALL);
 	include "UserClass.php";
-
+session_start();
 	if(isset($_POST['Fullname']) && isset($_POST['email']) && isset($_POST['handle']) && isset($_POST['password']) && isset($_POST['Cpassword']))
 	{
 		$new_User = new User();
@@ -24,6 +24,9 @@
 				$new_User->setUserPassword($password);
 				$new_User->SignUpUser();
 				/*	echo $Name ." <br> ".$Email ." <br> " .$Handle ." <br> " .$password ;*/
+			}elseif(isset($_GET['error'])){
+			$error = $_GET['error'];
+			header("Location:index2.php?error=$error");
 			}
 
 			
@@ -35,10 +38,48 @@
 
 
 	}
-	if(isset($_GET['error'])){
-		$error = $_GET['error'];
-	header("Location:index2.php?error=$error");
+
+
+	if(isset($_SESSION['access_token'] && $_SESSION['avatarLink'])){
+
+		$new_User = new User();
+		$new_User->setUserEmail($_GET['useremail']);
+		$new_User->setUserHandle($_GET['userhandle']);
+
+		if($_GET['username'] == ''){
+			 
+			 $userName =  str_replace('@', '', $_GET['userhandle']);
+		}else{
+			$userName = $_GET['username'];
+		}
+
+
+
+		if($new_User->checkEmailHandle())
+		{	
+			$Name = stripslashes(htmlspecialchars($userName);
+			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
+			$Handle = stripslashes(htmlspecialchars($_GET['userhandle']));
+			$password = stripslashes(htmlspecialchars($_SESSION['access_token']);
+			$new_User->setUserEmail($Email);
+			$new_User->setUserFullname($Name);
+			$new_User->setUserHandle($Handle);
+			$new_User->setUserPassword($password);
+			$new_User->SignUpUser();
+		}else{
+			///updata access_token used as password in the data base
+			include 'dbconnect.php';
+			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
+			$data = [
+				'temp' => $_SESSION['access_token'],
+				'userMtemp' =>$Email,
+			];
+			$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
+			$queryUpdatePWD->execute($data);
+		}
+		header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);
 	}
+
 	/*
 	///wont be neccesary 
 	Required takes care of these errors so no 

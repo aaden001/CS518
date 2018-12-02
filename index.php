@@ -10,7 +10,7 @@ error_reporting(E_ALL);
     exit;
   }
 
-  gitLogin();
+
 
   //credit: https://gist.github.com/asika32764/b204ff4799d577fd4eef
   function gitLogin()
@@ -61,6 +61,31 @@ error_reporting(E_ALL);
       $_SESSION['access_token'] = $token->access_token;
       header('Location: ' . $_SERVER['PHP_SELF']);
     }
+
+
+	if (session('access_token')) 
+	  {
+	      echo '<h3>Git: Logged In</h3>';
+
+				
+		$user= apiRequest('https://api.github.com/user');
+		
+ 		$useremail = apiRequest('https://api.github.com/user/emails');
+		$userEmail = $useremail[0]->email  ;
+	 	$userName  = $user->name;
+
+		$userHandle  = '@' .$user->login;
+		$_SESSION['avatarLink'] = $user->avatar_url;
+		header("Location:signUp.php?username=".$userName ."&useremail=".$useremail ."&userhandle=" .$userHandle);  
+	     
+	  } 
+	  else 
+	  {
+	      echo '<h3>Git: Not logged in</h3>';
+	      echo '<p><a href="?action=login">Log In</a></p>';
+	  }
+
+
   }
 
 
@@ -122,24 +147,8 @@ error_reporting(E_ALL);
     <button type="submit" class="btn btn-primary">Sign in</button>
       <?php
             echo "<br>";
-          if (session('access_token')) 
-          {
-              echo '<h3>Git: Logged In</h3>';
-
-              echo '<h3>Git: Logged In</h3>';
-		$user= apiRequest('https://api.github.com/user');
-		  echo "User Name:" .$user->name ."Or User Login Handle: " .$user->login ."<br>";
-		  echo "User Avatar Link" .$user->avatar_url ."<br>";
-              $useremail = apiRequest('https://api.github.com/user/emails');
-		
-		echo "User Email: " .$useremail[0]->email  ;
-             
-          } 
-          else 
-          {
-              echo '<h3>Git: Not logged in</h3>';
-              echo '<p><a href="?action=login">Log In</a></p>';
-          }
+              gitLogin();
+          
         ?>
       <b><a href="index2.php">Click to Sign Up</a></b>
       

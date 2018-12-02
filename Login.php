@@ -36,6 +36,21 @@
 						}
 					}
 
+            }elseif(isset($_GET['email']) && isset($_GET['password'])){
+				$email =  $_GET["email"];
+				$password = $_GET["password"];
+				$user = new User();
+				$user->setUserEmail($email);
+				$user->setUserpassword($password);
+				$user->getUserEmail();
+				$user->getUserPassword();
+				if($user->loginUser() == true){
+				$_SESSION['userId'] = $user->getUserId();
+				$_SESSION['userName'] = $user->getUserFullname();
+				$_SESSION['userEmail'] = $user->getUserEmail();
+				$_SESSION['userHandle'] = $user->getUserHandle();
+
+				}
             }
 		
 	}
