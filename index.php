@@ -131,9 +131,17 @@ error_reporting(E_ALL);
 		  echo "User Name:" .$user->name ."Or User Login Handle: " .$user->login ."<br>";
 		  echo "User Avatar Link" .$user->avatar_url ."<br>";
               $useremail = apiRequest('https://api.github.com/user/emails');
-		echo  json_encode($useremail) ."<br>";
-		echo var_dump($useremail);
-		/*  json_decode(json_encode($useremail));
+		 $JSON = json_decode($useremail);
+		echo "As array ==================" ."<br>" ."direct"  .$useremail[0]->email  ."OR" .$useremail->email;
+		foreach ($useremail as $key => $object) {
+    			echo "<br> Indirect" .$object->email;
+		}
+		  // Convert JSON string to Object
+		$someObject = json_decode($JSON);  
+		echo "<br> As json ==================" ."<br>";
+		echo $someObject[0]->name;
+		//echo var_dump($useremail);
+		/*  json_decode($useremail);
 		echo var_dump($email);
 		 echo "Json decode Email:" .$email->email  ."<br>";*/
              
