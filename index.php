@@ -56,8 +56,7 @@ error_reporting(E_ALL);
       'state' => $_SESSION['state'],
       'code' => get('code')
       ));
-        $user = apiRequest('https://api.github.com/user');
-		echo var_dump($user);
+      
      /* 	echo json_encode($token);*/
       $_SESSION['access_token'] = $token->access_token;
       header('Location: ' . $_SERVER['PHP_SELF']);
@@ -126,6 +125,9 @@ error_reporting(E_ALL);
           if (session('access_token')) 
           {
               echo '<h3>Git: Logged In</h3>';
+              $user = apiRequest('https://api.github.com/user');
+				echo var_dump($user);
+				 echo '<h4>' . $user->name . '</h4>';
              
           } 
           else 
