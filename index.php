@@ -130,9 +130,8 @@ error_reporting(E_ALL);
 		  echo "User Avatar Link" .$user->avatar_url ."<br>";
 		 echo  var_dump($user);
               $useremail = apiRequest('https://api.github.com/user/emails');
-		   echo  json_encode($useremail);
 		$email =  json_encode($useremail);
-	      echo '<h4>' . $email['email'] . '</h4>';
+	      echo '<h4>' . $email.email . '</h4>';
              
           } 
           else 
