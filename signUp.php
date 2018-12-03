@@ -43,9 +43,13 @@ session_start();
 	if(isset($_SESSION['access_token']) && isset($_SESSION['avatarLink'])){
 
 		$new_User = new User();
+		echo $_GET['useremail'];
+		echo $_GET['userhandle'];
+		echo $_SESSION['access_token'];
+		/*
 		$new_User->setUserEmail($_GET['useremail']);
 		$new_User->setUserHandle($_GET['userhandle']);
-
+		
 		if($_GET['username'] == ''){
 			 
 			 $userName =  str_replace('@', '', $_GET['userhandle']);
@@ -65,6 +69,7 @@ session_start();
 			$new_User->setUserFullname($Name);
 			$new_User->setUserHandle($Handle);
 			$new_User->setUserPassword($password);
+
 			$new_User->SignUpUser();
 			echo "In check email Handle";
 		}else{
@@ -79,7 +84,7 @@ session_start();
 			$queryUpdatePWD->execute($data);
 			echo "Below check email Handle";
 		}
-	/*	header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+		header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
 	}
 
 	/*
