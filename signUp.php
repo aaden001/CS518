@@ -80,7 +80,7 @@ session_start();
 
 			/*$new_User->SignUpUser();*/
 			echo "In check email Handle";
-		}elseif($new_User->checkEmailHandle() ==false){
+		}elseif(isset($_GET['error'])){
 			///updata access_token used as password in the data base
 			include 'dbconnect.php';
 			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
