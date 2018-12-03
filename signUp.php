@@ -46,7 +46,7 @@ session_start();
 		
 		$new_User->setUserEmail($_GET['useremail']);
 		$new_User->setUserHandle($_GET['userhandle']);
-
+		$new_User->setUserFullname($_GET['username']);
 		
 		if($_GET['username'] ===''){
 			 
@@ -80,7 +80,7 @@ session_start();
 
 			/*$new_User->SignUpUser();*/
 			echo "In check email Handle";
-		}else{
+		}elseif($new_User->checkEmailHandle() ==false){
 			///updata access_token used as password in the data base
 			include 'dbconnect.php';
 			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
