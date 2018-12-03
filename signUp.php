@@ -43,13 +43,12 @@ session_start();
 	if(isset($_SESSION['access_token']) && isset($_SESSION['avatarLink'])){
 
 		$new_User = new User();
-		echo $_GET['useremail'];
-		echo $_GET['userhandle'];
-		echo $_SESSION['access_token'];
-		/*
+		
 		$new_User->setUserEmail($_GET['useremail']);
 		$new_User->setUserHandle($_GET['userhandle']);
-		
+		echo $new_User->getUserEmail();
+		echo $new_User->getUserHandle();
+		/*
 		if($_GET['username'] == ''){
 			 
 			 $userName =  str_replace('@', '', $_GET['userhandle']);
