@@ -262,17 +262,19 @@ function sql_post_profilePic($UserID){
         if($PicLinkResult['userId'] ==  $UserID){
           $imgString .= $PicLinkResult['pictureLink'];
           
-        }elseif(isset($_SESSION['avatarLink']) ){
-         
-            $imgString .= $_SESSION['avatarLink'];
-            $sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
-            $imgString = $sample;           
         }else{
           $imgString .= '../ProfilePics/james.jpeg';
         }
         $Connection = null;
         $size = 40;
-      
+
+   /*     elseif(isset($_SESSION['avatarLink']) ){
+         
+            $imgString .= $_SESSION['avatarLink'];
+            $sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
+            $imgString = $sample;           
+        }
+      */
         $imgString = str_replace('..', '',$imgString);
        
        $default = $imgString;
