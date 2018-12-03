@@ -75,7 +75,10 @@ if ($uploadOk == 0) {
 			if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 			echo "The file ". basename( $_FILES["fileToUpload"]["name"]) . " has been uploaded.";
 
-
+				if(isset($_SESSION['avatarLink']))
+				{
+					 unset($_SESSION['avatarLink']);
+				}
 
 			$link = "../ProfilePics/" .basename( $_FILES["fileToUpload"]["name"]) ;
 			$sqlquerry = $Connection->prepare("INSERT INTO ProfilePictures(userId,pictureLink) VALUES(:tempAdminID,:tempLinkAddress) ON DUPLICATE KEY UPDATE userId=:tempUser");
