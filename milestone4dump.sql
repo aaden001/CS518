@@ -59,6 +59,11 @@ CREATE TABLE `Chat`.`ChatBox` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- AUTO_INCREMENT for table `ChatBox`
+--
+ALTER TABLE `Chat`.`ChatBox`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- Dumping data for table `ChatBox`
 --
 
@@ -119,6 +124,11 @@ CREATE TABLE `Chat`.`Comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- AUTO_INCREMENT for table `Comment`
+--
+ALTER TABLE `Chat`.`Comment`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- Dumping data for table `Comment`
 --
 
@@ -161,7 +171,11 @@ CREATE TABLE `Chat`.`ProfilePictures` (
   `userId` int(11) NOT NULL,
   `pictureLink` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+--
+-- AUTO_INCREMENT for table `ProfilePictures`
+--
+ALTER TABLE `Chat`.`ProfilePictures`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Dumping data for table `ProfilePictures`
 --
@@ -181,7 +195,11 @@ CREATE TABLE `Chat`.`Rooms` (
   `grpTyp` int(1) NOT NULL,
   `active` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+--
+-- AUTO_INCREMENT for table `Rooms`
+--
+ALTER TABLE `Chat`.`Rooms`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Dumping data for table `Rooms`
 --
@@ -233,7 +251,11 @@ CREATE TABLE `Chat`.`Users` (
   `userHandle` varchar(11) NOT NULL,
   `userPassword` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+--
+-- AUTO_INCREMENT for table `Users`
+--
+ALTER TABLE `Chat`.`Users`
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Dumping data for table `Users`
 --
@@ -317,31 +339,10 @@ ALTER TABLE `Chat`.`Users`
 -- AUTO_INCREMENT for dumped tables
 --
 
---
--- AUTO_INCREMENT for table `ChatBox`
---
-ALTER TABLE `Chat`.`ChatBox`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
---
--- AUTO_INCREMENT for table `Comment`
---
-ALTER TABLE `Chat`.`Comment`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `ProfilePictures`
---
-ALTER TABLE `Chat`.`ProfilePictures`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `Rooms`
---
-ALTER TABLE `Chat`.`Rooms`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `Users`
---
-ALTER TABLE `Chat`.`Users`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+
+
+
 --
 -- Constraints for dumped tables
 --
