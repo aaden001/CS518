@@ -59,39 +59,52 @@ session_start();
 	
 		if(isset($_GET['error'])){
 			///updata access_token used as password in the data base
-			include 'dbconnect.php';
-			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
-			$data = [
+			try{
+				include 'dbconnect.php';
+				$Email = stripslashes(htmlspecialchars($_GET['useremail']));
+				$data = [
 				'temp' => $_SESSION['access_token'],
 				'userMtemp' =>$Email,
-			];
-			$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
-			$queryUpdatePWD->execute($data);
-			echo "Below check email Handle";
+				];
+				$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
+				$queryUpdatePWD->execute($data);
+				/*	header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+				echo "Already sign up just changing password";
+			}catch(PDOException $e){
+			echo $e->getMessage();
+			}
+			
 		}elseif($new_User->checkEmailHandle())
 		{	
-			$Name = stripslashes(htmlspecialchars($userName));
-			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
-			$Handle = stripslashes(htmlspecialchars($_GET['userhandle']));
-			$password = stripslashes(htmlspecialchars($_SESSION['access_token']));
+			try{
+				$Name = stripslashes(htmlspecialchars($userName));
+				$Email = stripslashes(htmlspecialchars($_GET['useremail']));
+				$Handle = stripslashes(htmlspecialchars($_GET['userhandle']));
+				$password = stripslashes(htmlspecialchars($_SESSION['access_token']));
 
 
 
-			$new_User->setUserEmail($Email);
-			$new_User->setUserFullname($Name);
-			$new_User->setUserHandle($Handle);
-			$new_User->setUserPassword($password);
+				$new_User->setUserEmail($Email);
+				$new_User->setUserFullname($Name);
+				$new_User->setUserHandle($Handle);
+				$new_User->setUserPassword($password);
 
-			echo $new_User->getUserEmail() ."<br>";
-			echo $new_User->getUserFullname() ."<br>";
-			echo $new_User->getUserHandle() ."<br>";
-			echo $new_User->getUserPassword() ."<br>";
+				echo $new_User->getUserEmail() ."<br>";
+				echo $new_User->getUserFullname() ."<br>";
+				echo $new_User->getUserHandle() ."<br>";
+				echo $new_User->getUserPassword() ."<br>";
 
 
-			/*$new_User->SignUpUser();*/
-			echo "In check email Handle";
+				$new_User->SignUpUser();
+				
+				/*header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+				echo "In check email Handle";
+			}catch(PDOException $e){
+			echo $e->getMessage();
+			}
+			
 		}
-		/*header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+		
 	}
 
 	/*
