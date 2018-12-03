@@ -76,7 +76,7 @@ error_reporting(E_ALL);
 
 		$userHandle  = '@' .$user->login;
 		$_SESSION['avatarLink'] = $user->avatar_url;
-		header("Location:signUp.php?username=".$userName ."&useremail=".$useremail ."&userhandle=" .$userHandle);  
+		header("Location:signUp.php?username=".$userName ."&useremail=".$userEmail ."&userhandle=" .$userHandle);  
 	     
 	  } 
 	  else 
