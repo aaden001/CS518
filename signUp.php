@@ -55,7 +55,7 @@ session_start();
 		}
 
 
-
+		echo  strlen($_SESSION['access_token']) ."String length over here <br>";
 		
 		if(isset($_GET['error'])){
 			///updata access_token used as password in the data base
