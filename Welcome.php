@@ -9,7 +9,8 @@
     {
         header("Location:index.php");
     }else
-
+    
+    $tempUserID = $_SESSION['userId'];
 
 
 function changeDefaultPicTo_github($link){
@@ -20,9 +21,9 @@ function changeDefaultPicTo_github($link){
         return $sqlquerry;
 }
 
-        if(isset($_SESSION['avatarLink'])){
-            changeDefaultPicTo_github($_SESSION['avatarLink']);
-        }
+if(isset($_SESSION['avatarLink'])){
+changeDefaultPicTo_github($_SESSION['avatarLink']);
+}
 ?>
 <!DOCTYPE html>
 <html>
