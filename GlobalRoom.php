@@ -388,8 +388,8 @@ function gravatarImage_display($UserID){
           echo "PartOne " .$imgString ."<br>";
             $imgString .= $_SESSION['avatarLink'];
             echo "PartTwo " .$imgString ."<br>";
-            $imgString .= preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
-
+            $sample .= preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
+             echo "Smaple " .$imgString ."<br>";
            
         }else{
           $imgString .= '../ProfilePics/james.jpeg';
@@ -398,7 +398,7 @@ function gravatarImage_display($UserID){
         $size = 40;
       
         $imgString = str_replace('..', '',$imgString);
-        echo "PartThree " .$imgString ."<br>";
+       
        $default = $imgString;
 
     $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
