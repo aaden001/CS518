@@ -384,12 +384,11 @@ function gravatarImage_display($UserID){
         if($PicLinkResult['userId'] ==  $UserID){
           $imgString .= $PicLinkResult['pictureLink'];
         }elseif(isset($_SESSION['avatarLink']) ){
-          $imgString .= preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
-          echo "PartOne " .$imgString ."<br>";
+         
             $imgString .= $_SESSION['avatarLink'];
-            echo "PartTwo " .$imgString ."<br>";
             $sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
-             echo "Smaple " .$sample ."<br>";
+            $imgString = $sample;
+             echo "Smaple " .$imgString ."<br>";
            
         }else{
           $imgString .= '../ProfilePics/james.jpeg';
