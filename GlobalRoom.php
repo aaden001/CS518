@@ -397,7 +397,7 @@ function gravatarImage_display($UserID){
         $imgString = str_replace('..', '',$imgString);
        $default = $imgString;
         
-       /* echo $default ."<br>";*/
+        echo $default ."<br>";
 
     $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
 
