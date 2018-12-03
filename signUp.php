@@ -46,17 +46,17 @@ session_start();
 		
 		$new_User->setUserEmail($_GET['useremail']);
 		$new_User->setUserHandle($_GET['userhandle']);
-		echo $new_User->getUserEmail();
-		echo $new_User->getUserHandle();
-		/*
-		if($_GET['username'] == ''){
+
+		
+		if($_GET['username'] ===''){
 			 
 			 $userName =  str_replace('@', '', $_GET['userhandle']);
 		}else{
 			$userName = $_GET['username'];
 		}
 
-
+		echo $userName ."<br>";
+		
 
 		if($new_User->checkEmailHandle())
 		{	
@@ -64,12 +64,21 @@ session_start();
 			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
 			$Handle = stripslashes(htmlspecialchars($_GET['userhandle']));
 			$password = stripslashes(htmlspecialchars($_SESSION['access_token']));
+
+
+
 			$new_User->setUserEmail($Email);
 			$new_User->setUserFullname($Name);
 			$new_User->setUserHandle($Handle);
 			$new_User->setUserPassword($password);
 
-			$new_User->SignUpUser();
+			echo $new_User->getUserEmail() ."<br>";
+			echo $new_User->getUserFullname() ."<br>";
+			echo $new_User->getUserHandle() ."<br>";
+			echo $new_User->getUserPassword() ."<br>";
+
+
+			/*$new_User->SignUpUser();*/
 			echo "In check email Handle";
 		}else{
 			///updata access_token used as password in the data base
@@ -83,7 +92,7 @@ session_start();
 			$queryUpdatePWD->execute($data);
 			echo "Below check email Handle";
 		}
-		header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+		/*header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
 	}
 
 	/*
