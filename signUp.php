@@ -57,10 +57,10 @@ session_start();
 
 		if($new_User->checkEmailHandle())
 		{	
-			$Name = stripslashes(htmlspecialchars($userName);
+			$Name = stripslashes(htmlspecialchars($userName));
 			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
 			$Handle = stripslashes(htmlspecialchars($_GET['userhandle']));
-			$password = stripslashes(htmlspecialchars($_SESSION['access_token']);
+			$password = stripslashes(htmlspecialchars($_SESSION['access_token']));
 			$new_User->setUserEmail($Email);
 			$new_User->setUserFullname($Name);
 			$new_User->setUserHandle($Handle);

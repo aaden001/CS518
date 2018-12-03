@@ -73,10 +73,13 @@ error_reporting(E_ALL);
  		$useremail = apiRequest('https://api.github.com/user/emails');
 		$userEmail = $useremail[0]->email  ;
 	 	$userName  = $user->name;
-
+    $userName = trim($userName);
 		$userHandle  = '@' .$user->login;
 		$_SESSION['avatarLink'] = $user->avatar_url;
-		header("Location:signUp.php?username=".$userName ."&useremail=".$userEmail ."&userhandle=" .$userHandle);  
+
+    ///Process GitHub sign up here
+
+		/*header("Location:signUp.php?username=".$userName ."&useremail=".$userEmail ."&userhandle=" .$userHandle);  */
 	     
 	  } 
 	  else 
