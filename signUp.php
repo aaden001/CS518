@@ -66,6 +66,7 @@ session_start();
 			$new_User->setUserHandle($Handle);
 			$new_User->setUserPassword($password);
 			$new_User->SignUpUser();
+			echo "In check email Handle";
 		}else{
 			///updata access_token used as password in the data base
 			include 'dbconnect.php';
@@ -76,8 +77,9 @@ session_start();
 			];
 			$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
 			$queryUpdatePWD->execute($data);
+			echo "Below check email Handle";
 		}
-		header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);
+	/*	header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
 	}
 
 	/*
