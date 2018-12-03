@@ -66,12 +66,12 @@ session_start();
 
 				$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
 				$queryUpdatePWD->execute(array('temp' => $_SESSION['access_token'], 'userMtemp' => $Email));
-					/*header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+					header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);
 				echo "Already sign up just changing password<br> Confirming sign up<br>";
-				$ConFirm = $Connection->prepare("SELECT userEmail,userPassword FROM Users");
+				/*$ConFirm = $Connection->prepare("SELECT userEmail,userPassword FROM Users");
 				$ConFirm->execute();
 				$result = $ConFirm->fetchAll();
-				echo var_dump($result);
+				echo var_dump($result);*/
 			}catch(PDOException $e){
 			echo $e->getMessage();
 			}

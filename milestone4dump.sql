@@ -231,7 +231,7 @@ CREATE TABLE `Chat`.`Users` (
   `userFullName` varchar(50) NOT NULL,
   `userEmail` varchar(30) NOT NULL,
   `userHandle` varchar(11) NOT NULL,
-  `userPassword` varchar(11) NOT NULL
+  `userPassword` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
