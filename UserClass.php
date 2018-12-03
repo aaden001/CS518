@@ -160,24 +160,35 @@ class User{
 			
 			/// Execute a prepared statement with an array of insert values (named parameters)
 			$query = $Connection->prepare($sql);
-	
+			echo $this->getUserEmail();
+			echo $this->getUserPassword();
 			$query->execute(array('userMail' =>$this->getUserEmail(),'password' => $this->getUserPassword()));
-			if($query->rowCount() == 0)
-			{
-				header("Location:index.php?error=1");
-				return false;
+			$result = $query->fetchAll();
+			echo var_dump($result);
+
+			if(isset($_SESSION['access_token'])){
+
+				
+				
 			}else{
-				while($userData =$query->fetch()){
+					if($query->rowCount() == 0)
+					{
+					/*header("Location:index.php?error=1");*/
+					return false;
+					}else{
+					while($userData =$query->fetch()){
 					$this->setUserId($userData['userId']);
 					$this->setUserFullname($userData['userFullName']);
 					$this->setUserEmail($userData['userEmail']);
 					$this->setUserHandle($userData['userHandle']);
 					$this->setUserPassword($userData['userPassword']);
-				
-									
+
+
 					}
 					return true;
-				}				
+					}
+			}
+							
 			}catch(PDOException $e)
 			{
 			echo "This Error Occured: " .$e->getMessage();
