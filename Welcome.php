@@ -22,7 +22,11 @@ function changeDefaultPicTo_github($link){
 }
 
 if(isset($_SESSION['avatarLink'])){
-changeDefaultPicTo_github($_SESSION['avatarLink']);
+    if(changeDefaultPicTo_github($_SESSION['avatarLink'])){
+        echo "Avatar from get gub transfered"
+    }else{
+        echo 'error occoured ';
+    }
 }
 ?>
 <!DOCTYPE html>
