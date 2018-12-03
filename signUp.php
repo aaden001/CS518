@@ -45,6 +45,7 @@ session_start();
 		$new_User = new User();
 		$new_User->setUserEmail($_GET['useremail']);
 		$new_User->setUserHandle($_GET['userhandle']);
+		$new_User->setUserFullname($_GET['username']);
 
 		if($_GET['username'] == ''){
 			 
@@ -55,7 +56,27 @@ session_start();
 
 
 
-		if($new_User->checkEmailHandle())
+		
+		if(isset($_GET['error'])){
+			///updata access_token used as password in the data base
+			try{
+				include 'dbconnect.php';
+				$Email = stripslashes(htmlspecialchars($_GET['useremail']));
+				
+
+				$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
+				$queryUpdatePWD->execute(array('temp' => $_SESSION['access_token'], 'userMtemp' => $Email));
+					/*header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+				echo "Already sign up just changing password<br> Confirming sign up<br>";
+				$ConFirm = $Connection->prepare("SELECT * FROM Users");
+				$ConFirm->execute();
+				$result = $ConFirm->setFetchMode(PDO::FETCH_ASSOC);
+				echo var_dump($result);
+			}catch(PDOException $e){
+			echo $e->getMessage();
+			}
+			
+		}elseif($new_User->checkEmailHandle())
 		{	
 			$Name = stripslashes(htmlspecialchars($userName));
 			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
@@ -66,18 +87,14 @@ session_start();
 			$new_User->setUserHandle($Handle);
 			$new_User->setUserPassword($password);
 			$new_User->SignUpUser();
-		}else{
-			///updata access_token used as password in the data base
-			include 'dbconnect.php';
-			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
-			$data = [
-				'temp' => $_SESSION['access_token'],
-				'userMtemp' =>$Email,
-			];
-			$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
-			$queryUpdatePWD->execute($data);
+			echo "In check email Handle";
+			$ConFirm = $Connection->prepare("SELECT * FROM Users");
+			$ConFirm->execute();
+			$result = $ConFirm->setFetchMode(PDO::FETCH_ASSOC);
+			echo var_dump($result);
+			/*header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
 		}
-		header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);
+		
 	}
 
 	/*

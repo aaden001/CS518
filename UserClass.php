@@ -44,13 +44,24 @@ class User{
 		{
 			return true;
 		}else{
-			if($Sql->rowCount() > 0 && $query->rowCount() > 0)
-			{
-			header("Location:signUp.php?error=10");
-			}elseif($Sql->rowCount() > 0){
-			header("Location:signUp.php?error=8");
+			if(isset($_SESSION['access_token'])){
+				if($Sql->rowCount() > 0 && $query->rowCount() > 0)
+				{
+				header("Location:signUp.php?error=10&username=".$this->getUserFullname() ."&useremail=" .$this->getUserEmail() ."&userhandle=" .$this->getUserHandle());
+				}elseif($Sql->rowCount() > 0){
+				header("Location:signUp.php?error=8&username=".$this->getUserFullname() ."&useremail=" .$this->getUserEmail() ."&userhandle=" .$this->getUserHandle());
+				}else{
+				header("Location:signUp.php?error=9&username=".$this->getUserFullname() ."&useremail=" .$this->getUserEmail() ."&userhandle=" .$this->getUserHandle());
+				}
 			}else{
-			header("Location:signUp.php?error=9");
+				if($Sql->rowCount() > 0 && $query->rowCount() > 0)
+				{
+				header("Location:signUp.php?error=10");
+				}elseif($Sql->rowCount() > 0){
+				header("Location:signUp.php?error=8");
+				}else{
+				header("Location:signUp.php?error=9");
+				}
 			}
 
 			return false;
