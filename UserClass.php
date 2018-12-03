@@ -151,9 +151,10 @@ class User{
 					$this->setUserEmail($userData['userEmail']);
 					$this->setUserHandle($userData['userHandle']);
 					$this->setUserPassword($userData['userPassword']);
-					header("Location:Welcome.php");
-					return true;				
+				
+									
 					}
+					return true;
 				}				
 			}catch(PDOException $e)
 			{

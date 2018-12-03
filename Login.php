@@ -31,7 +31,7 @@
 							$_SESSION['userName'] = $user->getUserFullname();
 							$_SESSION['userEmail'] = $user->getUserEmail();
 							$_SESSION['userHandle'] = $user->getUserHandle();
-
+								header("Location:Welcome.php");
 							}
 						}
 					}
@@ -49,7 +49,7 @@
 				$_SESSION['userName'] = $user->getUserFullname();
 				$_SESSION['userEmail'] = $user->getUserEmail();
 				$_SESSION['userHandle'] = $user->getUserHandle();
-
+					header("Location:Welcome.php");
 				}
             }
 		
