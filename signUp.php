@@ -68,7 +68,7 @@ session_start();
 				];
 				$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
 				$queryUpdatePWD->execute($data);
-				/*	header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+					header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);
 				echo "Already sign up just changing password";
 			}catch(PDOException $e){
 			echo $e->getMessage();
@@ -97,7 +97,7 @@ session_start();
 
 				$new_User->SignUpUser();
 				
-				/*header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+				header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);
 				echo "In check email Handle";
 			}catch(PDOException $e){
 			echo $e->getMessage();
