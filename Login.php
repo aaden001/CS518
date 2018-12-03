@@ -36,7 +36,7 @@
 						}
 					}
 
-            }/*elseif(isset($_GET['email']) && isset($_GET['password'])){
+            }elseif(isset($_GET['email']) && isset($_GET['password'])){
 				$email =  $_GET["email"];
 				$password = $_GET["password"];
 				$user = new User();
@@ -51,7 +51,7 @@
 				$_SESSION['userHandle'] = $user->getUserHandle();
 				//	header("Location:Welcome.php");
 				}
-            }*/
+            }
 		
 	}
 	catch(Exception $e)
