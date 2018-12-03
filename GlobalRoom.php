@@ -388,8 +388,8 @@ function gravatarImage_display($UserID){
           echo "PartOne " .$imgString ."<br>";
             $imgString .= $_SESSION['avatarLink'];
             echo "PartTwo " .$imgString ."<br>";
-            $sample .= preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
-             echo "Smaple " .$imgString ."<br>";
+            $sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
+             echo "Smaple " .$sample ."<br>";
            
         }else{
           $imgString .= '../ProfilePics/james.jpeg';
