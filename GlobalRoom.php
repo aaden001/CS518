@@ -384,7 +384,9 @@ function gravatarImage_display($UserID){
         if($PicLinkResult['userId'] ==  $UserID){
           $imgString .= $PicLinkResult['pictureLink'];
         }elseif(isset($_SESSION['avatarLink']) ){
+           preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
             $imgString .= $_SESSION['avatarLink'];
+            $imgString .= preg_replace("/" .$root ."/", "", $imgString);
         }else{
           $imgString .= '../ProfilePics/james.jpeg';
         }
@@ -394,7 +396,7 @@ function gravatarImage_display($UserID){
         $imgString = str_replace('..', '',$imgString);
        $default = $imgString;
         
-        echo $default ."<br>";
+       /* echo $default ."<br>";*/
 
     $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
 
