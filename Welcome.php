@@ -9,6 +9,20 @@
     {
         header("Location:index.php");
     }else
+
+
+
+function changeDefaultPicTo_github($link){
+  include 'dbconnect.php';
+  $sqlquerry = $Connection->prepare("INSERT INTO ProfilePictures(userId,pictureLink) VALUES(:tempAdminID,:tempLinkAddress) ON DUPLICATE KEY UPDATE userId=:tempUser");
+        $sqlquerry->execute(array('tempAdminID' => $_SESSION['userId'],'tempLinkAddress' =>$link, 'tempUser' => $_SESSION['userId'] ));
+
+        return $sqlquerry;
+}
+
+        if(isset($_SESSION['avatarLink'])){
+            changeDefaultPicTo_github($_SESSION['avatarLink']);
+        }
 ?>
 <!DOCTYPE html>
 <html>

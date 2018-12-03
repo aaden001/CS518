@@ -15,8 +15,9 @@
 
     $tempUserID = $_SESSION['userId'];
 
-    $tempUserID = $_SESSION['userId'];
-   
+
+
+
 
 function roomName_querry(){
     include 'dbconnect.php';
@@ -245,18 +246,41 @@ function sql_fecth_post($maxpostsize){
 
 function sql_post_profilePic($UserID){
         include 'dbconnect.php';
+        $getuserEmailquerry = $Connection->prepare("SELECT userEmail FROM Users WHERE userId=:tempId");
+        $getuserEmailquerry->execute(array('tempId' => $UserID));
+        $EmailResult = $getuserEmailquerry->fetch();
+        $email = $EmailResult['userEmail'];
 
         $querryProfilPic= $Connection->prepare("SELECT * FROM ProfilePictures WHERE userID=:tempId");
         $querryProfilPic->execute(array('tempId' => $UserID));
 
         $PicLinkResult = $querryProfilPic->fetch();
-        $imgString="";
-        if($PicLinkResult['userId'] ==  $UserID){
-          $imgString ='<img  src="' .$PicLinkResult['pictureLink']  .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
-        }else{
-          $imgString = '<img  src="../ProfilePics/james.jpeg" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
-        }
+        $root = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+     
+        $imgString= $root;
 
+        if($PicLinkResult['userId'] ==  $UserID){
+          $imgString .= $PicLinkResult['pictureLink'];
+          
+        }elseif(isset($_SESSION['avatarLink']) ){
+         
+            $imgString .= $_SESSION['avatarLink'];
+            $sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
+            $imgString = $sample;           
+        }else{
+          $imgString .= '../ProfilePics/james.jpeg';
+        }
+        $Connection = null;
+        $size = 40;
+      
+        $imgString = str_replace('..', '',$imgString);
+       
+       $default = $imgString;
+
+       $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
+
+
+        $imgString = '<img  src="' .$grav_url .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
         return $imgString;
 }
 
@@ -365,45 +389,6 @@ function pagination($c, $m)
     return $rangeWithDots;
 }
 
-function gravatarImage_display($UserID){
-
-       include 'dbconnect.php';
-        $getuserEmailquerry = $Connection->prepare("SELECT userEmail FROM Users WHERE userId=:tempId");
-        $getuserEmailquerry->execute(array('tempId' => $UserID));
-        $EmailResult = $getuserEmailquerry->fetch();
-        $email = $EmailResult['userEmail'];
-
-        $querryProfilPic= $Connection->prepare("SELECT * FROM ProfilePictures WHERE userID=:tempId");
-        $querryProfilPic->execute(array('tempId' => $UserID));
-
-        $PicLinkResult = $querryProfilPic->fetch();
-        $root = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-     
-        $imgString= $root;
-
-        if($PicLinkResult['userId'] ==  $UserID){
-          $imgString .= $PicLinkResult['pictureLink'];
-        }elseif(isset($_SESSION['avatarLink']) ){
-         
-            $imgString .= $_SESSION['avatarLink'];
-            $sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
-            $imgString = $sample;
-             echo "Smaple " .$imgString ."<br>";
-           
-        }else{
-          $imgString .= '../ProfilePics/james.jpeg';
-        }
-        $Connection = null;
-        $size = 40;
-      
-        $imgString = str_replace('..', '',$imgString);
-       
-       $default = $imgString;
-
-    $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
-
-   echo '<img col-1 src="'.$grav_url .'" alt="" />';
-}
 
 
 
@@ -590,8 +575,7 @@ i {
 
         <!-- Page Content  -->
         <div id="content" style="position: fixed;">
-          <span class="row">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light col-11">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light col-12">
                 <div class="container-fluid">
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
@@ -603,8 +587,8 @@ i {
                     </button>
                 </div>
             </nav>
-            <?php  gravatarImage_display( $_SESSION['userId']);?>
-          </span>
+          
+        
             
         
          
