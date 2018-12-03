@@ -31,12 +31,12 @@
 							$_SESSION['userName'] = $user->getUserFullname();
 							$_SESSION['userEmail'] = $user->getUserEmail();
 							$_SESSION['userHandle'] = $user->getUserHandle();
-								header("Location:Welcome.php");
+								/*header("Location:Welcome.php");*/
 							}
 						}
 					}
 
-            }elseif(isset($_GET['email']) && isset($_GET['password'])){
+            }/*elseif(isset($_GET['email']) && isset($_GET['password'])){
 				$email =  $_GET["email"];
 				$password = $_GET["password"];
 				$user = new User();
@@ -44,14 +44,14 @@
 				$user->setUserpassword($password);
 				echo $user->getUserEmail();
 				echo $user->getUserPassword();
-			/*	if($user->loginUser() == true){
+				if($user->loginUser() == true){
 				$_SESSION['userId'] = $user->getUserId();
 				$_SESSION['userName'] = $user->getUserFullname();
 				$_SESSION['userEmail'] = $user->getUserEmail();
 				$_SESSION['userHandle'] = $user->getUserHandle();
-					header("Location:Welcome.php");
-				}*/
-            }
+				//	header("Location:Welcome.php");
+				}
+            }*/
 		
 	}
 	catch(Exception $e)

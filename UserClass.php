@@ -191,14 +191,14 @@ class User{
 			$result = $query->fetchAll();
 			echo var_dump($result);
 
-			if(isset($_SESSION['access_token'])){
+			/*if(isset($_SESSION['access_token'])){
 
 
 
-			}else{
+			}else{*/
 					if($query->rowCount() == 0)
 					{
-					/*header("Location:index.php?error=1");*/
+					header("Location:index.php?error=1");
 					return false;
 					}else{
 					while($userData =$query->fetch()){
@@ -212,8 +212,8 @@ class User{
 					}
 					return true;
 					}
-			}
-							
+		/*	}
+*/							
 			}catch(PDOException $e)
 			{
 			echo "This Error Occured: " .$e->getMessage();
