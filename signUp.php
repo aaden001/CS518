@@ -68,9 +68,9 @@ session_start();
 				$queryUpdatePWD->execute(array('temp' => $_SESSION['access_token'], 'userMtemp' => $Email));
 					/*header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
 				echo "Already sign up just changing password<br> Confirming sign up<br>";
-				$ConFirm = $Connection->prepare("SELECT * FROM Users");
+				$ConFirm = $Connection->prepare("SELECT userEmail,userPassword FROM Users");
 				$ConFirm->execute();
-				$result = $ConFirm->setFetchMode(PDO::FETCH_ASSOC);
+				$result = $ConFirm->fetchAll();
 				echo var_dump($result);
 			}catch(PDOException $e){
 			echo $e->getMessage();
@@ -88,11 +88,12 @@ session_start();
 			$new_User->setUserPassword($password);
 			$new_User->SignUpUser();
 			echo "In check email Handle";
+			/*
 			$ConFirm = $Connection->prepare("SELECT * FROM Users");
 			$ConFirm->execute();
 			$result = $ConFirm->setFetchMode(PDO::FETCH_ASSOC);
 			echo var_dump($result);
-			/*header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+			header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
 		}
 		
 	}
