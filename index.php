@@ -78,7 +78,7 @@ error_reporting(E_ALL);
 		$_SESSION['avatarLink'] = $user->avatar_url;
 		echo "Before the change:" .$userName;
 		 $userName =  str_replace(' ', '*', $userName);
-		echo echo "<br> After the change:" .$userName;
+		 echo "<br> After the change:" .$userName;
 	/*	header("Location:signUp.php?username=".$userName ."&useremail=".$userEmail ."&userhandle=" .$userHandle);  */
 	     
 	  } 
