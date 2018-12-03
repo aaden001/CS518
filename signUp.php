@@ -56,9 +56,19 @@ session_start();
 		}
 
 		echo $userName ."<br>";
-		
-
-		if($new_User->checkEmailHandle())
+	
+		if(isset($_GET['error'])){
+			///updata access_token used as password in the data base
+			include 'dbconnect.php';
+			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
+			$data = [
+				'temp' => $_SESSION['access_token'],
+				'userMtemp' =>$Email,
+			];
+			$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
+			$queryUpdatePWD->execute($data);
+			echo "Below check email Handle";
+		}elseif($new_User->checkEmailHandle())
 		{	
 			$Name = stripslashes(htmlspecialchars($userName));
 			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
@@ -80,19 +90,6 @@ session_start();
 
 			/*$new_User->SignUpUser();*/
 			echo "In check email Handle";
-		}
-
-		if(isset($_GET['error'])){
-			///updata access_token used as password in the data base
-			include 'dbconnect.php';
-			$Email = stripslashes(htmlspecialchars($_GET['useremail']));
-			$data = [
-				'temp' => $_SESSION['access_token'],
-				'userMtemp' =>$Email,
-			];
-			$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
-			$queryUpdatePWD->execute($data);
-			echo "Below check email Handle";
 		}
 		/*header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
 	}
