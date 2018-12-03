@@ -40,7 +40,7 @@ session_start();
 	}
 
 
-	if(isset($_SESSION['access_token'] && $_SESSION['avatarLink'])){
+	if(isset($_SESSION['access_token'])&& isset($_SESSION['avatarLink'])){
 
 		$new_User = new User();
 		$new_User->setUserEmail($_GET['useremail']);
