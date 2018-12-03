@@ -192,18 +192,36 @@ function sql_fecth_post($maxpostsize){
 
 function sql_post_profilePic($UserID){
         include 'dbconnect.php';
+        $getuserEmailquerry = $Connection->prepare("SELECT userEmail FROM Users WHERE userId=:tempId");
+        $getuserEmailquerry->execute(array('tempId' => $UserID));
+        $EmailResult = $getuserEmailquerry->fetch();
+        $email = $EmailResult['userEmail'];
 
         $querryProfilPic= $Connection->prepare("SELECT * FROM ProfilePictures WHERE userID=:tempId");
         $querryProfilPic->execute(array('tempId' => $UserID));
 
         $PicLinkResult = $querryProfilPic->fetch();
-        $imgString="";
-        if($PicLinkResult['userId'] ==  $UserID){
-          $imgString ='<img  src="' .$PicLinkResult['pictureLink']  .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
-        }else{
-          $imgString = '<img  src="../ProfilePics/james.jpeg" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
-        }
+        $root = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+     
+        $imgString= $root;
 
+        if($PicLinkResult['userId'] ==  $UserID){
+          $imgString .= $PicLinkResult['pictureLink'];
+          
+        }else{
+          $imgString .= '../ProfilePics/james.jpeg';
+        }
+        $Connection = null;
+        $size = 40;
+
+        $imgString = str_replace('..', '',$imgString);
+       
+       $default = $imgString;
+
+       $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
+
+
+        $imgString = '<img  src="' .$grav_url .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
         return $imgString;
 }
 
