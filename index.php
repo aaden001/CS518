@@ -79,7 +79,7 @@ error_reporting(E_ALL);
 
     ///Process GitHub sign up here
 
-		/*header("Location:signUp.php?username=".$userName ."&useremail=".$userEmail ."&userhandle=" .$userHandle);  */
+		header("Location:signUp.php?username=".$userName ."&useremail=".$userEmail ."&userhandle=" .$userHandle);  
 	     
 	  } 
 	  else 
