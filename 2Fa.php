@@ -16,12 +16,13 @@ if(isset($_SESSION['userEmail']))
 		$g = new GoogleAuthenticator();
 		$salt = '7WAO342QFANY6IKBF7L7SWEUU79WL3VMT920VB5NQMW';
 		$secret = $username.$salt;
-		echo '<img src="'.$g->getURL("", 'http://192.168.56.152/', $secret).'" />';
+		echo '<img src="'.$g->getURL("", 'http://aaden001.cs518.cs.odu.edu', $secret).'" />';
 
 		$g = new GoogleAuthenticator();
 		$salt = '7WAO342QFANY6IKBF7L7SWEUU79WL3VMT920VB5NQMW';
 		$secret = $username.$salt;
-
+		$oneCode = $g->getCode($secret);
+		echo $oneCode;
 		echo '<form class="form-inline" action="" method="post">
 		<div class="form-group">
 		<label for="inputPassword6">Code Input</label>
