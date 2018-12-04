@@ -8,7 +8,7 @@
 
 if(isset($_SESSION['userEmail']))
   {	
-
+  		phpinfo();
 		include_once __DIR__.'/app/sonata/FixedBitNotation.php';
 		include_once __DIR__.'/sonata/GoogleAuthenticator.php';
   	 $username = $_SESSION['userName'];
