@@ -9,7 +9,7 @@
 if(isset($_SESSION['userEmail']))
   {
 		
-		include_once 'src/FixedBitNotation.php';
+		/*include_once 'src/FixedBitNotation.php';*/
 		include_once 'src/GoogleAuthenticator.php';
 		$g = new \Google\Authenticator\GoogleAuthenticator();
 		$salt = '7WAO342QFANY6IKBF7L7SWEUU79WL3VMT920VB5NQMW';
