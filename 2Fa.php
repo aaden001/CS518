@@ -9,7 +9,7 @@
 if(isset($_SESSION['userEmail']))
   {	
 
-		include_once __DIR__.'/sonata/FixedBitNotation.php';
+		include_once __DIR__.'/app/sonata/FixedBitNotation.php';
 		include_once __DIR__.'/sonata/GoogleAuthenticator.php';
   	 $username = $_SESSION['userName'];
 		/*$g = new \Google\Authenticator\GoogleAuthenticator();*/
