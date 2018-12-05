@@ -134,7 +134,7 @@ session_start();
 	 8 Email match to database
 	 9 Handle mathc to database
 	 10 Both Email and Handle to match to database
-
+	 11 Failed authentication signup
 */
 
  ?>
