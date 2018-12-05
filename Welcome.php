@@ -27,6 +27,17 @@ function changeDefaultPicTo_github($link){
     }
  
 }
+function checkUserLinkPicture(){
+        try{
+             include 'dbconnect.php';
+        $querryProfilPic= $Connection->prepare("SELECT * FROM ProfilePictures WHERE userID=:tempId");
+        $querryProfilPic->execute(array('tempId' =>  $_SESSION['userId']));
+        $PicLinkResult = $querryProfilPic->fetch();
+        echo $PicLinkResult['pictureLink'];
+        }catch(Exception $e){
+            $e->getMessage();
+        }
+}
 
 if(isset($_SESSION['avatarLink'])){
     try{
@@ -205,7 +216,7 @@ if(isset($_SESSION['avatarLink'])){
    
                 <?php 
                echo "All Public Rooms links <br>";
-
+                checkUserLinkPicture();
                 require 'dbconnect.php';
                 // $tempId = $_SESSION['userId']; 0 stands for public group
                 $query = $Connection->prepare("SELECT * FROM Rooms WHERE grpTyp=0");
