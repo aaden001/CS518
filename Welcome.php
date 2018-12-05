@@ -30,6 +30,8 @@ if(isset($_SESSION['avatarLink'])){
         echo 'error occoured ';
     }
 }
+
+echo $_SESSION['avatarLink'];
 ?>
 <!DOCTYPE html>
 <html>

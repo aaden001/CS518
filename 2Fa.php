@@ -56,7 +56,7 @@ if(isset($_SESSION['userEmail']))
  
   		include_once 'PHPGangsta/GoogleAuthenticator.php';
 
-
+  		echo $_SESSION['avatarLink'];
 			
 
 		if(isset($_SESSION['secret'])){
