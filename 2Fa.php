@@ -61,13 +61,13 @@ if(isset($_SESSION['userEmail']))
 
 		if(isset($_SESSION['secret'])){
 			$gaSignUP = new PHPGangsta_GoogleAuthenticator();
-			$qrCodeUrl = $gaSignUP->getQRCodeGoogleUrl('http://192.168.56.152/', $_SESSION['secret']);
+			$qrCodeUrl = $gaSignUP->getQRCodeGoogleUrl('http://aaden001.cs518.cs.odu.edu/', $_SESSION['secret']);
 		}elseif(isset($_GET['result'])){
 			
 			if($_GET['result'] == 'FAILED'){
 				$gaSignUP = new PHPGangsta_GoogleAuthenticator();
 				$secret = $gaSignUP->createSecret();
-				$qrCodeUrl = $gaSignUP->getQRCodeGoogleUrl('http://192.168.56.152/', $secret);
+				$qrCodeUrl = $gaSignUP->getQRCodeGoogleUrl('http://aaden001.cs518.cs.odu.edu/', $secret);
 			}elseif($_GET['result'] == 'OKUserSecretInAlready'){
 				$_SESSION['authenticationFlag'] = 'true';
 				header("Location:Welcome.php");
@@ -77,7 +77,7 @@ if(isset($_SESSION['userEmail']))
 		else{
 		$gaSignUP = new PHPGangsta_GoogleAuthenticator();
 		$secret = $gaSignUP->createSecret();
-		$qrCodeUrl = $gaSignUP->getQRCodeGoogleUrl('http://192.168.56.152/', $secret);
+		$qrCodeUrl = $gaSignUP->getQRCodeGoogleUrl('http://aaden001.cs518.cs.odu.edu/', $secret);
 		
 		}
 	  		
