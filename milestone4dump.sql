@@ -58,6 +58,11 @@ CREATE TABLE `Chat`.`ChatBox` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+CREATE TABLE `Chat`.`GoogleAuth` (
+  `ID` int(11) NOT NULL,
+`Secret` varchar(16) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 --
 -- Dumping data for table `ChatBox`
 --
