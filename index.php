@@ -4,12 +4,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-  if( isset($_SESSION['authenticationFlag']) === true )
-  {
-    header('Location: main.php?channel=general');
-    exit;
-  }
-
+ 
 
 
   //credit: https://gist.github.com/asika32764/b204ff4799d577fd4eef
