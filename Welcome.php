@@ -17,6 +17,7 @@
 
 function changeDefaultPicTo_github($link){
   include 'dbconnect.php';
+  $link = trim($link);
   $sqlquerry = $Connection->prepare("INSERT INTO ProfilePictures(userId,pictureLink) VALUES(:tempAdminID,:tempLinkAddress) ON DUPLICATE KEY UPDATE userId=:tempUser");
         $sqlquerry->execute(array('tempAdminID' => $_SESSION['userId'],'tempLinkAddress' =>$link, 'tempUser' => $_SESSION['userId'] ));
 
@@ -25,9 +26,9 @@ function changeDefaultPicTo_github($link){
 
 if(isset($_SESSION['avatarLink'])){
     if(changeDefaultPicTo_github($_SESSION['avatarLink'])){
-        echo "Avatar from get gub transfered";
+        echo "Avatar from get gub transfered..............................................Avatar from get gub transfered";
     }else{
-        echo 'error occoured ';
+        echo 'error occoured...............................................................error occoured';
     }
 }
 
