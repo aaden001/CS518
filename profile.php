@@ -211,7 +211,7 @@
                         require 'dbconnect.php';
                         $querryProfilPic= $Connection->prepare("SELECT * FROM ProfilePictures WHERE userID=:tempId");
                         $querryProfilPic->execute(array('tempId' => $_GET['userId']));
-                        $PicLinkResult = $querryProfilPic->fetch();
+                        $PicLinkResult = $querryProfilPic->fetchAll();
                         $namequerry = $Connection->prepare("SELECT userFullName, userEmail,userHandle FROM Users WHERE userId=:tempUserId");
                         $namequerry->execute(array('tempUserId' => $_GET['userId']));
                         $resultquerry = $namequerry->fetch();
@@ -220,8 +220,9 @@
                         $resultRoomId = $roomIdquerry->fetchAll();
                         echo $PicLinkResult['pictureLink'];
                         echo $querryProfilPic->rowCount();
+                        echo count($PicLinkResult) ;
                         echo '<div class="container-fluid"><div class="wrapper">';
-                        if($querryProfilPic->rowCount() == 1){
+                        if(count($PicLinkResult) == 1){
                             echo'<img  src="' .$PicLinkResult['pictureLink'] .'" class="vtop"alt="Smiley face" style="float:left" width="60%" height="42%">';
                         }else{
                             echo '<img  src="../ProfilePics/james.jpeg" alt="Smiley face" style="float:left" width="60%" height="42%">';
