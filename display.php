@@ -190,6 +190,7 @@ function sql_fecth_post($maxpostsize){
         return $result;
 }
 
+
 function sql_post_profilePic($UserID){
         include 'dbconnect.php';
         $getuserEmailquerry = $Connection->prepare("SELECT userEmail FROM Users WHERE userId=:tempId");
@@ -215,17 +216,20 @@ function sql_post_profilePic($UserID){
         $size = 40;
 
         $imgString = str_replace('..', '',$imgString);
-        $sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
+    $occorance = substr_count( $imgString,"http");
+
+    if($occorance == 2){
+    $sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
     $imgString = $sample;
-        $default = $imgString;
-
-       $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
+    }
 
 
-        $imgString = '<img  src="' .$grav_url .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
-        return $imgString;
+    $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
+
+
+    $imgString = '<img  src="' .$grav_url .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
+    return $imgString;
 }
-
 function sql_fetch_comment(){
       include 'dbconnect.php';
 

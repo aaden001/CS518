@@ -243,48 +243,7 @@ function sql_fecth_post($maxpostsize){
 
         return $result;
 }
-function gravatar_Picture($UserID){
-         include 'dbconnect.php';
-        $getuserEmailquerry = $Connection->prepare("SELECT userEmail FROM Users WHERE userId=:tempId");
-        $getuserEmailquerry->execute(array('tempId' => $UserID));
-        $EmailResult = $getuserEmailquerry->fetch();
-        $email = $EmailResult['userEmail'];
 
-        $querryProfilPic= $Connection->prepare("SELECT * FROM ProfilePictures WHERE userID=:tempId");
-        $querryProfilPic->execute(array('tempId' => $UserID));
-
-        $PicLinkResult = $querryProfilPic->fetch();
-        $root = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-     
-        $imgString= $root;
-
-        if($PicLinkResult['userId'] ==  $UserID){
-          $imgString .= $PicLinkResult['pictureLink'];
-          
-        }else{
-          $imgString .= '../ProfilePics/james.jpeg';
-        }
-        $Connection = null;
-        $size = 40;
-
-        $imgString = str_replace('..', '',$imgString);
-        $occorance = substr_count( $imgString,"http");
-
-        if($occorance == 2){
-        	$sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
-			$imgString = $sample;
-        }
-
-        echo "Part 1: " .$imgString ."<br>";
-     
-       	$default = $imgString;
-       	echo "Part 2: " . $default ."<br>";
-       $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
-       echo  "Part 3: " .$grav_url ."<br>";
-
-        $imgString = '<img  src="' .$grav_url .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
-    	echo $imgString;
-}
 
 
 function sql_post_profilePic($UserID){
@@ -312,9 +271,13 @@ function sql_post_profilePic($UserID){
         $size = 40;
 
         $imgString = str_replace('..', '',$imgString);
-       	$sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
+		$occorance = substr_count( $imgString,"http");
+
+		if($occorance == 2){
+		$sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
 		$imgString = $sample;
-       	$default = $imgString;
+		}
+
 
        $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
 
@@ -635,12 +598,9 @@ i {
             <div id="container" >
         <?php   
 
-           if (isset($_GET['u'])){
-           		  gravatar_Picture($_GET['u']);
-           }
-
+    
                       
-/*
+
         if($_SESSION['userId'] == 6){
             include 'dbconnect.php';
             include 'ChatClass.php';
@@ -798,7 +758,7 @@ i {
           echo roomName_querry();
           }
         }
-    */
+    
           
         ?>
             </div>   <!-- End of Container -->
