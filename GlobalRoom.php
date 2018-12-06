@@ -244,7 +244,7 @@ function sql_fecth_post($maxpostsize){
         return $result;
 }
 function gravatar_Picture($UserID){
-        include 'dbconnect.php';
+         include 'dbconnect.php';
         $getuserEmailquerry = $Connection->prepare("SELECT userEmail FROM Users WHERE userId=:tempId");
         $getuserEmailquerry->execute(array('tempId' => $UserID));
         $EmailResult = $getuserEmailquerry->fetch();
@@ -259,7 +259,7 @@ function gravatar_Picture($UserID){
         $imgString= $root;
 
         if($PicLinkResult['userId'] ==  $UserID){
-          $imgString .= trim($PicLinkResult['pictureLink']);
+          $imgString .= $PicLinkResult['pictureLink'];
           
         }else{
           $imgString .= '../ProfilePics/james.jpeg';
@@ -267,42 +267,16 @@ function gravatar_Picture($UserID){
         $Connection = null;
         $size = 40;
 
-   /*     elseif(isset($_SESSION['avatarLink']) ){
-         
-            $imgString .= $_SESSION['avatarLink'];
-            $sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
-            $imgString = $sample;           
-        }
-      */
-        echo $imgString;
-        /* $imgString = str_replace('..', '',$imgString);*/
-        $needle = '..http://aaden001.cs518.cs.odu.edu';
-/*
-        $occurance = substr($imgString, $needle);
-        if($occurance > 0){
-        $sample = preg_replace("/..http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString,1);
-        $imgString = $sample;
-			if ($occurances > 1) {  
-			// second replace
-			$sample = preg_replace("/..http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString,1);
-			$imgString = $sample;
-			}
-        }
-        */
-       /*
-        if(strpos($imgString,$needle)!== strrpos($imgString,$needle)){
-       
-        }
-       
+        $imgString = str_replace('..', '',$imgString);
+       	$sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
+		$imgString = $sample;
+       	$default = $imgString;
+       	echo $default ."<br>";
+       $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
+       echo $grav_url ."<br>";
 
-       $default = $imgString;*/
-
-      /* $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
-
-
-        $imgString = '<img  src="' .$grav_url .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
-       */
-        return $imgString;
+       /* $imgString = '<img  src="' .$grav_url .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
+    */
 }
 
 
@@ -536,8 +510,9 @@ i {
             <div class="sidebar-header">
                 <h3 style="color: orange; font-family: tahoma; font-size: 25px;">Welcome 
                     <span>
-                        <?php echo $_SESSION['userName'];?>
-                            
+                        <?php echo $_SESSION['userName'];
+                        ?>
+                           
                         </span>
                 </h3>
         
@@ -652,6 +627,13 @@ i {
          
             <div id="container" >
         <?php   
+
+           if (isset($_GET['u'])){
+           		  gravatar_Picture($_GET['u']);
+           }
+
+                      
+
         if($_SESSION['userId'] == 6){
             include 'dbconnect.php';
             include 'ChatClass.php';
