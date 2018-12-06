@@ -260,7 +260,7 @@ function sql_post_profilePic($UserID){
         $imgString= $root;
 
         if($PicLinkResult['userId'] ==  $UserID){
-          $imgString .= $PicLinkResult['pictureLink'];
+          $imgString .= trim($PicLinkResult['pictureLink']);
           
         }else{
           $imgString .= '../ProfilePics/james.jpeg';
