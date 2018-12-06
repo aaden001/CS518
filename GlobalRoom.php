@@ -274,7 +274,7 @@ function gravatar_Picture($UserID){
        	$default = $imgString;
        	echo "Part 2: " . $default ."<br>";
        $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
-       echo  "Part 3: "$grav_url ."<br>";
+       echo  "Part 3: " .$grav_url ."<br>";
 
         $imgString = '<img  src="' .$grav_url .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
     	echo $imgString;
