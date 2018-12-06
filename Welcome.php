@@ -219,7 +219,7 @@ if(isset($_SESSION['avatarLink'])){
    
                 <?php 
                echo "All Public Rooms links <br>";
-                checkUserLinkPicture();
+              
                 require 'dbconnect.php';
                 // $tempId = $_SESSION['userId']; 0 stands for public group
                 $query = $Connection->prepare("SELECT * FROM Rooms WHERE grpTyp=0");
