@@ -8,9 +8,9 @@
     if(!isset($_SESSION['userId']) )
     {
         header("Location:index.php");
-    }elseif(!isset($_SESSION['authenticationFlag'])){
+    }else/*elseif(!isset($_SESSION['authenticationFlag'])){
          header("Location:2Fa.php");
-    }else
+    }*/
     
     $tempUserID = $_SESSION['userId'];
 
@@ -23,7 +23,7 @@ function changeDefaultPicTo_github($link){
         $sqlquerry->execute(array('tempAdminID' => $_SESSION['userId'],'tempLinkAddress' =>$link, 'tempUser' => $_SESSION['userId'] ));
         return $sqlquerry;
     }catch(Exception $e){
-          echo 'error occoured...............................................................error occoured333'   .$e->getMessage();
+          $e->getMessage();
     }
  
 }
@@ -43,12 +43,12 @@ if(isset($_SESSION['avatarLink'])){
     try{
              if(changeDefaultPicTo_github($_SESSION['avatarLink'])){
                 unset($_SESSION['avatarLink']);
-            echo "Avatar from get gub transfered..............................................Avatar from get gub transfered";
+            
         }else{
             echo 'error occoured...............................................................error occoured';
         }
     }catch(Exception $e){
-          echo 'error occoured...............................................................error occoured222'   .$e->getMessage();
+        $e->getMessage();
     }
    
 }

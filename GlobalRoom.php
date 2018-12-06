@@ -243,8 +243,7 @@ function sql_fecth_post($maxpostsize){
 
         return $result;
 }
-
-function sql_post_profilePic($UserID){
+function gravatar_Picture($UserID){
         include 'dbconnect.php';
         $getuserEmailquerry = $Connection->prepare("SELECT userEmail FROM Users WHERE userId=:tempId");
         $getuserEmailquerry->execute(array('tempId' => $UserID));
@@ -275,10 +274,66 @@ function sql_post_profilePic($UserID){
             $imgString = $sample;           
         }
       */
+        echo $imgString;
+        /* $imgString = str_replace('..', '',$imgString);*/
+        $needle = '..http://aaden001.cs518.cs.odu.edu';
+/*
+        $occurance = substr($imgString, $needle);
+        if($occurance > 0){
+        $sample = preg_replace("/..http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString,1);
+        $imgString = $sample;
+			if ($occurances > 1) {  
+			// second replace
+			$sample = preg_replace("/..http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString,1);
+			$imgString = $sample;
+			}
+        }
+        */
+       /*
+        if(strpos($imgString,$needle)!== strrpos($imgString,$needle)){
+       
+        }
+       
+
+       $default = $imgString;*/
+
+      /* $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
+
+
+        $imgString = '<img  src="' .$grav_url .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
+       */
+        return $imgString;
+}
+
+
+function sql_post_profilePic($UserID){
+        include 'dbconnect.php';
+        $getuserEmailquerry = $Connection->prepare("SELECT userEmail FROM Users WHERE userId=:tempId");
+        $getuserEmailquerry->execute(array('tempId' => $UserID));
+        $EmailResult = $getuserEmailquerry->fetch();
+        $email = $EmailResult['userEmail'];
+
+        $querryProfilPic= $Connection->prepare("SELECT * FROM ProfilePictures WHERE userID=:tempId");
+        $querryProfilPic->execute(array('tempId' => $UserID));
+
+        $PicLinkResult = $querryProfilPic->fetch();
+        $root = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+     
+        $imgString= $root;
+
+        if($PicLinkResult['userId'] ==  $UserID){
+          $imgString .= $PicLinkResult['pictureLink'];
+          
+        }else{
+          $imgString .= '../ProfilePics/james.jpeg';
+        }
+        $Connection = null;
+        $size = 40;
+
         $imgString = str_replace('..', '',$imgString);
        	$sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
-        $imgString = $sample;
-       $default = $imgString;
+		$imgString = $sample;
+       	$default = $imgString;
 
        $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
 
