@@ -268,9 +268,15 @@ function gravatar_Picture($UserID){
         $size = 40;
 
         $imgString = str_replace('..', '',$imgString);
+        $occorance = substr_count( $imgString,"http");
+
+        if($occorance == 2){
+        	$sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
+			$imgString = $sample;
+        }
+
         echo "Part 1: " .$imgString ."<br>";
-       /*	$sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
-		$imgString = $sample;*/
+     
        	$default = $imgString;
        	echo "Part 2: " . $default ."<br>";
        $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
