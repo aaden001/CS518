@@ -11,7 +11,7 @@
     }else
 
     $tempUserID = $_SESSION['userId'];
-    
+
     function checkUserGoogleAuth(){
     	try{
 			include 'dbconnect.php';
@@ -62,8 +62,7 @@ if(isset($_SESSION['userEmail']))
  
   		include_once 'PHPGangsta/GoogleAuthenticator.php';
 
-  		echo $_SESSION['avatarLink'];
-			
+  		
 
 		if(isset($_SESSION['secret'])){
 			$gaSignUP = new PHPGangsta_GoogleAuthenticator();
@@ -104,8 +103,7 @@ if(isset($_SESSION['userEmail']))
 
 			</div>
 			</form>';
-			echo "Resulting code from secret: " .$gaSignIn->getCode($secret);
-
+			
 
   		}else{
   			
