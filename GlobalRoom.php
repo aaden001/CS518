@@ -268,15 +268,16 @@ function gravatar_Picture($UserID){
         $size = 40;
 
         $imgString = str_replace('..', '',$imgString);
-       	$sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
-		$imgString = $sample;
+        echo "Part 1: " .$imgString ."<br>";
+       /*	$sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
+		$imgString = $sample;*/
        	$default = $imgString;
-       	echo $default ."<br>";
+       	echo "Part 2: " . $default ."<br>";
        $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
-       echo $grav_url ."<br>";
+       echo  "Part 3: "$grav_url ."<br>";
 
-       /* $imgString = '<img  src="' .$grav_url .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
-    */
+        $imgString = '<img  src="' .$grav_url .'" alt="Smiley face" style="float:right" width="42" height="42"><br><br><br><div>';
+    	echo $imgString;
 }
 
 
@@ -633,7 +634,7 @@ i {
            }
 
                       
-
+/*
         if($_SESSION['userId'] == 6){
             include 'dbconnect.php';
             include 'ChatClass.php';
@@ -666,8 +667,8 @@ i {
                     echo '<div id="displayArea" class="container"style="position: fixed;top: 11%;bottom: 20%; right: 5%;">';
                     $buildString = printPagePanel($PanelSize);
                     $buildString .= '<div id="display" class="pre-scrollable">';
-                    /*  $buildString .= '</div></div>';
-                    style="position: fixed;top: 11%;bottom: 20%;right: 5%;*/
+                  //  $buildString .= '</div></div>';
+                    //style="position: fixed;top: 11%;bottom: 20%;right: 5%;
                     foreach ($post as $row) {
                     $postID++; 
                     $buildString .= ' <div id="' .$postID .'" class="posts-wrapper row">'; 
@@ -707,7 +708,7 @@ i {
                 }
                    echo postArea(); 
                    echo '<h3>List Of People in the room</h3><div class="line" style="margin-top: 0%;margin-bottom: 0%;"></div>';
-                   /*echo people_inRoom($_SESSION['currentRoomID']);*/
+                  // echo people_inRoom($_SESSION['currentRoomID']);
 
                    echo '<div class=row>';
                    people_inRoom($_SESSION['currentRoomID']);
@@ -749,7 +750,7 @@ i {
           echo '<div id="displayArea" class="container"style="position: fixed;top: 20%;bottom: 20%; right: 5%;">';
           $buildString = printPagePanel($PanelSize);
           $buildString .= '<div id="display" class="pre-scrollable">';
-          /*  $buildString .= '</div></div>';*/
+            //$buildString .= '</div></div>';
           foreach ($post as $row) {
           $postID++; 
           $buildString .= ' <div id="' .$postID .'" class="posts-wrapper row">'; 
@@ -791,7 +792,7 @@ i {
           echo roomName_querry();
           }
         }
-    
+    */
           
         ?>
             </div>   <!-- End of Container -->
