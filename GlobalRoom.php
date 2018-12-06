@@ -8,9 +8,11 @@
    /* echo $_SESSION['currentPage'] ;
    
     echo $_SESSION['userId'];*/
-   if(!isset($_SESSION['userId']))
+    if(!isset($_SESSION['userId']) )
     {
         header("Location:index.php");
+    }elseif(!isset($_SESSION['authenticationFlag'])){
+         header("Location:2Fa.php");
     }else
 
     $tempUserID = $_SESSION['userId'];
@@ -643,7 +645,7 @@ i {
                     $buildString .= '<p style="background-color:blue;"' .'>' .$row['created_at'] .'</p></div><div class="col-sm-2">';
                     $buildString .=  sql_post_profilePic($row['UserID']);
                     $buildString .= $row['userHandle'];
-                    $buildString .=  $row['ID'];
+                   /* $buildString .=  $row['ID'];*/
                     $buildString .= '</div><br></div>';
                     $buildString .=  likes_dislike_Post($row['ID']);
                     $comment = sql_fetch_comment();

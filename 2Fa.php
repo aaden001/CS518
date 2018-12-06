@@ -5,6 +5,10 @@
     error_reporting(E_ALL);
 
     session_start();
+    if(!isset($_SESSION['userId']) )
+    {
+        header("Location:index.php");
+    }else
 
     function checkUserGoogleAuth(){
     	try{

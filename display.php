@@ -6,9 +6,11 @@
     $_SESSION['currentRoomID'] = $_POST['currentRoomID'];
     $_SESSION['currentPage']   = $_POST['page'];
     $_SESSION['userId'] = $_POST['userId'];
-   if(!isset($_SESSION['userId']))
+   if(!isset($_SESSION['userId']) )
     {
         header("Location:index.php");
+    }elseif(!isset($_SESSION['authenticationFlag'])){
+         header("Location:2Fa.php");
     }else
 
 
@@ -389,7 +391,7 @@ function pagination($c, $m)
                  $buildString .=  sql_post_profilePic($row['UserID']);
                  $buildString .= $row['userHandle'];
 
-                 $buildString .=  $row['ID'];
+                /* $buildString .=  $row['ID'];*/
                  $buildString .= '</div><br></div>';
                  $buildString .=  likes_dislike_Post($row['ID']);
 

@@ -8,9 +8,9 @@
     if(!isset($_SESSION['userId']) )
     {
         header("Location:index.php");
-    }else/*elseif(!isset($_SESSION['authenticationFlag'])){
+    }elseif(!isset($_SESSION['authenticationFlag'])){
          header("Location:2Fa.php");
-    }*/
+    }else
     
     $tempUserID = $_SESSION['userId'];
 
@@ -27,6 +27,8 @@ function changeDefaultPicTo_github($link){
     }
  
 }
+/*
+Used for debugging 
 function checkUserLinkPicture(){
         try{
              include 'dbconnect.php';
@@ -37,7 +39,7 @@ function checkUserLinkPicture(){
         }catch(Exception $e){
             $e->getMessage();
         }
-}
+}*/
 
 if(isset($_SESSION['avatarLink'])){
     try{
