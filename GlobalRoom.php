@@ -277,7 +277,7 @@ function sql_post_profilePic($UserID){
 		$sample = preg_replace("/http:\/\/aaden001.cs518.cs.odu.edu/", "", $imgString);
 		$imgString = $sample;
 		}
-
+		$default = $imgString
 
        $grav_url = "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
 
