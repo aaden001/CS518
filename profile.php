@@ -218,7 +218,7 @@
                         $roomIdquerry = $Connection->prepare("SELECT RoomsID FROM UserGroups WHERE UserID=:tempID");
                         $roomIdquerry->execute(array('tempID' => $_GET['userId']));
                         $resultRoomId = $roomIdquerry->fetchAll();
-                        
+                        echo $PicLinkResult['pictureLink'];
                         
                         echo '<div class="container-fluid"><div class="wrapper">';
                         if($querryProfilPic->rowCount() == 1){
