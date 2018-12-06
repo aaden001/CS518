@@ -10,6 +10,8 @@
         header("Location:index.php");
     }else
 
+    $tempUserID = $_SESSION['userId'];
+    
     function checkUserGoogleAuth(){
     	try{
 			include 'dbconnect.php';

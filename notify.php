@@ -11,6 +11,8 @@
     }elseif(!isset($_SESSION['authenticationFlag'])){
          header("Location:2Fa.php");
     }else
+
+    $tempUserID = $_SESSION['userId'];
 ?>
 <!DOCTYPE html>
 <html>
