@@ -219,7 +219,7 @@
                         $roomIdquerry->execute(array('tempID' => $_GET['userId']));
                         $resultRoomId = $roomIdquerry->fetchAll();
                         echo $PicLinkResult['pictureLink'];
-                        
+                        echo $querryProfilPic->rowCount();
                         echo '<div class="container-fluid"><div class="wrapper">';
                         if($querryProfilPic->rowCount() == 1){
                             echo'<img  src="' .$PicLinkResult['pictureLink'] .'" class="vtop"alt="Smiley face" style="float:left" width="60%" height="42%">';
