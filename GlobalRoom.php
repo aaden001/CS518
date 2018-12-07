@@ -227,7 +227,7 @@ function postArea(){
         <form  enctype="multipart/form-data">
         <div class="form-group">
         <div class="input-group input-file2" name="doc">
-        <input type="text" class="form-control" placeholder="Choose a file..." />     
+        <input id="fileUpload"type="text" class="form-control" placeholder="Choose a file..."  onchange="showMyImage(this) />     
         <span class="input-group-btn">
         <button class="btn btn-default btn-choose" type="button" style="margin-top: 0%;">Choose</button>
         </span>
@@ -237,7 +237,8 @@ function postArea(){
         <button type="submit" class="btn btn-primary pull-right" disabled>Submit</button>
         <button type="reset" class="btn btn-danger">Reset</button>
         </div>
-        </form>       
+        </form> 
+       <div id="image-holder"> </div>  
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -577,7 +578,7 @@ function pagination($c, $m)
 <!-- Our Custom CSS-->
   <!--  <link rel="stylesheet" href="style2.css"> -->
 <!--    Scrollbar Custom CSS-->
-  <!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"> -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 <!--    Font Awesome JS-->
    <!-- <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script>
    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script> -->
@@ -763,7 +764,7 @@ i {
             
         
          
-            <div id="container" >
+            <div id="container-fluid" >
         <?php   
 
     
@@ -935,6 +936,8 @@ i {
     <script src="//code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+ <script type="text/javascript" src="jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 <!-- <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> -->
     <!-- End ofPage Content  -->
    <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -947,7 +950,7 @@ i {
    <!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
  -->
     <!-- jQuery Custom Scroller CDN -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script> -->
+    
 <!--      <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
  -->   
@@ -956,8 +959,8 @@ i {
 
     
     var userID = "<?php echo $_SESSION['userId']; ?>"; var pageNumber = "<?php echo $_SESSION['currentPage']; ?>";</script>
-   <!--  <script type="text/javascript" src="toggle.js"></script> -->
-    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="toggle.js"></script>
+   
     <script type="text/javascript" src="load.js"></script>
     <script type="text/javascript"src="more.js"></script>
     <script type="text/javascript" src="comment.js"></script>
