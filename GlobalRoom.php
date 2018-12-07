@@ -93,7 +93,7 @@ function postArea(){
       
   <!-- Post Document-->
   <div class="modal fade" id="modal-1"  tabindex="-1" role="dialog"  data-backdrop="false">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
@@ -132,7 +132,7 @@ function postArea(){
 
   <!-- Post Picture-->
 <div class="modal fade" id="modal-2"  tabindex="-1" role="dialog"  data-backdrop="false">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal" style="margin-right: 2%;">Document</a>
@@ -158,7 +158,7 @@ function postArea(){
 
   <!-- Post Code-->
 <div class="modal fade" id="modal-3"  tabindex="-1" role="dialog"  data-backdrop="false">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
@@ -168,9 +168,13 @@ function postArea(){
        
       </div>
       <div class="modal-body">
-        <p>Modal 3</p>
+        <h3>Post Code</h3>
+        <form class="input-group">
+        <input type="text" class="form-control custom-control postLink" placeholder="Put your code format here" row="1" >
+        <span class="input-group-addon btn btn-success postL">Post</span>
+        </form>
         
-  <a href="#modal-1" data-toggle="modal" data-dismiss="modal">< Previous</a>
+  
         
       </div>
       <div class="modal-footer">
@@ -183,7 +187,7 @@ function postArea(){
 
  <!-- Post Picture As Link-->
  <div class="modal fade" id="modal-4"  tabindex="-1" role="dialog"  data-backdrop="false">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
@@ -194,6 +198,10 @@ function postArea(){
       </div>
       <div class="modal-body">
         <h3>Picture as link</h3>
+        <form class="input-group">
+        <input type="text" class="form-control custom-control postLink" placeholder="Put a link to a picture" row="1" >
+        <span class="input-group-addon btn btn-success postL">Post</span>
+        </form>
 
       </div>
       <div class="modal-footer">
@@ -205,7 +213,7 @@ function postArea(){
 
  <!-- Post Picture As File Image-->
  <div class="modal fade" id="modal-5"  tabindex="-1" role="dialog"  data-backdrop="false">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
