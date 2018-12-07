@@ -45,7 +45,7 @@ Credit https://stackoverflow.com/questions/901115/how-can-i-get-query-string-val
 									'userId': userID,
 								},
 								success: function(response){
-
+									console.log(response);
 									var obj = jQuery.parseJSON(response);
 									var page = $.trim(obj.pagination);
 									var buildpage = $.trim(obj.buildpage);

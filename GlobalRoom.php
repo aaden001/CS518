@@ -125,7 +125,6 @@ function postArea(){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -143,14 +142,14 @@ function postArea(){
        
       </div>
       <div class="modal-body">
-        <p>Modal 2</p>
-        
-  <a href="#modal-1" data-toggle="modal" data-dismiss="modal">< Previous</a>
+      <h3>Post Picture As</h3>
+        <a href="#modal-4" class="btn btn-dark"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Link</a>
+        <a href="#modal-5" class="btn btn-primary"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">FileImage</a>
+ 
         
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -176,7 +175,64 @@ function postArea(){
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+
+
+ <!-- Post Picture As Link-->
+ <div class="modal fade" id="modal-4"  tabindex="-1" role="dialog"  data-backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
+        <a href="#modal-2" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Picture</a>
+         <a href="#modal-3" class="btn btn-success"  data-toggle="modal" data-dismiss="modal">Code</a>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+       
+      </div>
+      <div class="modal-body">
+        <h3>Picture as link</h3>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+
+ <!-- Post Picture As File Image-->
+ <div class="modal fade" id="modal-5"  tabindex="-1" role="dialog"  data-backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
+        <a href="#modal-2" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Picture</a>
+         <a href="#modal-3" class="btn btn-success"  data-toggle="modal" data-dismiss="modal">Code</a>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+       
+      </div>
+      <div class="modal-body">
+        <h3>Picture as File Image</h3>
+        <form  enctype="multipart/form-data">
+        <div class="form-group">
+        <div class="input-group input-file2" name="doc">
+        <input type="text" class="form-control" placeholder="Choose a file..." />     
+        <span class="input-group-btn">
+        <button class="btn btn-default btn-choose" type="button" style="margin-top: 0%;">Choose</button>
+        </span>
+        </div>
+        </div>
+        <div class="form-group">
+        <button type="submit" class="btn btn-primary pull-right" disabled>Submit</button>
+        <button type="reset" class="btn btn-danger">Reset</button>
+        </div>
+        </form>       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -520,7 +576,7 @@ function pagination($c, $m)
 <!-- Thumps Up thump down -->
 
 
-  <!--   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    
 <style>
   @media (min-width: 1200px) {
