@@ -11,8 +11,6 @@
     if(!isset($_SESSION['userId']) )
     {
         header("Location:index.php");
-    }elseif(!isset($_SESSION['authenticationFlag'])){
-         header("Location:2Fa.php");
     }else
 
     $tempUserID = $_SESSION['userId'];
@@ -86,9 +84,40 @@ function postArea(){
       <div class="form-group ">        
       <textarea class="form-control" rows="2" id="messages" name="messages" form="chatArea" maxlength="300" placeholder="Write a Post"></textarea>';
       if($newRoomObj->check_room_status($_SESSION['currentRoomID']) == 1){
-         $postA .='<span ><input  type="code" id= "code" class="btn btn-success" style="margin-top: 4px;">Code</input>
-         <input  type="submit" id= "Picture" class="btn btn-success" style="margin-top: 4px;">Picture</input>
-         <button  type="submit" id= "post-submit" class="btn btn-success" style="margin-top: 4px;">Send</button></span>';
+         $postA .='<span >
+
+         <button  type="submit" id= "post-submit" class="btn btn-success" style="margin-top: 4px;">Send</button></span>
+
+          <!-- Button trigger modal -->
+         <button  type="button" id= "more-submit" class="btn btn-success" style="margin-top: 4px;" data-toggle="modal" data-target="#exampleModal">More</button></span>
+      
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog"  data-backdrop="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Modal title</h4>
+        <button type="button" class="close" data-dismiss="modal">
+        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        
+      </div>
+      <div class="modal-body">
+        <p>Modal 1</p>
+        
+  <a href="#modal-2" data-toggle="modal" data-dismiss="modal">Next ></a>
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->  ';
+        /* <input  type="code" id= "code" class="btn btn-success" style="margin-top: 4px;">Code</input>
+         <input  type="submit" id= "Picture" class="btn btn-success" style="margin-top: 4px;">Picture</input>*/
+
       }else{
          $postA .='<br><h3> Room has been archived by admin</h3>';
       }
@@ -407,18 +436,24 @@ function pagination($c, $m)
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" type="text/css" href="stylewelcome.css">
     <title>Get Together </title>
+    <head>
+
+
 
 <!--   Bootstrap CSS CDN-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+   <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
 <!-- Our Custom CSS-->
-   <link rel="stylesheet" href="style2.css">
+  <!--  <link rel="stylesheet" href="style2.css"> -->
 <!--    Scrollbar Custom CSS-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+  <!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"> -->
 <!--    Font Awesome JS-->
    <!-- <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script>
    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script> -->
 <!-- Thumps Up thump down -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <!--   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
    
 <style>
   @media (min-width: 1200px) {
@@ -765,24 +800,35 @@ i {
         ?>
             </div>   <!-- End of Container -->
 
-    </div><!-- End ofPage Content  -->
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-
+    </div>
+    <script src="//code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<!-- <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> -->
+    <!-- End ofPage Content  -->
+   <!-- jQuery CDN - Slim version (=without AJAX) -->
+ <!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+ -->
     <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script> -->
 
     <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
+   <!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+ -->
     <!-- jQuery Custom Scroller CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script type="text/javascript">var roomID = "<?php echo $_SESSION['currentRoomID'];?>";
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script> -->
+<!--      <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+ -->   
+
+  <script type="text/javascript">var roomID = "<?php echo $_SESSION['currentRoomID'];?>";
+
+    
     var userID = "<?php echo $_SESSION['userId']; ?>"; var pageNumber = "<?php echo $_SESSION['currentPage']; ?>";</script>
-    <script type="text/javascript" src="toggle.js"></script>
+   <!--  <script type="text/javascript" src="toggle.js"></script> -->
     <script type="text/javascript" src="jquery.js"></script>
     <script type="text/javascript" src="load.js"></script>
-   
+    <script type="text/javascript"src="more.js"></script>
     <script type="text/javascript" src="comment.js"></script>
     <script type="text/javascript" src="delete.js"></script>
 
