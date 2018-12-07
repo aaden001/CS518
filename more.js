@@ -4,7 +4,7 @@ $(document).ready(function(){
     $(".input-file").before(
         function() {
             if ( ! $(this).prev().hasClass('input-ghost') ) {
-                var element = $("<input type='file' class='input-ghost' style='visibility:hidden; height:0' accept='application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf'>");
+                var element = $("<input id='doc' type='file' class='input-ghost' style='visibility:hidden; height:0' accept='application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf'>");
                 element.attr("name",$(this).attr("name"));
                 element.change(function(){
                     element.next(element).find('input').val((element.val()).split('\\').pop());
@@ -26,25 +26,6 @@ $(document).ready(function(){
         }
     );
 }
-     function showMyImage(fileInput) {
-        var files = fileInput.files;
-        for (var i = 0; i < files.length; i++) {           
-            var file = files[i];
-            var imageType = /image.*/;     
-            if (!file.type.match(imageType)) {
-                continue;
-            }           
-            var img=document.getElementById("thumbnil");            
-            img.file = file;    
-            var reader = new FileReader();
-            reader.onload = (function(aImg) { 
-                return function(e) { 
-                    aImg.src = e.target.result; 
-                }; 
-            })(img);
-            reader.readAsDataURL(file);
-        }    
-    }
 
    function picture_Upload() {
     $(".input-file2").before(
@@ -60,8 +41,10 @@ $(document).ready(function(){
                 });
                 $(this).find("button.btn-reset").click(function(){
                     element.val(null);
+                    $("img").remove("#image-holder");
                     $(this).parents(".input-file").find('input').val('');
                 });
+
                 $(this).find('input').css("cursor","pointer");
                 $(this).find('input').mousedown(function() {
                     $(this).parents('.input-file').prev().click();
@@ -114,6 +97,27 @@ $(function() {
             alert("Pls select only images");
           }
         });
+
+
+     $('.doc').on('click',function(){
+            event.preventDefault();
+        var formData = new FormData($("#doc"));
+        $.ajax({
+            url: 'more.php',  
+            type: 'POST',
+            data: formData,
+            success:function(data){
+               console.log(data);
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        })
+     });
+     
+
+
+
 });
 
 });

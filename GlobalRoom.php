@@ -107,17 +107,17 @@ function postArea(){
    
       
       <h3>Post a Document File Content Here</h3>
-        <form  enctype="multipart/form-data">
+        <form id="doc" enctype="multipart/form-data">
         <div class="form-group">
         <div class="input-group input-file" name="doc">
-        <input type="text" class="form-control" placeholder="Choose a file..." />     
+        <input  type="text" class="form-control" placeholder="Choose a file..." />     
         <span class="input-group-btn">
         <button class="btn btn-default btn-choose" type="button" style="margin-top: 0%;">Choose</button>
         </span>
         </div>
         </div>
         <div class="form-group">
-        <button type="submit" class="btn btn-primary pull-right" disabled>Submit</button>
+        <button type="submit" class="btn btn-primary pull-right doc" >Submit</button>
         <button type="reset" class="btn btn-danger">Reset</button>
         </div>
         </form>
@@ -224,7 +224,7 @@ function postArea(){
       </div>
       <div class="modal-body">
         <h3>Picture as File Image</h3>
-        <form  enctype="multipart/form-data">
+        <form  id="pic" enctype="multipart/form-data">
         <div class="form-group">
         <div class="input-group input-file2" name="doc">
         <input id="fileUpload"type="text" class="form-control" placeholder="Choose a file..."  onchange="showMyImage(this) />     
