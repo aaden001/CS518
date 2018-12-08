@@ -339,7 +339,7 @@ function display_extra($rowId){
             $fileName = str_replace('../POSTFiles/', '',$result['Link'] );;
             $buildString .= '<a href="'.$result['Link'] .'" class ="col-sm-12" >'.$fileName.'</a>';
            }elseif($result['type'] == 'CO'){
-            $buildString .='<div class="col-sm-12">' .$result['Code'] .'</div>';
+            $buildString .='<div class="col-sm-12"><pre><code>' .$result['Code'] .'</code></pre></div>';
            }
        /*    $buildString .='</div>';*/
 
