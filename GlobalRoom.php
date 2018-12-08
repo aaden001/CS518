@@ -90,7 +90,43 @@ function postArea(){
 
           <!-- Button trigger modal -->
          <button  type="button" id= "more-submit" class="btn btn-success" style="margin-top: 4px;" data-toggle="modal" data-target="#modal-1">More</button></span>
-      
+
+ <!-- Post Picture As File Image-->
+ <div class="modal fade" id="modal-5"  tabindex="-1" role="dialog"  data-backdrop="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
+        <a href="#modal-2" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Picture</a>
+         <a href="#modal-3" class="btn btn-success"  data-toggle="modal" data-dismiss="modal">Code</a>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+       
+      </div>
+      <div class="modal-body">
+        <h3>Picture as File Image</h3>
+        <form  id="pic" enctype="multipart/form-data">
+          <div class="form-group">
+            <div class="input-group input-file2">
+              <input id="ImgUpload" type="text" class="form-control" placeholder="Choose an image file..." />     
+              <span class="input-group-btn">
+                <button class="btn btn-default btn-choose" type="button" style="margin-top: 0%;">Choose</button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary pull-right img" >Submit</button>
+            <button type="reset" class="btn btn-danger">Reset</button>
+          </div>
+        </form> 
+       <div id="image-holder"> </div>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div><!-- /.modal-footer -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+
   <!-- Post Document-->
   <div class="modal fade" id="modal-1"  tabindex="-1" role="dialog"  data-backdrop="false">
   <div class="modal-dialog modal-dialog-centered">
@@ -99,29 +135,29 @@ function postArea(){
         <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
         <a href="#modal-2" class="btn btn-success"  data-toggle="modal" data-dismiss="modal" style="margin-right: 2%;">Picture</a>
          <a href="#modal-3" class="btn btn-success"  data-toggle="modal" data-dismiss="modal">Code</a>
-        <button type="button" class="close" data-dismiss="modal">
-        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         
       </div>
-      <div class="modal-body">
-   
-      
-      <h3>Post a Document File Content Here</h3>
-        <form id="doc" enctype="multipart/form-data">
-        <div class="form-group">
-        <div class="input-group input-file" name="doc">
-        <input  type="text" class="form-control" placeholder="Choose a file..." />     
-        <span class="input-group-btn">
-        <button class="btn btn-default btn-choose" type="button" style="margin-top: 0%;">Choose</button>
-        </span>
-        </div>
-        </div>
-        <div class="form-group">
-        <button type="submit" class="btn btn-primary pull-right doc" >Submit</button>
-        <button type="reset" class="btn btn-danger">Reset</button>
-        </div>
-        </form>
-        
+      <div class="modal-body">  
+        <h3>Post a Document File Content Here</h3> <!-- Begining Form Group -->
+         <form  id="doc" enctype="multipart/form-data">
+          <div class="form-group">
+            <div class="input-group input-file" >
+              <input  type="text" class="form-control" placeholder="Choose a file..." />     
+              <span class="input-group-btn">
+                <button class="btn btn-default btn-choose" type="button" style="margin-top: 0%;">Choose</button>
+              </span>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary pull-right doc" >Submit</button>
+            <button type="reset" class="btn btn-danger">Reset</button>
+          </div> <!-- End button div Form Group -->
+        </form> <!-- End Form  -->
+        <div></div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -211,41 +247,6 @@ function postArea(){
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal --> 
 
- <!-- Post Picture As File Image-->
- <div class="modal fade" id="modal-5"  tabindex="-1" role="dialog"  data-backdrop="false">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
-        <a href="#modal-2" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Picture</a>
-         <a href="#modal-3" class="btn btn-success"  data-toggle="modal" data-dismiss="modal">Code</a>
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-       
-      </div>
-      <div class="modal-body">
-        <h3>Picture as File Image</h3>
-        <form  id="pic" enctype="multipart/form-data">
-        <div class="form-group">
-        <div class="input-group input-file2" name="doc">
-        <input id="fileUpload"type="text" class="form-control" placeholder="Choose a file..."  onchange="showMyImage(this) />     
-        <span class="input-group-btn">
-        <button class="btn btn-default btn-choose" type="button" style="margin-top: 0%;">Choose</button>
-        </span>
-        </div>
-        </div>
-        <div class="form-group">
-        <button type="submit" class="btn btn-primary pull-right" disabled>Submit</button>
-        <button type="reset" class="btn btn-danger">Reset</button>
-        </div>
-        </form> 
-       <div id="image-holder"> </div>  
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal --> 
 ';
         /* <input  type="code" id= "code" class="btn btn-success" style="margin-top: 4px;">Code</input>
          <input  type="submit" id= "Picture" class="btn btn-success" style="margin-top: 4px;">Picture</input>*/

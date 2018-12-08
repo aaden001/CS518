@@ -4,7 +4,7 @@ $(document).ready(function(){
     $(".input-file").before(
         function() {
             if ( ! $(this).prev().hasClass('input-ghost') ) {
-                var element = $("<input id='doc' type='file' class='input-ghost' style='visibility:hidden; height:0' accept='application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf'>");
+                var element = $("<input id='docUpload' type='file' class='input-ghost' name='docUpload' style='visibility:hidden; height:0' accept='application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf'>");
                 element.attr("name",$(this).attr("name"));
                 element.change(function(){
                     element.next(element).find('input').val((element.val()).split('\\').pop());
@@ -31,7 +31,7 @@ $(document).ready(function(){
     $(".input-file2").before(
         function() {
             if ( ! $(this).prev().hasClass('input-ghost') ) {
-                var element = $("<input id='fileUpload' type='file' class='input-ghost' style='visibility:hidden; height:0' accept='image/* '>");
+                var element = $("<input  name='imgUpload' id='imgUpload' type='file' name='img' class='input-ghost' style='visibility:hidden; height:0' accept='image/* '>");
                 element.attr("name",$(this).attr("name"));
                 element.change(function(){
                     element.next(element).find('input').val((element.val()).split('\\').pop());
@@ -66,7 +66,7 @@ $(function() {
     document_Upload();
     picture_Upload();
 
-     $("#fileUpload").on('change', function() {
+     $("#imgUpload").on('change', function() {
           //Get count of selected files
           var countFiles = $(this)[0].files.length;
           var imgPath = $(this)[0].value;
@@ -101,7 +101,30 @@ $(function() {
 
      $('.doc').on('click',function(){
             event.preventDefault();
-        var formData = new FormData($("#doc"));
+            var fileInput = document.getElementById('docUpload');
+            var file = fileInput.files[0];
+            var formData = new FormData();
+            formData.append('file',file);
+        $.ajax({
+            url: 'more.php',  
+            type: 'POST',
+            data: formData,
+            success:function(data){
+               console.log(data);
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        })
+     });
+
+
+     $('.img').on('click',function(){
+            event.preventDefault();
+            var fileInput = document.getElementById('imgUpload');
+            var file = fileInput.files[0];
+            var formData = new FormData();
+            formData.append('file',file);
         $.ajax({
             url: 'more.php',  
             type: 'POST',
