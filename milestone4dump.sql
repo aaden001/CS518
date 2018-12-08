@@ -55,6 +55,9 @@ CREATE TABLE `Chat`.`ChatBox` (
   `RoomID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
   `TextA` varchar(400) NOT NULL,
+`type` varchar(2) NULL,
+`Code`  varchar(500) NULL,
+`Link` varchar(500) NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

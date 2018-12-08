@@ -5,15 +5,14 @@
     session_start();
     $_SESSION['currentRoomID'] = $_GET['currentRoomID'];
     $_SESSION['currentPage']   = $_GET['page'];
-   /* echo $_SESSION['currentPage'] ;
-   
-    echo $_SESSION['userId'];*/
+  
     if(!isset($_SESSION['userId']) )
     {
         header("Location:index.php");
     }elseif(!isset($_SESSION['authenticationFlag'])){
          header("Location:2Fa.php");
     }else
+
 
     $tempUserID = $_SESSION['userId'];
 
@@ -86,9 +85,173 @@ function postArea(){
       <div class="form-group ">        
       <textarea class="form-control" rows="2" id="messages" name="messages" form="chatArea" maxlength="300" placeholder="Write a Post"></textarea>';
       if($newRoomObj->check_room_status($_SESSION['currentRoomID']) == 1){
-         $postA .='<span ><input  type="code" id= "code" class="btn btn-success" style="margin-top: 4px;">Code</input>
-         <input  type="submit" id= "Picture" class="btn btn-success" style="margin-top: 4px;">Picture</input>
-         <button  type="submit" id= "post-submit" class="btn btn-success" style="margin-top: 4px;">Send</button></span>';
+         $postA .='<span >
+
+         <button  type="submit" id= "post-submit" class="btn btn-success" style="margin-top: 4px;">Send</button></span>
+
+          <!-- Button trigger modal -->
+         <button  type="button" id= "more-submit" class="btn btn-success" style="margin-top: 4px;" data-toggle="modal" data-target="#modal-1">More</button></span>
+
+ <!-- Post Picture As File Image-->
+ <div class="modal fade" id="modal-5"  tabindex="-1" role="dialog"  data-backdrop="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
+        <a href="#modal-2" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Picture</a>
+         <a href="#modal-3" class="btn btn-success"  data-toggle="modal" data-dismiss="modal">Code</a>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+       
+      </div>
+      <div class="modal-body">
+        <h3>Picture as File Image</h3>
+        <form  id="pic" enctype="multipart/form-data">
+          <div class="form-group">
+            <div class="input-group input-file2">
+              <input id="ImgUpload" type="text" class="form-control" placeholder="Choose an image file..." />     
+              <span class="input-group-btn">
+                <button class="btn btn-default btn-choose" type="button" style="margin-top: 0%;">Choose</button>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary pull-right img" >Submit</button>
+            <button type="reset" class="btn btn-danger">Reset</button>
+          </div>
+        </form> 
+       <div id="image-holder"> </div>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div><!-- /.modal-footer -->
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+
+  <!-- Post Document-->
+  <div class="modal fade" id="modal-1"  tabindex="-1" role="dialog"  data-backdrop="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
+        <a href="#modal-2" class="btn btn-success"  data-toggle="modal" data-dismiss="modal" style="margin-right: 2%;">Picture</a>
+         <a href="#modal-3" class="btn btn-success"  data-toggle="modal" data-dismiss="modal">Code</a>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        
+      </div>
+      <div class="modal-body">  
+        <h3>Post a Document File Content Here</h3> <!-- Begining Form Group -->
+         <form  id="doc" enctype="multipart/form-data">
+          <div class="form-group">
+            <div class="input-group input-file" >
+              <input  type="text" class="form-control" placeholder="Choose a file..." />     
+              <span class="input-group-btn">
+                <button class="btn btn-default btn-choose" type="button" style="margin-top: 0%;">Choose</button>
+              </span>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary pull-right doc" >Submit</button>
+            <button type="reset" class="btn btn-danger">Reset</button>
+          </div> <!-- End button div Form Group -->
+        </form> <!-- End Form  -->
+        <div></div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->  
+
+  <!-- Post Picture-->
+<div class="modal fade" id="modal-2"  tabindex="-1" role="dialog"  data-backdrop="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal" style="margin-right: 2%;">Document</a>
+        <a href="#modal-2" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Picture</a>
+         <a href="#modal-3" class="btn btn-success"  data-toggle="modal" data-dismiss="modal">Code</a>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+       
+      </div>
+      <div class="modal-body">
+      <h3>Post Picture As</h3>
+        <a href="#modal-4" class="btn btn-dark"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Link</a>
+        <a href="#modal-5" class="btn btn-primary"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">FileImage</a>
+ 
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->  
+
+
+  <!-- Post Code-->
+<div class="modal fade" id="modal-3"  tabindex="-1" role="dialog"  data-backdrop="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
+        <a href="#modal-2" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Picture</a>
+         <a href="#modal-3" class="btn btn-success"  data-toggle="modal" data-dismiss="modal">Code</a>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+       
+      </div>
+      <div class="modal-body">
+        <h3>Post Code</h3>
+        <form class="input-group">
+        <input type="text" class="form-control custom-control postCode" placeholder="Put your code format here" row="1" >
+        <button id="code" class="input-group-addon btn btn-success" style="margin-top: 0%">Post</button>
+        </form>
+        
+  
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+
+
+ <!-- Post Picture As Link-->
+ <div class="modal fade" id="modal-4"  tabindex="-1" role="dialog"  data-backdrop="false">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a href="#modal-1" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Document</a>
+        <a href="#modal-2" class="btn btn-success"  data-toggle="modal" data-dismiss="modal"  style="margin-right: 2%;">Picture</a>
+         <a href="#modal-3" class="btn btn-success"  data-toggle="modal" data-dismiss="modal">Code</a>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+       
+      </div>
+      <div class="modal-body">
+        <h3>Picture as link</h3>
+        <form class="input-group">
+        <input type="text" class="form-control custom-control postLink" placeholder="Put a link to a picture" row="1" >
+        <button id="postL" class="input-group-addon btn btn-success" style="margin-top: 0%">Post</button>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+
+';
+        /* <input  type="code" id= "code" class="btn btn-success" style="margin-top: 4px;">Code</input>
+         <input  type="submit" id= "Picture" class="btn btn-success" style="margin-top: 4px;">Picture</input>*/
+
       }else{
          $postA .='<br><h3> Room has been archived by admin</h3>';
       }
@@ -160,7 +323,33 @@ function likes_dislike_Post($rowID){
     return $FinalLikeBuild;
 }
 
+function display_extra($rowId){
 
+  try{
+     include 'dbconnect.php';
+      
+      $querry = $Connection->prepare("SELECT type,Code, Link FROM ChatBox WHERE ID=:tempId");      
+      $querry->execute(array('tempId' =>$rowId));
+      $result = $querry->fetch();
+       $buildString = '';
+      /*     $buildString .= '<div class ="col-sm-12">';*/
+           if($result['type'] == 'PF' || $result['type'] == 'PO' ){
+              $buildString .= '<img src="' .$result['Link'] .'" height="20%" width="20%"  class ="col-sm-12" >';
+           }elseif($result['type'] == 'DF'){
+            $fileName = str_replace('../POSTFiles/', '',$result['Link'] );;
+            $buildString .= '<a href="'.$result['Link'] .'" class ="col-sm-12" >'.$fileName.'</a>';
+           }elseif($result['type'] == 'CO'){
+            $buildString .='<div class="col-sm-12">' .$result['Code'] .'</div>';
+           }
+       /*    $buildString .='</div>';*/
+
+       return $buildString;
+
+  }catch (Exception $e){
+    $e->getMessage();
+  }
+     
+}
 
 function sql_fecth_post($maxpostsize){
           //Querry for text,user handle and time stamp
@@ -233,7 +422,7 @@ function sql_fecth_post($maxpostsize){
 
         }
         include 'dbconnect.php';
-        $SQL ="SELECT ID, created_at, TextA, ChatBox.UserID, userHandle FROM ChatBox 
+        $SQL ="SELECT ID, created_at, TextA, type,Code,Link,ChatBox.UserID, userHandle FROM ChatBox 
                     INNER JOIN Users ON ChatBox.UserID = Users.userID WHERE RoomID=:roomIdentify ORDER BY ID DESC LIMIT :start ,:stop";
         $query = $Connection->prepare($SQL);
         $query->bindParam(':start', $Start, PDO::PARAM_INT);
@@ -407,18 +596,24 @@ function pagination($c, $m)
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" type="text/css" href="stylewelcome.css">
     <title>Get Together </title>
+    <head>
+
+
 
 <!--   Bootstrap CSS CDN-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+   <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
 <!-- Our Custom CSS-->
-   <link rel="stylesheet" href="style2.css">
+  <!--  <link rel="stylesheet" href="style2.css"> -->
 <!--    Scrollbar Custom CSS-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 <!--    Font Awesome JS-->
    <!-- <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script>
    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script> -->
 <!-- Thumps Up thump down -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    
 <style>
   @media (min-width: 1200px) {
@@ -597,7 +792,7 @@ i {
             
         
          
-            <div id="container" >
+            <div id="container-fluid" >
         <?php   
 
     
@@ -724,11 +919,12 @@ i {
           $buildString .= ' <div id="' .$postID .'" class="posts-wrapper row">'; 
           $buildString .=  '<div class="col-sm-10" style="background-color:lavender;">';
           $buildString .=  "<p> {$row['TextA']}</p>";
-          $buildString .= '<p style="background-color:blue;"' .'>' .$row['created_at'] .'</p></div><div class="col-sm-2">';
+          $buildString .= '<p style="background-color:blue;"' .'>' .$row['created_at'] .'</p></div>';
+          $buildString .= '<div class="col-sm-2">';
           $buildString .=  sql_post_profilePic($row['UserID']);
           $buildString .= $row['userHandle'];
-          $buildString .=  $row['ID'];
           $buildString .= '</div><br></div>';
+          $buildString .= display_extra($row['ID']);
           $buildString .=  likes_dislike_Post($row['ID']);
           $comment = sql_fetch_comment();
           $buildString .= '<div   id="'.'div'.$row['ID'] .'" class="comment-div row" style="display: none" >';
@@ -765,24 +961,39 @@ i {
         ?>
             </div>   <!-- End of Container -->
 
-    </div><!-- End ofPage Content  -->
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-
+    </div>
+    <script src="//code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script type="text/javascript" src="jquery.js"></script>
+<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+<script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+ 
+<script src="//cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+<!-- <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> -->
+    <!-- End ofPage Content  -->
+   <!-- jQuery CDN - Slim version (=without AJAX) -->
+ <!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+ -->
     <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <!--   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script> -->
 
     <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
+   <!--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+ -->
     <!-- jQuery Custom Scroller CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script type="text/javascript">var roomID = "<?php echo $_SESSION['currentRoomID'];?>";
+    
+<!--      <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+ -->   
+
+  <script type="text/javascript">var roomID = "<?php echo $_SESSION['currentRoomID'];?>";
+
+    
     var userID = "<?php echo $_SESSION['userId']; ?>"; var pageNumber = "<?php echo $_SESSION['currentPage']; ?>";</script>
     <script type="text/javascript" src="toggle.js"></script>
-    <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript" src="load.js"></script>
    
+    <script type="text/javascript" src="load.js"></script>
+    <script type="text/javascript"src="more.js"></script>
     <script type="text/javascript" src="comment.js"></script>
     <script type="text/javascript" src="delete.js"></script>
 
