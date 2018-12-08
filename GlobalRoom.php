@@ -395,7 +395,7 @@ function sql_fecth_post($maxpostsize){
 
         }
         include 'dbconnect.php';
-        $SQL ="SELECT ID, created_at, TextA, ChatBox.UserID, userHandle FROM ChatBox 
+        $SQL ="SELECT ID, created_at, TextA, type,Code,Link,ChatBox.UserID, userHandle FROM ChatBox 
                     INNER JOIN Users ON ChatBox.UserID = Users.userID WHERE RoomID=:roomIdentify ORDER BY ID DESC LIMIT :start ,:stop";
         $query = $Connection->prepare($SQL);
         $query->bindParam(':start', $Start, PDO::PARAM_INT);

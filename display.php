@@ -114,7 +114,8 @@ function sql_fecth_post($maxpostsize){
           //Querry for text,user handle and time stamp
         $currentRoomChatID = $_SESSION['currentRoomID'];
         $currentPage = $_SESSION['currentPage'];
-    
+/*        echo 'max post size ->' .$maxpostsize .'<br>';
+*/
 
         $StopCheck = $maxpostsize % 5;
         $Stop = 5;
@@ -180,7 +181,7 @@ function sql_fecth_post($maxpostsize){
 
         }
         include 'dbconnect.php';
-        $SQL ="SELECT ID, created_at, TextA, ChatBox.UserID, userHandle FROM ChatBox 
+        $SQL ="SELECT ID, created_at, TextA, type,Code,Link,ChatBox.UserID, userHandle FROM ChatBox 
                     INNER JOIN Users ON ChatBox.UserID = Users.userID WHERE RoomID=:roomIdentify ORDER BY ID DESC LIMIT :start ,:stop";
         $query = $Connection->prepare($SQL);
         $query->bindParam(':start', $Start, PDO::PARAM_INT);
@@ -192,6 +193,7 @@ function sql_fecth_post($maxpostsize){
 
         return $result;
 }
+
 
 
 function sql_post_profilePic($UserID){
