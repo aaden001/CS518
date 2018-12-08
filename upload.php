@@ -4,9 +4,9 @@
     if(!isset($_SESSION['userId']) )
     {
         header("Location:index.php");
-    }else/*elseif(!isset($_SESSION['authenticationFlag'])){
+    }elseif(!isset($_SESSION['authenticationFlag'])){
          header("Location:2Fa.php");
-    }*/
+    }else
 
 
 

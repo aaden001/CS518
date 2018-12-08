@@ -11,8 +11,9 @@
     if(!isset($_SESSION['userId']) )
     {
         header("Location:index.php");
+    }elseif(!isset($_SESSION['authenticationFlag'])){
+         header("Location:2Fa.php");
     }else
-
     $tempUserID = $_SESSION['userId'];
 
 
@@ -841,6 +842,7 @@ i {
                     $buildString .= $row['userHandle'];
                    /* $buildString .=  $row['ID'];*/
                     $buildString .= '</div><br></div>';
+                    $buildString .= display_extra($row['ID']);
                     $buildString .=  likes_dislike_Post($row['ID']);
                     $comment = sql_fetch_comment();
                     $buildString .= '<div   id="'.'div'.$row['ID'] .'" class="comment-div row" style="display: none" >';
