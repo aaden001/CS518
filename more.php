@@ -18,10 +18,11 @@ error_reporting(E_ALL);
 
 		if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
 				$fileName = $_FILES["file"]["name"];
+				$fileName = stripslashes(htmlspecialchars($fileName));
 				$userId =$_POST['userId'];
 				$roomId = $_POST['roomId'];
 				$fileLink = '../POSTFiles/' .$fileName;
-
+				
 			if($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg" || $imageFileType == "gif" ) {
 				try{
 					$img = 'PF';
@@ -70,6 +71,7 @@ error_reporting(E_ALL);
 }elseif (isset($_POST['pictureLink'])) {
 	# code...
 	$pictureLink =  $_POST['pictureLink'];
+	$pictureLink = stripslashes(htmlspecialchars($pictureLink));
 	$userId = $_POST['userId'];
 	$roomId = $_POST['roomId'];
 	$textArea = 'Picture as a Link';
@@ -91,6 +93,7 @@ error_reporting(E_ALL);
 
 }elseif(isset($_POST['code'])){
 		$codeText =  $_POST['code'];
+	$codeText = stripslashes(htmlspecialchars($codeText));	
 	$userId = $_POST['userId'];
 	$roomId = $_POST['roomId'];
 	$textArea = 'Code';

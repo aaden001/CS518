@@ -322,7 +322,33 @@ function likes_dislike_Post($rowID){
     return $FinalLikeBuild;
 }
 
+function display_extra($rowId){
 
+  try{
+     include 'dbconnect.php';
+      
+      $querry = $Connection->prepare("SELECT type,Code, Link FROM ChatBox WHERE ID=:tempId");      
+      $querry->execute(array('tempId' =>$rowId));
+      $result = $querry->fetch();
+       $buildString = '';
+      /*     $buildString .= '<div class ="col-sm-12">';*/
+           if($result['type'] == 'PF' || $result['type'] == 'PO' ){
+              $buildString .= '<img src="' .$result['Link'] .'" height="20%" width="20%"  class ="col-sm-12" >';
+           }elseif($result['type'] == 'DF'){
+            $fileName = str_replace('../POSTFiles/', '',$result['Link'] );;
+            $buildString .= '<a href="'.$result['Link'] .'" class ="col-sm-12" >'.$fileName.'</a>';
+           }elseif($result['type'] == 'CO'){
+            $buildString .='<div class="col-sm-12">' .$result['Code'] .'</div>';
+           }
+       /*    $buildString .='</div>';*/
+
+       return $buildString;
+
+  }catch (Exception $e){
+    $e->getMessage();
+  }
+     
+}
 
 function sql_fecth_post($maxpostsize){
           //Querry for text,user handle and time stamp
@@ -892,11 +918,12 @@ i {
           $buildString .= ' <div id="' .$postID .'" class="posts-wrapper row">'; 
           $buildString .=  '<div class="col-sm-10" style="background-color:lavender;">';
           $buildString .=  "<p> {$row['TextA']}</p>";
-          $buildString .= '<p style="background-color:blue;"' .'>' .$row['created_at'] .'</p></div><div class="col-sm-2">';
+          $buildString .= '<p style="background-color:blue;"' .'>' .$row['created_at'] .'</p></div>';
+          $buildString .= '<div class="col-sm-2">';
           $buildString .=  sql_post_profilePic($row['UserID']);
           $buildString .= $row['userHandle'];
-          $buildString .=  $row['ID'];
           $buildString .= '</div><br></div>';
+          $buildString .= display_extra($row['ID']);
           $buildString .=  likes_dislike_Post($row['ID']);
           $comment = sql_fetch_comment();
           $buildString .= '<div   id="'.'div'.$row['ID'] .'" class="comment-div row" style="display: none" >';
@@ -937,6 +964,7 @@ i {
     <script src="//code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script type="text/javascript" src="jquery.js"></script>
+<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
  
 <script src="//cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
