@@ -17,6 +17,37 @@ error_reporting(E_ALL);
 	if ($_FILES["file"]['error'] == 0 && $uploadOk ==1) {
 
 		if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+				$fileName = $_FILES["file"]["name"];
+				$userId =$_POST['userId'];
+				$roomId = $_POST['roomId'];
+				$fileLink = '../POSTFiles/' .$fileName;
+
+			if($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg" || $imageFileType == "gif" ) {
+				try{
+
+				include 'dbconnect.php';
+				$textArea = "Picture";
+
+				$query = $Connection->prepare("INSERT INTO ChatBox (RoomID,UserID,TextA,Link) VALUES(:tempRoom,:tempUser,:tempText,:tempLink)");
+				$query->execute(array('tempRoom' => $userId, 'tempUser' => $roomId, 'tempText' => $textArea, 'tempLink' => $fileLink));
+
+
+				}catch(Exception $e){
+					$e->getMessage();
+				}
+			}else{
+				try{
+
+				include 'dbconnect.php';
+				$textArea = "Document";
+				$query = $Connection->prepare("INSERT INTO ChatBox (RoomID,UserID,TextA,Link) VALUES(:tempRoom,:tempUser,:tempText,:tempLink)");
+				$query->execute(array('tempRoom' => $userId, 'tempUser' => $roomId, 'tempText' => $textArea, 'tempLink' => $fileLink));
+
+
+				}catch(Exception $e){
+					$e->getMessage();
+				}
+			}
 		echo "success";
 		} else {
 		echo "Sorry, there was an error uploading your file.";

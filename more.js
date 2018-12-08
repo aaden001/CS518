@@ -105,12 +105,48 @@ $(function() {
             var file = fileInput.files[0];
             var formData = new FormData();
             formData.append('file',file);
+            formData.append('userId', userID);
+            formData.append('roomId',roomID);
         $.ajax({
             url: 'more.php',  
             type: 'POST',
             data: formData,
             success:function(data){
-               console.log(data);
+                data = $.trim(data);
+               if(data == "success"){
+
+                    $.ajax({
+                    url: 'display.php',
+                    type: 'post',
+                    data: {
+                    'currentRoomID': roomID,
+                    'page': pageNumber,
+                    'userId': userID,
+                    },
+                    success: function(response){
+                  
+                    var obj = jQuery.parseJSON(response);
+                    var page = $.trim(obj.pagination);
+                    var buildpage = $.trim(obj.buildpage);
+                    
+                    $('modal-1').modal('hide');
+                    $('div#display').find('div').remove();
+                    $('div#display').find('script').remove();
+
+
+                    $('div#displayArea').find('div#pagePanel').remove();
+
+
+                    /*  $('div#displayArea #pagePanel').remove();*/
+                    $('div#displayArea').prepend(page);
+                   $('div#display').append(buildpage);              
+                    }
+
+                    });
+
+               }else{
+                    alert(data);
+               }
             },
             cache: false,
             contentType: false,
@@ -125,12 +161,48 @@ $(function() {
             var file = fileInput.files[0];
             var formData = new FormData();
             formData.append('file',file);
+            formData.append('userId', userID);
+            formData.append('roomId',roomID);
         $.ajax({
             url: 'more.php',  
             type: 'POST',
             data: formData,
             success:function(data){
-               console.log(data);
+               data = $.trim(data);
+               if(data == "success"){
+
+                    $.ajax({
+                    url: 'display.php',
+                    type: 'post',
+                    data: {
+                    'currentRoomID': roomID,
+                    'page': pageNumber,
+                    'userId': userID,
+                    },
+                    success: function(response){
+                  
+                    var obj = jQuery.parseJSON(response);
+                    var page = $.trim(obj.pagination);
+                    var buildpage = $.trim(obj.buildpage);
+                    
+                    $('modal-5').modal('hide');
+                    $('div#display').find('div').remove();
+                    $('div#display').find('script').remove();
+
+
+                    $('div#displayArea').find('div#pagePanel').remove();
+
+
+                    /*  $('div#displayArea #pagePanel').remove();*/
+                    $('div#displayArea').prepend(page);
+                   $('div#display').append(buildpage);              
+                    }
+
+                    });
+
+               }else{
+                    alert(data);
+               }
             },
             cache: false,
             contentType: false,
