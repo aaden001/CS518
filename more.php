@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-	if(isset($_FILES)){
+	if(isset($_FILES['file'])){
 		$target_dir = "POSTFiles/";
 		$target_file = $target_dir . basename($_FILES["file"]["name"]);
 		$uploadOk = 1;
@@ -24,12 +24,12 @@ error_reporting(E_ALL);
 
 			if($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg" || $imageFileType == "gif" ) {
 				try{
-
+					$img = 'PF';
 				include 'dbconnect.php';
-				$textArea = "Picture";
+				$textArea = "Picture As File";
 
-				$query = $Connection->prepare("INSERT INTO ChatBox (RoomID,UserID,TextA,Link) VALUES(:tempRoom,:tempUser,:tempText,:tempLink)");
-				$query->execute(array('tempRoom' => $userId, 'tempUser' => $roomId, 'tempText' => $textArea, 'tempLink' => $fileLink));
+				$query = $Connection->prepare("INSERT INTO ChatBox (RoomID,UserID,TextA,type,Link) VALUES(:tempRoom,:tempUser,:tempText,:tempType,:tempLink)");
+				$query->execute(array('tempRoom' => $userId, 'tempUser' => $roomId, 'tempText' => $textArea, 'tempType' => $img ,'tempLink' => $fileLink));
 
 
 				}catch(Exception $e){
@@ -37,11 +37,11 @@ error_reporting(E_ALL);
 				}
 			}else{
 				try{
-
+					$doc = 'DF';
 				include 'dbconnect.php';
-				$textArea = "Document";
-				$query = $Connection->prepare("INSERT INTO ChatBox (RoomID,UserID,TextA,Link) VALUES(:tempRoom,:tempUser,:tempText,:tempLink)");
-				$query->execute(array('tempRoom' => $userId, 'tempUser' => $roomId, 'tempText' => $textArea, 'tempLink' => $fileLink));
+				$textArea = "Document As File";
+				$query = $Connection->prepare("INSERT INTO ChatBox (RoomID,UserID,TextA,type,Link) VALUES(:tempRoom,:tempUser,:tempText,:tempType,:tempLink)");
+				$query->execute(array('tempRoom' => $userId, 'tempUser' => $roomId, 'tempText' => $textArea, 'tempType' => $doc ,'tempLink' => $fileLink));
 
 
 				}catch(Exception $e){
@@ -67,6 +67,49 @@ error_reporting(E_ALL);
 	}elseif($_FILES["file"]['error'] == 8){
 		echo "nothing";
 	}
-}
+}elseif (isset($_POST['pictureLink'])) {
+	# code...
+	$pictureLink =  $_POST['pictureLink'];
+	$userId = $_POST['userId'];
+	$roomId = $_POST['roomId'];
+	$textArea = 'Picture as a Link';
+	$PL = 'PO';
+	try{
+		include 'dbconnect.php';
+		$query =  $Connection->prepare("INSERT INTO ChatBox(RoomID,UserID,TextA,type,Link) VALUES(:tempRoom,:tempUser,:tempText,:tempType,:tempLink)");
+		$query->execute(array('tempRoom' => $userId, 'tempUser' => $roomId, 'tempText' => $textArea, 'tempType' => $PL ,'tempLink' => $pictureLink));
+		if ($query){
+			echo 'success';
+		}else{
+			echo 'error to post Picture as Link';
+		}
+		$Connection = null;
+	}catch(Exception $e){
+		$e->getMessage();
+	}
+
+
+}elseif(isset($_POST['code'])){
+		$codeText =  $_POST['code'];
+	$userId = $_POST['userId'];
+	$roomId = $_POST['roomId'];
+	$textArea = 'Code';
+	$PL = 'CO';
+	try{
+		include 'dbconnect.php';
+		$query =  $Connection->prepare("INSERT INTO ChatBox(RoomID,UserID,TextA,type,Code) VALUES(:tempRoom,:tempUser,:tempText,:tempType,:tempCode)");
+		$query->execute(array('tempRoom' => $userId, 'tempUser' => $roomId, 'tempText' => $textArea, 'tempType' => $PL ,'tempCode' => $codeText));
+		if ($query){
+			echo 'success';
+		}else{
+			echo 'error to post Code';
+		}
+		$Connection = null;
+	}catch(Exception $e){
+		$e->getMessage();
+	}
+}else{
+	echo 'nothing to do';
+}	
 
 ?>

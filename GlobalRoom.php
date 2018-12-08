@@ -206,8 +206,8 @@ function postArea(){
       <div class="modal-body">
         <h3>Post Code</h3>
         <form class="input-group">
-        <input type="text" class="form-control custom-control postLink" placeholder="Put your code format here" row="1" >
-        <span class="input-group-addon btn btn-success postL">Post</span>
+        <input type="text" class="form-control custom-control postCode" placeholder="Put your code format here" row="1" >
+        <button id="code" class="input-group-addon btn btn-success" style="margin-top: 0%">Post</button>
         </form>
         
   
@@ -236,7 +236,7 @@ function postArea(){
         <h3>Picture as link</h3>
         <form class="input-group">
         <input type="text" class="form-control custom-control postLink" placeholder="Put a link to a picture" row="1" >
-        <span class="input-group-addon btn btn-success postL">Post</span>
+        <button id="postL" class="input-group-addon btn btn-success" style="margin-top: 0%">Post</button>
         </form>
 
       </div>

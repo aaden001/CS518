@@ -41,7 +41,7 @@ $(document).ready(function(){
                 });
                 $(this).find("button.btn-reset").click(function(){
                     element.val(null);
-                    $("img").remove("#image-holder");
+                    $("div").remove("#image-holder");
                     $(this).parents(".input-file").find('input').val('');
                 });
 
@@ -199,7 +199,7 @@ $(function() {
                     }
 
                     });
-
+                     $("div").remove("#image-holder");
                }else{
                     alert(data);
                }
@@ -210,6 +210,135 @@ $(function() {
         })
      });
      
+
+     $('#code').on('click', function(){
+          event.preventDefault();
+          var codeText = $.trim($('.postCode').val());
+          if(codeText  != ''){
+           
+            $.ajax({
+
+                url: 'more.php',
+                type: 'post',
+                data: {
+                'code':codeText,
+                'roomId': roomID,
+                'userId': userID,
+                },
+               success: function(data){
+                data = $.trim(data);
+                if(data == 'success'){
+                    
+                    $.ajax({
+                    url: 'display.php',
+                    type: 'post',
+                    data: {
+                    'currentRoomID': roomID,
+                    'page': pageNumber,
+                    'userId': userID,
+                    },
+                    success: function(response){
+                  
+                    var obj = jQuery.parseJSON(response);
+                    var page = $.trim(obj.pagination);
+                    var buildpage = $.trim(obj.buildpage);
+                    
+                    $('modal-5').modal('hide');
+                    $('div#display').find('div').remove();
+                    $('div#display').find('script').remove();
+
+
+                    $('div#displayArea').find('div#pagePanel').remove();
+
+
+                    /*  $('div#displayArea #pagePanel').remove();*/
+                    $('div#displayArea').prepend(page);
+                   $('div#display').append(buildpage);              
+                    }
+
+                    });
+                $('.postCode').val('');
+
+                }else{
+                    alert(data);
+                }
+               },
+               error: function(xhr, ajaxOptions, thrownError){
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
+
+
+          }else{
+            alert("You cant send an empty code");
+          }
+          
+     });
+
+     $('#postL').on('click', function(){
+         event.preventDefault();
+          var pictureLink = $.trim($('.postLink').val());
+          if(pictureLink  != ''){
+           
+
+            $.ajax({
+
+                url: 'more.php',
+                type: 'post',
+                data: {
+                'pictureLink': pictureLink,
+                'roomId': roomID,
+                'userId': userID,
+                },
+               success: function(data){
+                data = $.trim(data);
+                if(data == 'success'){
+                    
+                    $.ajax({
+                    url: 'display.php',
+                    type: 'post',
+                    data: {
+                    'currentRoomID': roomID,
+                    'page': pageNumber,
+                    'userId': userID,
+                    },
+                    success: function(response){
+                  
+                    var obj = jQuery.parseJSON(response);
+                    var page = $.trim(obj.pagination);
+                    var buildpage = $.trim(obj.buildpage);
+                    
+                    $('modal-5').modal('hide');
+                    $('div#display').find('div').remove();
+                    $('div#display').find('script').remove();
+
+
+                    $('div#displayArea').find('div#pagePanel').remove();
+
+
+                    /*  $('div#displayArea #pagePanel').remove();*/
+                    $('div#displayArea').prepend(page);
+                   $('div#display').append(buildpage);              
+                    }
+
+                    });
+                     $('.postLink').val('');
+                }else{
+                    alert(data);
+                }
+               },
+               error: function(xhr, ajaxOptions, thrownError){
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
+
+
+          }else{
+            alert("You cant send an empty code");
+          }
+     });
 
 
 
