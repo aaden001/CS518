@@ -12,8 +12,14 @@
     {
         header("Location:index.php");
     }elseif(!isset($_SESSION['authenticationFlag'])){
+<<<<<<< HEAD
          header("Location:2Fa.php");
     }else
+=======
+	header("Location:2Fa.php");
+	}else
+
+>>>>>>> fixed
     $tempUserID = $_SESSION['userId'];
 
 
@@ -324,7 +330,6 @@ function likes_dislike_Post($rowID){
 }
 
 function display_extra($rowId){
-
   try{
      include 'dbconnect.php';
       
@@ -343,9 +348,11 @@ function display_extra($rowId){
              $buildString .='<div class="col-sm-12"><pre class="prettyprint" ><code  class="html php">' .$result['Code'].'</code></pre></div>';
            }
      
+<<<<<<< HEAD
 
+=======
+>>>>>>> fixed
        return $buildString;
-
   }catch (Exception $e){
     $e->getMessage();
   }
@@ -844,7 +851,11 @@ i {
                     $buildString .= $row['userHandle'];
                    /* $buildString .=  $row['ID'];*/
                     $buildString .= '</div><br></div>';
+<<<<<<< HEAD
                     $buildString .= display_extra($row['ID']);
+=======
+                    $buildString .=  display_extra($row['ID']);
+>>>>>>> fixed
                     $buildString .=  likes_dislike_Post($row['ID']);
                     $comment = sql_fetch_comment();
                     $buildString .= '<div   id="'.'div'.$row['ID'] .'" class="comment-div row" style="display: none" >';
