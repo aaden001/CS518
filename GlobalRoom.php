@@ -11,15 +11,8 @@
     if(!isset($_SESSION['userId']) )
     {
         header("Location:index.php");
-    }elseif(!isset($_SESSION['authenticationFlag'])){
-<<<<<<< HEAD
-         header("Location:2Fa.php");
     }else
-=======
-	header("Location:2Fa.php");
-	}else
 
->>>>>>> fixed
     $tempUserID = $_SESSION['userId'];
 
 
@@ -341,17 +334,13 @@ function display_extra($rowId){
            if($result['type'] == 'PF' || $result['type'] == 'PO' ){
               $buildString .= '<img src="' .$result['Link'] .'" height="20%" width="20%"  class ="col-sm-12" >';
            }elseif($result['type'] == 'DF'){
-            $fileName = str_replace('../POSTFiles/', '',$result['Link'] );;
+            $fileName = str_replace('../POSTFiles/', '',$result['Link'] );
             $buildString .= '<a href="'.$result['Link'] .'" class ="col-sm-12" >'.$fileName.'</a>';
            }elseif($result['type'] == 'CO'){
       
              $buildString .='<div class="col-sm-12"><pre class="prettyprint" ><code  class="html php">' .$result['Code'].'</code></pre></div>';
            }
      
-<<<<<<< HEAD
-
-=======
->>>>>>> fixed
        return $buildString;
   }catch (Exception $e){
     $e->getMessage();
@@ -851,11 +840,9 @@ i {
                     $buildString .= $row['userHandle'];
                    /* $buildString .=  $row['ID'];*/
                     $buildString .= '</div><br></div>';
-<<<<<<< HEAD
-                    $buildString .= display_extra($row['ID']);
-=======
+
                     $buildString .=  display_extra($row['ID']);
->>>>>>> fixed
+
                     $buildString .=  likes_dislike_Post($row['ID']);
                     $comment = sql_fetch_comment();
                     $buildString .= '<div   id="'.'div'.$row['ID'] .'" class="comment-div row" style="display: none" >';
