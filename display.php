@@ -474,8 +474,7 @@ function pagination($c, $m)
 
 
    $buildString .=' <script type="text/javascript" src="rating.js"></script>
-    <script type="text/javascript" src="comment.js"></script><script type="text/javascript" src="delete.js"></script>
-';
+    <script type="text/javascript" src="comment.js"></script><script type="text/javascript" src="delete.js"></script>';
     $result = array('pagination' => $buildPageString, 'buildpage' =>$buildString);
    
 
