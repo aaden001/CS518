@@ -207,7 +207,7 @@ function postArea(){
       <div class="modal-body">
         <h3>Post Code</h3>
         <form class="input-group">
-        <input type="text" class="form-control custom-control postCode" placeholder="Put your code format here" row="1" >
+        <textarea type="text" class="form-control custom-control postCode" placeholder="Put your code format here" row="1" ></textarea>
         <button id="code" class="input-group-addon btn btn-success" style="margin-top: 0%">Post</button>
         </form>
         
@@ -332,16 +332,17 @@ function display_extra($rowId){
       $querry->execute(array('tempId' =>$rowId));
       $result = $querry->fetch();
        $buildString = '';
-      /*     $buildString .= '<div class ="col-sm-12">';*/
+      
            if($result['type'] == 'PF' || $result['type'] == 'PO' ){
               $buildString .= '<img src="' .$result['Link'] .'" height="20%" width="20%"  class ="col-sm-12" >';
            }elseif($result['type'] == 'DF'){
             $fileName = str_replace('../POSTFiles/', '',$result['Link'] );;
             $buildString .= '<a href="'.$result['Link'] .'" class ="col-sm-12" >'.$fileName.'</a>';
            }elseif($result['type'] == 'CO'){
-            $buildString .='<div class="col-sm-12"><pre><code>' .$result['Code'] .'</code></pre></div>';
+      
+             $buildString .='<div class="col-sm-12"><pre class="prettyprint" ><code  class="html php">' .$result['Code'].'</code></pre></div>';
            }
-       /*    $buildString .='</div>';*/
+     
 
        return $buildString;
 
@@ -612,7 +613,8 @@ function pagination($c, $m)
    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script> -->
 <!-- Thumps Up thump down -->
 
-
+  <!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+ -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    
 <style>
@@ -965,9 +967,12 @@ i {
     </div>
     <script src="//code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+ --><!-- <script>hljs.initHighlightingOnLoad();</script> -->
+
 <script type="text/javascript" src="jquery.js"></script>
-<script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-<script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+ <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+ <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
  
 <script src="//cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 <!-- <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> -->

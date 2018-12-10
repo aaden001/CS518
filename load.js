@@ -1,5 +1,5 @@
 $(document).ready(function(){
-		
+	/*	$(".prettyprinted span").after("<br>");*/
 	$( 'textarea#messages' ).on('input',function(){
 		 if ($(this).val().length>=200) {
       alert('you have reached a limit of 200');   

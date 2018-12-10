@@ -93,7 +93,7 @@ error_reporting(E_ALL);
 
 }elseif(isset($_POST['code'])){
 		$codeText =  $_POST['code'];
-	$codeText = stripslashes(htmlspecialchars($codeText));	
+	$codeText = htmlspecialchars($codeText);	
 	$userId = $_POST['userId'];
 	$roomId = $_POST['roomId'];
 	$textArea = 'Code';

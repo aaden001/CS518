@@ -213,7 +213,7 @@ $(function() {
 
      $('#code').on('click', function(){
           event.preventDefault();
-          var codeText = $.trim($('.postCode').val());
+          var codeText = $('.postCode').val();
           if(codeText  != ''){
            
             $.ajax({
