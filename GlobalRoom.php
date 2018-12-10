@@ -206,7 +206,7 @@ function postArea(){
       <div class="modal-body">
         <h3>Post Code</h3>
         <form class="input-group">
-        <input type="text" class="form-control custom-control postCode" placeholder="Put your code format here" row="1" >
+        <textarea type="text" class="form-control custom-control postCode" placeholder="Put your code format here" row="1" ></textarea>
         <button id="code" class="input-group-addon btn btn-success" style="margin-top: 0%">Post</button>
         </form>
         
@@ -323,7 +323,6 @@ function likes_dislike_Post($rowID){
 }
 
 function display_extra($rowId){
-
   try{
      include 'dbconnect.php';
       
@@ -331,19 +330,18 @@ function display_extra($rowId){
       $querry->execute(array('tempId' =>$rowId));
       $result = $querry->fetch();
        $buildString = '';
-      /*     $buildString .= '<div class ="col-sm-12">';*/
+      
            if($result['type'] == 'PF' || $result['type'] == 'PO' ){
               $buildString .= '<img src="' .$result['Link'] .'" height="20%" width="20%"  class ="col-sm-12" >';
            }elseif($result['type'] == 'DF'){
             $fileName = str_replace('../POSTFiles/', '',$result['Link'] );;
             $buildString .= '<a href="'.$result['Link'] .'" class ="col-sm-12" >'.$fileName.'</a>';
            }elseif($result['type'] == 'CO'){
-            $buildString .='<div class="col-sm-12">' .$result['Code'] .'</div>';
+      
+             $buildString .='<div class="col-sm-12"><pre class="prettyprint" ><code  class="html php">' .$result['Code'].'</code></pre></div>';
            }
-       /*    $buildString .='</div>';*/
-
+     
        return $buildString;
-
   }catch (Exception $e){
     $e->getMessage();
   }
@@ -841,6 +839,7 @@ i {
                     $buildString .= $row['userHandle'];
                    /* $buildString .=  $row['ID'];*/
                     $buildString .= '</div><br></div>';
+                    $buildString .=  display_extra($row['ID']);
                     $buildString .=  likes_dislike_Post($row['ID']);
                     $comment = sql_fetch_comment();
                     $buildString .= '<div   id="'.'div'.$row['ID'] .'" class="comment-div row" style="display: none" >';
