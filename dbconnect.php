@@ -7,7 +7,7 @@
 /*
 	///connect to database
 	$Connection = new mysqli($Servername, $Username, $Password, $Database);
-
+s
 
 	if($Connection -> connect_error)
 	{

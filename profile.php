@@ -184,6 +184,9 @@
               <li>
               <a href='profile.php?userId=<?php echo $_SESSION['userId'] ?>'>View My Profile</a>
               </li>
+              <li>
+              <a href='help.php'>Help</a>
+              </li>
         </nav>
 
         <!-- Page Content  -->
