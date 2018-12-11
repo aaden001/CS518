@@ -9,10 +9,10 @@
    if(!isset($_SESSION['userId']) )
     {
         header("Location:index.php");
-    }else
-/*    elseif(!isset($_SESSION['authenticationFlag'])){
+    } elseif(!isset($_SESSION['authenticationFlag'])){
          header("Location:2Fa.php");
-    }
+    }else
+/*   
 */
 
 
@@ -62,6 +62,35 @@ function likes_dislike_Post($rowID){
    
     return $FinalLikeBuild;
 }
+
+function display_extra($rowId){
+
+  try{
+     include 'dbconnect.php';
+      
+      $querry = $Connection->prepare("SELECT type,Code, Link FROM ChatBox WHERE ID=:tempId");      
+      $querry->execute(array('tempId' =>$rowId));
+      $result = $querry->fetch();
+       $buildString = '';
+      /*     $buildString .= '<div class ="col-sm-12">';*/
+           if($result['type'] == 'PF' || $result['type'] == 'PO' ){
+              $buildString .= '<img src="' .$result['Link'] .'" height="20%" width="20%"  class ="col-sm-12" >';
+           }elseif($result['type'] == 'DF'){
+            $fileName = str_replace('../POSTFiles/', '',$result['Link'] );;
+            $buildString .= '<a href="'.$result['Link'] .'" class ="col-sm-12" >'.$fileName.'</a>';
+           }elseif($result['type'] == 'CO'){
+             $buildString .='<div class="col-sm-12"><pre class="prettyprint" ><code  class="html php">' .$result['Code'].'</code></pre></div>';
+           }
+       /*    $buildString .='</div>';*/
+
+       return $buildString;
+
+  }catch (Exception $e){
+    $e->getMessage();
+  }
+     
+}
+
 
 
 function roomName_querry(){
@@ -396,6 +425,7 @@ function pagination($c, $m)
 
                 /* $buildString .=  $row['ID'];*/
                  $buildString .= '</div><br></div>';
+                  $buildString .=  display_extra($row['ID']);
                  $buildString .=  likes_dislike_Post($row['ID']);
 
                  $comment = sql_fetch_comment();
@@ -446,8 +476,7 @@ function pagination($c, $m)
 
 
    $buildString .=' <script type="text/javascript" src="rating.js"></script>
-    <script type="text/javascript" src="comment.js"></script><script type="text/javascript" src="delete.js"></script>
-';
+    <script type="text/javascript" src="comment.js"></script><script type="text/javascript" src="delete.js"></script><script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>';
     $result = array('pagination' => $buildPageString, 'buildpage' =>$buildString);
    
 

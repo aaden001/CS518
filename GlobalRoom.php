@@ -207,7 +207,7 @@ function postArea(){
       <div class="modal-body">
         <h3>Post Code</h3>
         <form class="input-group">
-        <input type="text" class="form-control custom-control postCode" placeholder="Put your code format here" row="1" >
+        <textarea type="text" class="form-control custom-control postCode" placeholder="Put your code format here" row="1" ></textarea>
         <button id="code" class="input-group-addon btn btn-success" style="margin-top: 0%">Post</button>
         </form>
         
@@ -339,7 +339,7 @@ function display_extra($rowId){
             $fileName = str_replace('../POSTFiles/', '',$result['Link'] );;
             $buildString .= '<a href="'.$result['Link'] .'" class ="col-sm-12" >'.$fileName.'</a>';
            }elseif($result['type'] == 'CO'){
-            $buildString .='<div class="col-sm-12"><pre><code>' .$result['Code'] .'</code></pre></div>';
+             $buildString .='<div class="col-sm-12"><pre class="prettyprint" ><code  class="html php">' .$result['Code'].'</code></pre></div>';
            }
        /*    $buildString .='</div>';*/
 
