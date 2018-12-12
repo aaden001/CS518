@@ -1,6 +1,6 @@
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
 <ShortName>aaden001.cs</ShortName>
 <Description>Use Google to search aaden001.cs</Description>
-<Tags>aaden001.cs.odu.edu</Tags>
+<Tags>aaden001.cs.odu.edu/Welcome.php</Tags>
 <Url type="text/html" method="GET" template="http://aaden001.cs518.cs.odu.edu/Welcome.php?q= {searchTerms}"/>
 </OpenSearchDescription>
