@@ -231,9 +231,9 @@ if(isset($_SESSION['avatarLink'])){
                  echo '<a href="GlobalRoom.php?currentRoomID=' .$result['ID'] .'&page=1'.'">' .$result['Name'] .' Room'.'</a>'; 
                     echo "<br>";
                 }
-                echo '<span>';
-                echo '<input type="text" name="q"><br><input type = "submit" value="Go">';
-                echo'<div class="line"></div>';
+                echo '<span class="row"> <form action="" method="get">';
+                echo '<input type="text" name="q"><br><input type = "submit" value="Go"></form></span>';
+                /*echo'<div class="line"></div>';*/
                 
                 $Connection = null;
                 ?>
