@@ -221,7 +221,7 @@ if(isset($_SESSION['avatarLink'])){
     <!--     /// Decore -->
    
                 <?php 
-               echo "<span><h3>All Public Rooms links </h3><br>";
+               echo '<div class="row"><span class ="col-6"><h3>All Public Rooms links </h3><br>';
               
                 require 'dbconnect.php';
                 // $tempId = $_SESSION['userId']; 0 stands for public group
@@ -231,8 +231,8 @@ if(isset($_SESSION['avatarLink'])){
                  echo '<a href="GlobalRoom.php?currentRoomID=' .$result['ID'] .'&page=1'.'">' .$result['Name'] .' Room'.'</a>'; 
                     echo "<br>";
                 }
-                echo '<span class="row"> <form action="" method="get">';
-                echo '<input type="text" name="q"><br><input type = "submit" value="Go"></form></span>';
+                echo '</span><span class="col-6"> <form action="" method="get">';
+                echo '<input type="text" name="q"><br><input type = "submit" value="Go"></form></span></div>';
                 /*echo'<div class="line"></div>';*/
                 
                 $Connection = null;
