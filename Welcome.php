@@ -233,6 +233,12 @@ if(isset($_SESSION['avatarLink'])){
                 }
                 echo '</span><span class="col-6"> <form action="" method="get">';
                 echo '<input type="text" name="q"><br><input type = "submit" value="Go"></form></span></div>';
+
+                if(isset($_GET['q'])){
+                   echo '<script type="text/javascript">var q =' .$_GET['q'] .'; var roomID = 1; </script>';
+                }else{
+                      echo '<script type="text/javascript">var q = ""</script>';
+                }
                 /*echo'<div class="line"></div>';*/
                 
                 $Connection = null;
@@ -252,6 +258,7 @@ if(isset($_SESSION['avatarLink'])){
     <script type="text/javascript" src="toggle.js"></script>
     <script type="text/javascript" src="groupCreate.js"></script>
     <!-- For dialog box -->
+    
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
