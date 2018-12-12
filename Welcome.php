@@ -64,7 +64,7 @@ if(isset($_SESSION['avatarLink'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" type="text/css" href="stylewelcome.css">
-   
+   <link rel="search" href="/opensearchdescription.xml" type="application/opensearchdescription+xml" title="aaden001.cs518.cs.odu.edu" />
     <title>Get Together </title>
 
     <!-- Bootstrap CSS CDN -->
