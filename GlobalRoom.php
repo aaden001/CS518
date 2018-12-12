@@ -593,7 +593,7 @@ function pagination($c, $m)
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" type="text/css" href="stylewelcome.css">
     <title>Get Together </title>
-    <link rel="search" href="http://aaden001.cs518.cs.odu.edu/opensearchdescription.xml" type="application/opensearchdescription+xml" title="aaden001.cs" />
+    <link rel="search" href="/opensearchdescription.xml" type="application/opensearchdescription+xml" title="aaden001.cs" />
 <head>
 
 

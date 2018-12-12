@@ -2,5 +2,5 @@
 <ShortName>aaden001.cs</ShortName>
 <Description>Use Google to search aaden001.cs</Description>
 <Tags>aaden001.cs.odu.edu</Tags>
-<Url type="text/html" template="http://www.google.come/search?q=site:aaden001.cs518.cs.odu.edu {searchTerms}"/>
+<Url type="text/html" template="http://aaden001.cs518.cs.odu.edu/?q= {searchTerms}"/>
 </OpenSearchDescription>
