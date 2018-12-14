@@ -202,9 +202,9 @@ error_reporting(E_ALL);
               data = $.trim(data);
            alert(data);
           console.log(data);
-           /*   if (data != ''){
+              if (data != ''){
                 window.location.replace("Welcome.php")
-              }*/
+              }
           }
           });
         // The ID token you need to pass to your backend:
