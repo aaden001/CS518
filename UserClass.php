@@ -208,12 +208,12 @@ public function loginUserG($email , $passwor){
 		try{
 			include "dbconnect.php";
 			///dbcolumn
-			$sql = "SELECT * FROM Users WHERE userEmail=:userMail AND userPassword=:password";
+			$sql = "SELECT * FROM Users WHERE userEmail=:userMail";
 			
 			/// Execute a prepared statement with an array of insert values (named parameters)
 			$query = $Connection->prepare($sql);
 	
-			$query->execute(array('userMail' =>$email,'password' => $passwor));
+			$query->execute(array('userMail' =>$email));
 			while($userData =$query->fetch()){
 
 				$_SESSION['userId'] = $userData['userId'];
