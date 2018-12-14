@@ -235,6 +235,7 @@ error_reporting(E_ALL);
       <?php
             echo "<br>";
               gitLogin();
+              googleLogin();
           
         ?>
       <b><a href="index2.php">Click to Sign Up</a></b>
