@@ -96,6 +96,58 @@ session_start();
 			header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
 		}
 		
+	};
+
+	if(isset($_POST['googleUserName']) && isset($_POST['imgLinkGoogle']) && isset($_POST['emailGoogle']) && isset($_POST['handleGoogle'])){
+
+		$new_User = new User();
+		$handle = '@' .$_POST['handleGoogle']
+		$new_User->setUserEmail($_POST['emailGoogle']);
+		$new_User->setUserHandle($handle);
+		$new_User->setUserFullname($_POST['googleUserName']);
+		$_SESSION['avatarLink'] = $_POST['imgLinkGoogle'];
+
+		echo  strlen($_SESSION['access_token']) ."String length over here <br>";
+		
+		if(isset($_GET['error'])){
+			///updata access_token used as password in the data base
+			try{
+				include 'dbconnect.php';
+				$Email = stripslashes(htmlspecialchars($_POST['emailGoogle']));
+				
+
+				$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
+				$queryUpdatePWD->execute(array('temp' => $_SESSION['access_token'], 'userMtemp' => $Email));
+					header("Location:Login.php?email=" .$_POST['emailGoogle'] ."&password=" .$_SESSION['access_token']);
+				echo "Already sign up just changing password<br> Confirming sign up<br>";
+				/*$ConFirm = $Connection->prepare("SELECT userEmail,userPassword FROM Users");
+				$ConFirm->execute();
+				$result = $ConFirm->fetchAll();
+				echo var_dump($result);*/
+			}catch(PDOException $e){
+			echo $e->getMessage();
+			}
+			
+		}elseif($new_User->checkEmailHandle())
+		{	
+			$Name = stripslashes(htmlspecialchars($_POST['googleUserName']));
+			$Email = stripslashes(htmlspecialchars($_POST['emailGoogle']));
+			$Handle = stripslashes(htmlspecialchars($handle));
+			$password = stripslashes(htmlspecialchars($_SESSION['access_token']));
+			$new_User->setUserEmail($Email);
+			$new_User->setUserFullname($Name);
+			$new_User->setUserHandle($Handle);
+			$new_User->setUserPassword($password);
+			$new_User->SignUpUser();
+			echo "In check email Handle";
+			/*
+			$ConFirm = $Connection->prepare("SELECT * FROM Users");
+			$ConFirm->execute();
+			$result = $ConFirm->setFetchMode(PDO::FETCH_ASSOC);
+			echo var_dump($result);
+			header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+		}
+
 	}
 
 	/*

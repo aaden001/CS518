@@ -186,16 +186,25 @@ error_reporting(E_ALL);
       function onSignIn(googleUser) {
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        console.log('Full Name: ' + profile.getName());
-        console.log('Given Name: ' + profile.getGivenName());
-        console.log('Family Name: ' + profile.getFamilyName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
-
-        // The ID token you need to pass to your backend:
+        var username = profile.getName();
+        var imgLink  = profile.getImageUrl();
+        var email = profile.getEmail();
+        var handle = profile.getGivenName();
         var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
+        if(username != "" && imgLink !="" && email !="")
+          $.ajax({
+            url: 'signUp.php',
+            type: 'post',
+            data: {
+            'googleUserName':username,
+            'imgLinkGoogle': imgLink,
+            'emailGoogle': email,
+            'handleGoogle': handle,
+            },
+          });
+        // The ID token you need to pass to your backend:
+      
+        
       };
     </script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
