@@ -2,7 +2,7 @@
 	
 	$Servername = "localhost";
 	$Username = "root";
-	$Password = "";
+	$Password = "bolorunTUNDE827!";
 	$Database = "Chat";
 /*
 	///connect to database

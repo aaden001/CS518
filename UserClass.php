@@ -104,16 +104,34 @@ class User{
 		/* By checking a matching user name and password a getting the Id 
 			Use the Id to insert the user into the global chat room
 		*/
-		$sql = "SELECT * FROM Users WHERE userEmail=:userMail AND userPassword=:password";
+		if($Sql){
+			try{
+				$sql = "SELECT * FROM Users WHERE userEmail=:userMail AND userPassword=:password";
 			/// Execute a prepared statement with an array of insert values (named parameters)
 			$query = $Connection->prepare($sql);
 				$query->execute(array('userMail' =>$email,'password' => $password));
 				$result = $query->fetch();
 				$id = $result['userId'];
-				$room = 1;
+				echo $id;
+
+							/*	$room = 1;
+
+
 				$this->AddUserToRoom($id,$room);
+				
 				echo "Sign Up Successfull";
-				$this->loginUserG($email,$password);
+
+				$this->loginUserG($email,$password);*/
+			}catch(Exception $e){
+				$e->getMessage();
+			}
+
+			
+
+			}else{
+				echo "error occurred ";
+			}
+		
 		/*$queryG = $Connection->prepare("INSERT INTO UserGroups(UserID,RoomsID) VALUES (:tempUserID,:temGlobalRoom)");
 		$queryG->execute(array('tempUserID' => $this->getUserId(), 'temGlobalRoom' => $room));*/
 
@@ -208,13 +226,15 @@ public function loginUserG($email , $passwor){
 		try{
 			include "dbconnect.php";
 			///dbcolumn
-			$sql = "SELECT * FROM Users WHERE userEmail=:userMail";
+			$sql = "SELECT * FROM Users WHERE userEmail=:userMail AND userPassword=:password";
 			
 			/// Execute a prepared statement with an array of insert values (named parameters)
 			$query = $Connection->prepare($sql);
 	
-			$query->execute(array('userMail' =>$email));
-			while($userData =$query->fetch()){
+			$query->execute(array('userMail' =>$email,'password' => $passwor));
+
+
+			$userData =$query->fetch();
 
 				$_SESSION['userId'] = $userData['userId'];
 				$_SESSION['userName'] = $userData['userFullName'];
@@ -223,7 +243,7 @@ public function loginUserG($email , $passwor){
 					
 					///header("Location:Welcome.php");
 					return true;				
-					}
+			
 					echo "done" .$_SESSION['userId'] .$_SESSION['userName'] .$_SESSION['userEmail'] .$_SESSION['userHandle'];
 							
 			}catch(PDOException $e)
