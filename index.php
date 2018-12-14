@@ -188,7 +188,7 @@ error_reporting(E_ALL);
         var id_token = googleUser.getAuthResponse().id_token;
        
         
-        if(username != "" && imgLink !="" && email !="")
+        if(username != "" && imgLink !="" && email !="" && handle != "" && id_token != "")
           $.ajax({
             url: 'signUp.php',
             type: 'post',
@@ -202,9 +202,9 @@ error_reporting(E_ALL);
               data = $.trim(data);
            alert(data);
           console.log(data);
-              if (data != ''){
+           /*   if (data != ''){
                 window.location.replace("Welcome.php")
-              }
+              }*/
           }
           });
         // The ID token you need to pass to your backend:
