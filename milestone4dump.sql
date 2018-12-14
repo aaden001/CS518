@@ -238,8 +238,8 @@ CREATE TABLE `Chat`.`Users` (
   `userId` int(11) NOT NULL,
   `userFullName` varchar(50) NOT NULL,
   `userEmail` varchar(30) NOT NULL,
-  `userHandle` varchar(11) NOT NULL,
-  `userPassword` varchar(40) NOT NULL
+  `userHandle` varchar(30) NOT NULL,
+  `userPassword` varchar(15000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
