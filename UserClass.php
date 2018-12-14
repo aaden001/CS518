@@ -71,7 +71,9 @@ class User{
 	}
 	public function SignUpUser(){
 		include "dbconnect.php";
-		$Sql = $Connection->prepare("INSERT INTO Users(userFullName,userEmail,userHandle,userPassword) VALUES (:tempFullName,:tempUserMail,:tempHandle,:tempPasswd)");
+
+		try{
+			$Sql = $Connection->prepare("INSERT INTO Users(userFullName,userEmail,userHandle,userPassword) VALUES (:tempFullName,:tempUserMail,:tempHandle,:tempPasswd)");
 		$Sql->execute(array('tempFullName' => $this->getUserFullname(),'tempUserMail' => $this->getUserEmail(), 'tempHandle' => $this->getUserHandle(),'tempPasswd' => $this->getUserPassword()));
 
 		///Add user to the global chat room instantly
@@ -94,6 +96,11 @@ class User{
 
 		echo "Sign Up Successfull";
 		header("Refresh:5; url=index.php",true, 303);
+		}catch(Exception $e){
+			$e->getMessage();
+
+		}
+		
 	}
 	public function AddUserToRoom($userId, $roomID){
 		include 'dbconnect.php';
