@@ -181,16 +181,26 @@ error_reporting(E_ALL);
     </form>
   </div>
 
-  <script type="text/javascript" src="jquery.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+  <script type="text/javascript" src="checkrecaptcha.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
    <script>
       function onSignIn(googleUser) {
         // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
+         var profile = googleUser.getBasicProfile();
+
+         
         var username = profile.getName();
         var imgLink  = profile.getImageUrl();
         var email = profile.getEmail();
         var handle = profile.getGivenName();
         var id_token = googleUser.getAuthResponse().id_token;
+       
+        
         if(username != "" && imgLink !="" && email !="")
           $.ajax({
             url: 'signUp.php',
@@ -200,17 +210,27 @@ error_reporting(E_ALL);
             'imgLinkGoogle': imgLink,
             'emailGoogle': email,
             'handleGoogle': handle,
-            },
+            'id_token': id_token,
+            },success: function(data){
+              data = $.trim(data);
+
+        /*   alert(data);
+          console.log(data);*/
+              if (data != ''){
+                window.location.replace("Welcome.php")
+              }
+          }
           });
         // The ID token you need to pass to your backend:
-      
+     /* var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());*/
         
       };
     </script>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  <script src='https://www.google.com/recaptcha/api.js'></script>
-  <script type="text/javascript" src="checkrecaptcha.js"></script>
 </body>
 </html>
