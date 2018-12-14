@@ -80,8 +80,89 @@ error_reporting(E_ALL);
 	  else 
 	  {
 	      echo '<h3>Git: Not logged in</h3>';
-	      echo '<p><a href="?action=login">Log In</a></p>';
+	      echo '<p><a href="?action=login">Log In Git</a></p>';
 	  }
+
+
+  }
+
+
+
+  function googleLogin()
+  {
+    define('OAUTH2_CLIENT_ID', '895157867960-3ek9vivk30r9gefbj0uqdbq5lqpa8juo.apps.googleusercontent.com');
+    define('OAUTH2_CLIENT_SECRET', 'Om1XgcjyB2zF2vdAXHVCEiBS');
+
+    $authorizeURL = 'https://github.com/login/oauth/authorize';
+    $tokenURL     = 'https://github.com/login/oauth/access_token';
+    $apiURLBase   = 'https://api.github.com/';
+
+
+    // Start the login process by sending the user to Github's authorization page
+    if(get('action') == 'loginG') 
+    {
+        // Generate a random hash and store in the session for security
+        $_SESSION['google'] = 2;
+        $_SESSION['stateG'] = hash('sha256', microtime(TRUE) . rand() . $_SERVER['REMOTE_ADDR']);
+        unset($_SESSION['access_tokenG']);
+        $params = array(
+            'client_id' => OAUTH2_CLIENT_ID,
+            'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'],
+            'scope' => 'user:email',
+            'state' => $_SESSION['stateG']
+        );
+        // Redirect the user to Github's authorization page
+        header('Location: ' . $authorizeURL . '?' . http_build_query($params));
+        die();
+    }
+
+    // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
+    if (get('code') && get('google') == 2) 
+    {
+        // Verify the state matches our stored state
+        if (!get('state') || $_SESSION['state'] != get('state')) {
+            header('Location: ' . $_SERVER['PHP_SELF']);
+            die();
+        }
+        // Exchange the auth code for a token
+      $token = apiRequest($tokenURL, array(
+      'client_id' => OAUTH2_CLIENT_ID,
+      'client_secret' => OAUTH2_CLIENT_SECRET,
+      'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'],
+      'state' => $_SESSION['state'],
+      'code' => get('code')
+      ));
+      
+     /*   echo json_encode($token);*/
+      $_SESSION['access_token'] = $token->access_token;
+      header('Location: ' . $_SERVER['PHP_SELF']);
+    }
+
+
+  if (session('access_token')  && get('google') == 2) 
+    {
+        echo '<h3>Google: Logged In</h3>';
+
+        
+    $user= apiRequest('https://api.github.com/user');
+    
+    $useremail = apiRequest('https://api.github.com/user/emails');
+    $userEmail = $useremail[0]->email  ;
+    $userName  = $user->name;
+    $userName = trim($userName);
+    $userHandle  = '@' .$user->login;
+    $_SESSION['avatarLink'] = $user->avatar_url;
+
+    ///Process GitHub sign up here
+
+    header("Location:signUp.php?username=".$userName ."&useremail=".$userEmail ."&userhandle=" .$userHandle);  
+       
+    } 
+    else 
+    {
+        echo '<h3>Google: Not logged in</h3>';
+        echo '<p><a href="?action=loginG">Log In Google</a></p>';
+    }
 
 
   }
@@ -95,8 +176,14 @@ error_reporting(E_ALL);
           curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
       $headers[] = 'Accept: application/json';
       $headers[] = 'User-Agent: PHP Api Call';
-      if (session('access_token'))
+      if (session('access_token')){
           $headers[] = 'Authorization: Bearer ' . session('access_token');
+        }elseif (session('access_tokenG')) {
+          # code...
+        }elseif (session('access_tokenT')) {
+          # code...
+        }
+        
       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
       $response = curl_exec($ch);
       return json_decode($response);
@@ -111,6 +198,8 @@ error_reporting(E_ALL);
   {
       return array_key_exists($key, $_SESSION) ? $_SESSION[$key] : $default;
   }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
