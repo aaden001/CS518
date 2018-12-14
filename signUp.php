@@ -98,6 +98,66 @@ session_start();
 		
 	}
 
+
+
+	if(isset($_POST['googleUserName']) && isset($_POST['imgLinkGoogle']) && isset($_POST['emailGoogle']) && isset($_POST['handleGoogle'])){
+		$new_User = new User();
+		$handle = '@' .$_POST['handleGoogle'];
+		$new_User->setUserEmail($_POST['emailGoogle']);
+		$new_User->setUserHandle($handle);
+		$new_User->setUserFullname($_POST['googleUserName']);
+		$_SESSION['avatarLink'] = $_POST['imgLinkGoogle'];
+		$_SESSION['access_token'] =$_POST['id_token'];
+	
+		
+		if(isset($_GET['error'])){
+			///updata access_token used as password in the data base
+			try{
+				include 'dbconnect.php';
+				$Email = stripslashes(htmlspecialchars($_POST['emailGoogle']));
+				
+				$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
+				$queryUpdatePWD->execute(array('temp' => $_SESSION['access_token'], 'userMtemp' => $Email));
+				header("Location:Login.php?email=" .$_POST['emailGoogle'] ."&password=" .$_POST['id_token']."&g=1" );
+				///echo "Already sign up just changing password<br> Confirming sign up<br>";
+				/*$ConFirm = $Connection->prepare("SELECT userEmail,userPassword FROM Users");
+				$ConFirm->execute();
+				$result = $ConFirm->fetchAll();
+				echo var_dump($result);*/
+				echo "yes";
+			}catch(PDOException $e){
+			 $e->getMessage();
+			}
+			
+		}
+		if($new_User->checkEmailHandle())
+		{	
+			try{
+				$Name = stripslashes(htmlspecialchars($_POST['googleUserName']));
+			$Email = stripslashes(htmlspecialchars($_POST['emailGoogle']));
+			$Handle = stripslashes(htmlspecialchars($handle));
+			$password = stripslashes(htmlspecialchars($_POST['id_token']));
+			$new_User->setUserEmail($Email);
+			$new_User->setUserFullname($Name);
+			$new_User->setUserHandle($Handle);
+			$new_User->setUserPassword($password);
+			/*$new_User->SignUpUserG($Name,$Email,$Handle,$password);*/
+			$new_User->SignUpUser();
+			header("Location:Login.php?email=" .$_POST['emailGoogle'] ."&password=" .$_POST['id_token']."&g=1" );
+			}catch(Exception $e){
+				$e->getMessage();
+			}
+			
+			//echo "In check email Handle";
+			/*
+			$ConFirm = $Connection->prepare("SELECT * FROM Users");
+			$ConFirm->execute();
+			$result = $ConFirm->setFetchMode(PDO::FETCH_ASSOC);
+			echo var_dump($result);
+			header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+		}
+	}
+
 	/*
 	///wont be neccesary 
 	Required takes care of these errors so no 

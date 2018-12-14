@@ -1,6 +1,6 @@
 <?php 
 class User{
-	private $userId, $userFullname, $userEmail, $userHandle, $userPassword;
+	private $userId, $userFullname, $userEmail, $userHandle, $userPassword, $g;
 	
 	public function setUserId($infoUserId){
 		$this->userId = $infoUserId;
@@ -171,5 +171,41 @@ class User{
 			echo "This Error Occured: " .$e->getMessage();
 			}	
 		}
+		public function SignUpUserG($name,$email,$handle,$password){
+		include "dbconnect.php";
+		$Sql = $Connection->prepare("INSERT INTO Users(userFullName,userEmail,userHandle,userPassword) VALUES (:tempFullName,:tempUserMail,:tempHandle,:tempPasswd)");
+		$Sql->execute(array('tempFullName' => $name,'tempUserMail' => $email, 'tempHandle' => $handle,'tempPasswd' => $password));
+		///Add user to the global chat room instantly
+		/* By checking a matching user name and password a getting the Id 
+			Use the Id to insert the user into the global chat room
+		*/
+		if($Sql){
+			try{
+				$sql = "SELECT * FROM Users WHERE userEmail=:userMail AND userPassword=:password";
+			/// Execute a prepared statement with an array of insert values (named parameters)
+			$query = $Connection->prepare($sql);
+				$query->execute(array('userMail' =>$email,'password' => $password));
+				$result = $query->fetch();
+				$id = $result['userId'];
+				echo $id;
+							/*	$room = 1;
+				$this->AddUserToRoom($id,$room);
+				
+				echo "Sign Up Successfull";
+				$this->loginUserG($email,$password);*/
+			}catch(Exception $e){
+				$e->getMessage();
+			}
+			
+			}else{
+				echo "error occurred ";
+			}
+		
+		/*$queryG = $Connection->prepare("INSERT INTO UserGroups(UserID,RoomsID) VALUES (:tempUserID,:temGlobalRoom)");
+		$queryG->execute(array('tempUserID' => $this->getUserId(), 'temGlobalRoom' => $room));*/
+		$Connection = null;
+		
+		//header("Location:Login.php?email=" .$this->getUserEmail() ."&password=" .$this->getUserPassword()."&g=1" );
+	}
 	}
  ?>
