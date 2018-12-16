@@ -1,10 +1,10 @@
 <?php  include('services.php');
   session_start();
 /*parse_str(implode('&', array_slice($argv, 1)), $_GET);*/
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
- 
+ */
 
 
   //credit: https://gist.github.com/asika32764/b204ff4799d577fd4eef
@@ -56,6 +56,15 @@ error_reporting(E_ALL);
       $_SESSION['access_token'] = $token->access_token;
       header('Location: ' . $_SERVER['PHP_SELF']);
     }
+    /*function twitterLogin(){
+      require 'twitteroauth/autoload.php';
+      use Abraham\TwitterOAuth\TwitterOAuth;
+
+      define('CONSUMER_KEY', 'dKbBvndNgJFQQYVSAzmQfKFcS');
+      define('CONSUMER_SECRET', 'owZENw37LnjdRsdtiMyIDYscXsJ1Dq36RoYDaVLJlqbrmAk8MW');
+      define('OAUTH_CALLBACK', 'http://niyiserverhost.com');
+
+    }*/
 
 
 	if (session('access_token')) 
@@ -86,7 +95,22 @@ error_reporting(E_ALL);
 
   }
 
+  function twitterLogin(){
 
+      require_once 'init.php';
+  
+      $auth = new TwitterAuth($client);  ///this is taken to TwitterAuth.php
+      $auth->getAuthUrl();
+
+     if($auth->signedIn()){
+        $reply2 = $this->client->account_verifyCredentials();
+        var_dump($reply2);
+         echo "<p>You are signed In</p>";
+        }else{
+        echo '<p><a href="' .$auth->getAuthUrl() .'">Sigin with Twitter</a></p>';
+     } 
+
+  }
   function apiRequest($url, $post = FALSE, $headers = array())
   {
       $ch = curl_init($url);
@@ -148,6 +172,7 @@ error_reporting(E_ALL);
             echo "<br>";
               gitLogin();
           echo ' <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>';
+          twitterLogin();
           
         ?>
       <b><a href="index2.php">Click to Sign Up</a></b>
