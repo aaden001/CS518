@@ -39,55 +39,31 @@
 					$this->storeTokens($reply->oauth_token,$reply->oauth_token_secret);
 					$this->verifyTokens();
 					$_SESSION['user_id'] =  $reply->user_id;
-               		$_SESSION['user_name'] =  $reply->screen_name;
-               		$params = array('screen_name' => $_SESSION['user_name']);
 
-					$user_info = $this->client->users_show($params);
-
-					$user_info2 = $this->client->account_verifyCredentials();
-					/*echo json_decode($user_info);
-					echo "<br><br>";
-					echo json_encode($user_info);
-					echo "<br><br>";*/
-					var_dump($user_info2);   
+               		$user_info2 = $this->client->account_verifyCredentials(array('include_entities' => 'true', 'skip_status' => 'true', 'include_email' => 'true'));
+					$userFullname = $user_info2->name;
+					$userHandle = '@' .$user_info2->screen_name;
+					$userEmail = $user_info2->email;
+					$userProfileLink = $user_info2->profile_image_url;
+					if(isset($userFullname) && isset($userHandle) && isset($userEmail) && isset($userProfileLink)){
+						header('Location:signUp.php?twitFullname=' .$userFullname .'&twitHandle=' .$userHandle .'&twitEmail=' .$userEmail .'&PicLink=' .$userProfileLink );	
+					
+					}else{
+						echo "Error getting one of this information user Full name, user Handle, user Email , user profile Link";
+					}
+					
+					//$userInfo = array('Fullname' => $userFullname, 'Handle' => $userHandle, 'Email' => $userEmail, 'ProfileLink' => $userProfileLink);
+					//echo 'user Full name: '.$userFullname .'  userHandle: ' .$userHandle .' <br>userEamil: ' .$userEmail .'ProfileImgLink: ' .$userProfileLink;
+					//var_dump($userInfo) ;
 					exit;   
+					
 
+						return true;  
 
-    
-					/*
-					$_SESSION['user_id']=  $reply->user_id;
-               		$_SESSION['user_name']=  $reply->screen_name;
-               		$this->verifyTokens();
-               		$params = array('screen_name' => $_SESSION['user_name']);
-               		$user_info = $this->client->users_show($params);
-                //$user_info = $this->client->account_verifyCredentials($params);
-                	var_dump($user_info);   
-                	die();
-                	exit;   */
-
-                	return true;  
-
+				}else{
+					echo "fail to retrieve details";
 				}
 
-/*				$this->verifyTokens();
-				var_dump($reply);
-$this->verifyTokens();
-				$params = array('screen_name' => $reply->screen_name);
-$this->verifyTokens();
-				$user_info = $this->client->account_verifyCredentials($params);
-
-                
-				echo "<br><br>";
-
-				var_dump($user_info);*/
-				
-				
-		/*		$this->storeTokens($reply->oauth_token,$reply->oauth_token_secret);
-				$this->verifyTokens();
-
-				$params = array('screen_name' => $_SESSION['user_name']);*/
-
-				
 
 				
 			}

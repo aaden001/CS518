@@ -108,11 +108,14 @@ session_start();
 		$new_User->setUserFullname($_POST['googleUserName']);
 		$_SESSION['avatarLink'] = $_POST['imgLinkGoogle'];
 		$_SESSION['access_token'] =$_POST['id_token'];
-	
-		
-		if(isset($_GET['error'])){
-			///updata access_token used as password in the data base
+		echo $new_User->checkEmailHandleOAuth();
+		/*
+		if($new_User->checkEmailHandleOAuth() == 8 || $new_User->checkEmailHandleOAuth() == 10 ){
+
 			try{
+				///updata access_token used as password in the data base
+				
+			
 				include 'dbconnect.php';
 				$Email = stripslashes(htmlspecialchars($_POST['emailGoogle']));
 				
@@ -120,17 +123,21 @@ session_start();
 				$queryUpdatePWD->execute(array('temp' => $_SESSION['access_token'], 'userMtemp' => $Email));
 				header("Location:Login.php?email=" .$_POST['emailGoogle'] ."&password=" .$_POST['id_token']."&g=1" );
 				///echo "Already sign up just changing password<br> Confirming sign up<br>";
-				/*$ConFirm = $Connection->prepare("SELECT userEmail,userPassword FROM Users");
-				$ConFirm->execute();
-				$result = $ConFirm->fetchAll();
-				echo var_dump($result);*/
+				//$ConFirm = $Connection->prepare("SELECT userEmail,userPassword FROM Users");
+				//$ConFirm->execute();
+				//$result = $ConFirm->fetchAll();
+				//echo var_dump($result);
 				echo "yes";
+			
+			
+				
+
 			}catch(PDOException $e){
 			 $e->getMessage();
 			}
 			
-		}
-		if($new_User->checkEmailHandle())
+			
+		}elseif($new_User->checkEmailHandleOAuth())
 		{	
 			try{
 				$Name = stripslashes(htmlspecialchars($_POST['googleUserName']));
@@ -141,9 +148,76 @@ session_start();
 			$new_User->setUserFullname($Name);
 			$new_User->setUserHandle($Handle);
 			$new_User->setUserPassword($password);
-			/*$new_User->SignUpUserG($Name,$Email,$Handle,$password);*/
+			//$new_User->SignUpUserG($Name,$Email,$Handle,$password);
 			$new_User->SignUpUser();
 			header("Location:Login.php?email=" .$_POST['emailGoogle'] ."&password=" .$_POST['id_token']."&g=1" );
+			}catch(Exception $e){
+				$e->getMessage();
+			}
+			
+			//echo "In check email Handle";
+			
+			//$ConFirm = $Connection->prepare("SELECT * FROM Users");
+			//$ConFirm->execute();
+			//$result = $ConFirm->setFetchMode(PDO::FETCH_ASSOC);
+			//echo var_dump($result);
+			//header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);
+		}elseif($new_User->checkEmailHandleOAuth() == 9){
+				echo "You cant sigup someone has that handle already.... please change it from your screen name from google and try again";
+		}
+		*/
+	}
+
+	if(isset($_GET['twitFullname']) && isset($_GET['twitHandle']) && isset($_GET['twitEmail']) && isset($_GET['PicLink'])){
+
+		$new_User = new User();
+	
+		$new_User->setUserEmail($_GET['twitEmail']);
+		$new_User->setUserHandle($_GET['twitHandle']);
+		$new_User->setUserFullname($_GET['twitFullname']);
+		$_SESSION['avatarLink'] = $_GET['PicLink'];
+		$_SESSION['access_token'] ='root';
+
+
+		if(isset($_GET['error'])){
+
+			if($_GET['error'] == 8 || $_GET['error'] == 10){
+				try{
+				include 'dbconnect.php';
+				$Email = stripslashes(htmlspecialchars($_GET['twitEmail']));
+
+				$queryUpdatePWD = $Connection->prepare("UPDATE Users SET userPassword=:temp WHERE userEmail=:userMtemp");
+				$queryUpdatePWD->execute(array('temp' => $_SESSION['access_token'], 'userMtemp' => $Email));
+				header("Location:Login.php?email=" .$_GET['twitEmail'] ."&password=" .$_SESSION['access_token']."&t=1" );
+				///echo "Already sign up just changing password<br> Confirming sign up<br>";
+				/*$ConFirm = $Connection->prepare("SELECT userEmail,userPassword FROM Users");
+				$ConFirm->execute();
+				$result = $ConFirm->fetchAll();
+				echo var_dump($result);*/
+				echo "yes";
+				}catch(PDOException $e){
+				$e->getMessage();
+				}
+			}elseif($_GET['error'] == 9){
+			echo "You cant sigup someone has that handle already.... please change it from your screen name from twitter and try again";
+			}
+			///updata access_token used as password in the data base
+			
+			
+		}elseif($new_User->checkEmailHandle())
+		{	
+			try{
+				$Name = stripslashes(htmlspecialchars($_GET['twitFullname']));
+			$Email = stripslashes(htmlspecialchars($_GET['twitEmail']));
+			$Handle = stripslashes(htmlspecialchars($_GET['twitHandle']));
+			$password = stripslashes(htmlspecialchars($_SESSION['access_token']));
+			$new_User->setUserEmail($Email);
+			$new_User->setUserFullname($Name);
+			$new_User->setUserHandle($Handle);
+			$new_User->setUserPassword($password);
+			/*$new_User->SignUpUserG($Name,$Email,$Handle,$password);*/
+			$new_User->SignUpUser();
+			header("Location:Login.php?email=" .$_GET['twitEmail'] ."&password=" .$_SESSION['access_token']."&t=1" );
 			}catch(Exception $e){
 				$e->getMessage();
 			}
@@ -156,8 +230,8 @@ session_start();
 			echo var_dump($result);
 			header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
 		}
-	}
 
+	}
 	/*
 	///wont be neccesary 
 	Required takes care of these errors so no 

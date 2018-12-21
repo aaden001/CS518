@@ -69,6 +69,42 @@ class User{
 
 		$Connection = null;
 	}
+	public function checkEmailHandleOAuth()
+	{	include 'dbconnect.php';
+
+		$Sql =$Connection->prepare("SELECT userEmail FROM Users WHERE userEmail=:tempUserMail");
+		$query =$Connection->prepare("SELECT userHandle FROM Users WHERE userHandle=:tempHandle");
+		$Sql->execute(array('tempUserMail' => $this->getUserEmail()));
+		$query->execute(array('tempHandle' =>$this->getUserHandle()));
+		if($Sql->rowCount() == 0 && $query->rowCount() == 0)
+		{
+			return true;
+		}else{
+			if(isset($_SESSION['access_token'])){
+				if($Sql->rowCount() > 0 && $query->rowCount() > 0)
+				{
+				return 10;
+				}elseif($Sql->rowCount() > 0){
+				return 8;
+				}else{
+				return 9;
+				}
+			}else{
+				if($Sql->rowCount() > 0 && $query->rowCount() > 0)
+				{
+				header("Location:signUp.php?error=10");
+				}elseif($Sql->rowCount() > 0){
+				header("Location:signUp.php?error=8");
+				}else{
+				header("Location:signUp.php?error=9");
+				}
+			}
+
+			return false;
+		}
+
+		$Connection = null;
+	}
 	public function SignUpUser(){
 		include "dbconnect.php";
 

@@ -4,7 +4,7 @@
 	require_once 'vendor/autoload.php';
 	require_once 'dbconnect.php';
 	require_once 'TwitterAuth.php';
-	\Codebird\Codebird::setConsumerKey('dKbBvndNgJFQQYVSAzmQfKFcS','owZENw37LnjdRsdtiMyIDYscXsJ1Dq36RoYDaVLJlqbrmAk8MW');
+	\Codebird\Codebird::setConsumerKey('PLc68WLvxnkG24zoVuhQKZMzr','XTAuGCw1uMWktSiwMYEgMDGhRFj90Ewalw80XQGymfXgV8mYst');
 	$client = \Codebird\Codebird::getInstance();
 	///var_dump($client);
 ?>
