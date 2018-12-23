@@ -108,8 +108,8 @@ session_start();
 		$new_User->setUserFullname($_POST['googleUserName']);
 		$_SESSION['avatarLink'] = $_POST['imgLinkGoogle'];
 		$_SESSION['access_token'] =$_POST['id_token'];
-		echo $new_User->checkEmailHandleOAuth();
-		/*
+		$value = $new_User->checkEmailHandleOAuth();
+		
 		if($new_User->checkEmailHandleOAuth() == 8 || $new_User->checkEmailHandleOAuth() == 10 ){
 
 			try{
@@ -127,7 +127,7 @@ session_start();
 				//$ConFirm->execute();
 				//$result = $ConFirm->fetchAll();
 				//echo var_dump($result);
-				echo "yes";
+				//echo "yes";
 			
 			
 				
@@ -137,7 +137,7 @@ session_start();
 			}
 			
 			
-		}elseif($new_User->checkEmailHandleOAuth())
+		}elseif($new_User->checkEmailHandleOAuth() == 1)
 		{	
 			try{
 				$Name = stripslashes(htmlspecialchars($_POST['googleUserName']));
@@ -162,10 +162,12 @@ session_start();
 			//$result = $ConFirm->setFetchMode(PDO::FETCH_ASSOC);
 			//echo var_dump($result);
 			//header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);
-		}elseif($new_User->checkEmailHandleOAuth() == 9){
-				echo "You cant sigup someone has that handle already.... please change it from your screen name from google and try again";
+		}elseif ($new_User->checkEmailHandleOAuth() == 9) {
+			# code...
+			$value = 9;
+			echo $value;
 		}
-		*/
+		
 	}
 
 	if(isset($_GET['twitFullname']) && isset($_GET['twitHandle']) && isset($_GET['twitEmail']) && isset($_GET['PicLink'])){
@@ -179,9 +181,10 @@ session_start();
 		$_SESSION['access_token'] ='root';
 
 
-		if(isset($_GET['error'])){
+		$value = $new_User->checkEmailHandleOAuth();
+		
+		if($new_User->checkEmailHandleOAuth() == 8 || $new_User->checkEmailHandleOAuth() == 10 ){
 
-			if($_GET['error'] == 8 || $_GET['error'] == 10){
 				try{
 				include 'dbconnect.php';
 				$Email = stripslashes(htmlspecialchars($_GET['twitEmail']));
@@ -198,13 +201,10 @@ session_start();
 				}catch(PDOException $e){
 				$e->getMessage();
 				}
-			}elseif($_GET['error'] == 9){
-			echo "You cant sigup someone has that handle already.... please change it from your screen name from twitter and try again";
-			}
-			///updata access_token used as password in the data base
 			
 			
-		}elseif($new_User->checkEmailHandle())
+			
+		}elseif($new_User->checkEmailHandleOAuth() == 1)
 		{	
 			try{
 				$Name = stripslashes(htmlspecialchars($_GET['twitFullname']));
@@ -229,7 +229,12 @@ session_start();
 			$result = $ConFirm->setFetchMode(PDO::FETCH_ASSOC);
 			echo var_dump($result);
 			header("Location:Login.php?email=" .$_GET['useremail'] ."&password=" .$_SESSION['access_token']);*/
+		}elseif ($new_User->checkEmailHandleOAuth() == 9) {
+			# code...
+			echo "You cant sigup someone has that handle already.... please change it from your screen name from twitter and try again";
+			
 		}
+		
 
 	}
 	/*

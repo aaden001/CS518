@@ -78,7 +78,7 @@ class User{
 		$query->execute(array('tempHandle' =>$this->getUserHandle()));
 		if($Sql->rowCount() == 0 && $query->rowCount() == 0)
 		{
-			return true;
+			return 1;
 		}else{
 			if(isset($_SESSION['access_token'])){
 				if($Sql->rowCount() > 0 && $query->rowCount() > 0)
