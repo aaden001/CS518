@@ -171,7 +171,7 @@ error_reporting(E_ALL);
       <?php
             echo "<br>";
               gitLogin();
-               twitterLogin();
+              // twitterLogin();
           echo ' <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>';
          
           
