@@ -89,7 +89,7 @@ error_reporting(E_ALL);
 	  else 
 	  {
 	      echo '<h3>Git: Not logged in</h3>';
-	      echo '<p><a href="?action=login">Log In</a></p>';
+	      echo '<p><a href="?action=login">Log In with Github</a></p>';
 	  }
 
 
@@ -171,8 +171,9 @@ error_reporting(E_ALL);
       <?php
             echo "<br>";
               gitLogin();
+               twitterLogin();
           echo ' <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>';
-          twitterLogin();
+         
           
         ?>
       <b><a href="index2.php">Click to Sign Up</a></b>
