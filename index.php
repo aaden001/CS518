@@ -103,8 +103,8 @@ error_reporting(E_ALL);
       $auth->getAuthUrl();
 
      if($auth->signedIn()){
-        $reply2 = $this->client->account_verifyCredentials();
-        var_dump($reply2);
+      //  $reply2 = $this->client->account_verifyCredentials();
+       /// var_dump($reply2);
          echo "<p>You are signed In</p>";
         }else{
         echo '<p><a href="' .$auth->getAuthUrl() .'">Sigin with Twitter</a></p>';
@@ -171,7 +171,7 @@ error_reporting(E_ALL);
       <?php
             echo "<br>";
               gitLogin();
-              // twitterLogin();
+              twitterLogin();
           echo ' <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>';
          
           
