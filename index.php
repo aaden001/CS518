@@ -97,7 +97,7 @@ error_reporting(E_ALL);
 
   function twitterLogin(){
 
-      require_once 'init.php';
+      include('init.php');
      
       $auth = new TwitterAuth($client);  ///this is taken to TwitterAuth.php
       $auth->getAuthUrl();
