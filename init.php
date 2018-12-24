@@ -4,8 +4,9 @@
 	//require_once 'vendor/jublonet/codebird-php/src/codebird.php';
 	//require_once __DIR__ .'/vendor/autoload.php';
 	echo shell_exec('pwd');
-	echo shell_exec('ls');
+	
 	echo shell_exec("rm -rf vendor");
+	echo shell_exec('ls');
 	//echo shell_exec("php composer.phar install");
 	if(require_once __DIR__ .'/vendor/autoload.php'){
 		require_once __DIR__ .'/TwitterAuth.php';
