@@ -98,7 +98,8 @@ error_reporting(E_ALL);
   function twitterLogin(){
  
       require_once __DIR__ .'/init.php';
-     
+     $dir = dirname(__FILE__);
+     echo "<p>Full path to this dir: " . $dir . "</p>";
       $auth = new TwitterAuth($client);  ///this is taken to TwitterAuth.php
       $auth->getAuthUrl();
 
