@@ -1,8 +1,10 @@
 <?php
-	//require 'sample.php';  
+	//require 'sample.php';
+	 
 	class TwitterAuth{
 		protected $client;
-		protected $clientCallback = 'http://niyiserverhost.com/callback.php';
+		///protected $clientCallback = 'http://niyiserverhost.com/callback.php';
+		protected $clientCallback = 'http://aaden001.cs518.cs.odu.edu/callback.php';
 		public function __construct(\Codebird\Codebird $temp)
 		{
 			$this->client = $temp;
@@ -96,6 +98,7 @@
 		protected function verifyTokens()
 		{
 			# code...
+			
 			$this->client->setToken($_SESSION['oauth_token'],$_SESSION['oauth_token_secret']);
 		}
 	}
