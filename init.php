@@ -5,12 +5,12 @@
 	//require_once __DIR__ .'/vendor/autoload.php';
 	echo shell_exec('pwd');
 	
-	echo shell_exec("rm -rf vendor");
+	//echo shell_exec("rm -rf vendor");
 	
 	echo shell_exec("php composer.phar install");
 	echo shell_exec('ls');
 	echo shell_exec(' ls vendor/');
-	if(require_once '/app/vendor/autoload.php'){
+	if(require_once '../vendor/autoload.php'){
 		require_once 'TwitterAuth.php';
 	\Codebird\Codebird::setConsumerKey('PLc68WLvxnkG24zoVuhQKZMzr','XTAuGCw1uMWktSiwMYEgMDGhRFj90Ewalw80XQGymfXgV8mYst');
 	$client = \Codebird\Codebird::getInstance();
