@@ -438,9 +438,8 @@ class ClassLoader
  * Scope isolated include.
  *
  * Prevents access to $this/self from included files.
-
+ */
 function includeFile($file)
 {
     include $file;
 }
- */
