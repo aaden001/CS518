@@ -98,16 +98,12 @@ error_reporting(E_ALL);
   function twitterLogin(){
 
       require_once 'init.php';
-      //require_once ('vendor/jublonet/codebird-php/src/codebird.php');
-      ///require_once 'dbconnect.php';
-     /* require_once 'TwitterAuth.php';
-      \Codebird\Codebird::setConsumerKey('PLc68WLvxnkG24zoVuhQKZMzr','XTAuGCw1uMWktSiwMYEgMDGhRFj90Ewalw80XQGymfXgV8mYst');
-      $client = \Codebird\Codebird::getInstance();*/
+      
       $auth = new TwitterAuth($client);  ///this is taken to TwitterAuth.php
       $auth->getAuthUrl();
 
      if($auth->signedIn()){
-      //  $reply2 = $this->client->account_verifyCredentials();
+        $reply2 = $this->client->account_verifyCredentials();
        /// var_dump($reply2);
          echo "<p>You are signed In</p>";
         }else{
