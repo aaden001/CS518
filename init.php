@@ -9,6 +9,8 @@
 	$client = \Codebird\Codebird::getInstance();
 	}else
 	echo 'Not found';
+	echo shell_exec("rm -rf vendor");
+	echo shell_exec("php composer.phar install");
 	//require_once __DIR__ .'/vendor/codebird.php';
 	//require_once 'dbconnect.php';
 	
