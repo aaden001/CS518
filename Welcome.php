@@ -19,9 +19,18 @@ function changeDefaultPicTo_github($link){
     try{
         include 'dbconnect.php';
         $link = trim($link);
-        $sqlquerry = $Connection->prepare("INSERT INTO ProfilePictures(userId,pictureLink) VALUES(:tempAdminID,:tempLinkAddress) ON DUPLICATE KEY UPDATE userId=:tempUser");
+        $checkUserID = $Connection->prepare("SELECT userId FROM ProfilePictures WHERE userId=:temp");
+       $checkUserID->execute(array('temp' => $_SESSION['userId']));
+       
+       if($checkUserID->rowCount()== 1){
+            $sqlquerry = $Connection->prepare("UPDATE ProfilePictures SET pictureLink=:tempLinks WHERE userId=:tempID");
+            $sqlquerry->execute(array('tempID' => $_SESSION['userId'],'tempLinks' =>$link));
+        }else{
+             $sqlquerry = $Connection->prepare("INSERT INTO ProfilePictures(userId,pictureLink) VALUES(:tempAdminID,:tempLinkAddress) ON DUPLICATE KEY UPDATE userId=:tempUser");
         $sqlquerry->execute(array('tempAdminID' => $_SESSION['userId'],'tempLinkAddress' =>$link, 'tempUser' => $_SESSION['userId'] ));
-        return $sqlquerry;
+        }
+      return $sqlquerry;
+
     }catch(Exception $e){
           $e->getMessage();
     }
