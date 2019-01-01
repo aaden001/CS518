@@ -15,6 +15,11 @@
     $tempUserID = $_SESSION['userId'];
 
 
+
+    if(isset($_POST['google'])){      
+        $_SESSION['google'] = $_POST['google'];
+    }
+    
 function changeDefaultPicTo_github($link){
     try{
         include 'dbconnect.php';
