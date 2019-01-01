@@ -16,7 +16,7 @@ if(isset($_SESSION['google'])){
   unset($_SESSION['state']);
 unset($_SESSION['oauth_token'] );
    unset($_SESSION['oauth_token_secret']); 
-
+  unset($_SESSION['google']);
 
     if (isset($_SERVER['HTTP_COOKIE'])) {
     $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
@@ -40,7 +40,7 @@ unset($_SESSION['oauth_token'] );
   unset($_SESSION['state']);
 unset($_SESSION['oauth_token'] );
    unset($_SESSION['oauth_token_secret']); 
-
+unset($_SESSION['google']);
 
     if (isset($_SERVER['HTTP_COOKIE'])) {
     $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
