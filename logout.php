@@ -3,8 +3,12 @@
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
   echo "logging you out.... ";
-session_unset();
-session_destroy();
+ session_start();
+    session_unset();
+    session_destroy();
+    session_write_close();
+    setcookie(session_name(),'',0,'/');
+    session_regenerate_id(true);
  unset($_SESSION['access_token']);
   unset($_SESSION['state']);
 unset($_SESSION['oauth_token'] );
