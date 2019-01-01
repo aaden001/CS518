@@ -2,11 +2,11 @@
   ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-
+ session_start();
   echo "logging you out.... ";
 
 if(isset($_SESSION['google'])){
-     session_start();
+    
     session_unset();
     session_destroy();
     session_write_close();
@@ -30,7 +30,7 @@ unset($_SESSION['oauth_token'] );
 
  header("Location:https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://aaden001.cs518.cs.odu.edu/index.php");
 }else{
-     session_start();
+    
     session_unset();
     session_destroy();
     session_write_close();
