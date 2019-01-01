@@ -231,6 +231,7 @@ error_reporting(E_ALL);
                   alert("Cant sign you up. There is a match in with a user handle in our database.");
 
                 }else{
+		$.post( "welcome.php", { google: "yes"} );
 		alert("Welcome");
          	 console.log("Welcome");
                   window.location.replace("Welcome.php")  
