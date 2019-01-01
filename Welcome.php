@@ -189,6 +189,9 @@ if(isset($_SESSION['avatarLink'])){
               <li>
               <a href='help.php'>Help</a>
               </li>
+              <li>
+              <a href='logout.php'>Logout</a>
+              </li>
               
         </nav>
         <!-- Page Content  -->
