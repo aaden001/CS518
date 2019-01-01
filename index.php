@@ -225,13 +225,14 @@ error_reporting(E_ALL);
             'id_token': id_token,
             },success: function(data){
               data = $.trim(data);
-           alert(data);
-          console.log(data);
+           
               if (data != ''){
                 if(data == 9){
                   alert("Cant sign you up. There is a match in with a user handle in our database.");
 
                 }else{
+		alert("Welcome");
+         	 console.log("Welcome");
                   window.location.replace("Welcome.php")  
                 } 
                 
