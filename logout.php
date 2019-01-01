@@ -4,7 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
   echo "logging you out.... ";
- session_start();
+   session_start();
     session_unset();
     session_destroy();
     session_write_close();
@@ -25,8 +25,16 @@ unset($_SESSION['oauth_token'] );
         setcookie($name, '', time()-1000, '/');
     }
 }
+
+if(isset($_SESSION['google'])){
+ header("Location:https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=http://aaden001.cs518.cs.odu.edu/index.php");
+}else{
+  
+   header("Location:index.php");
+}
+
     
 
-  header("Location:index.php");
+ 
 
 ?>
