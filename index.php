@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
  
-
+$googleTrouble = 0;
 
   //credit: https://gist.github.com/asika32764/b204ff4799d577fd4eef
   function gitLogin()
@@ -17,7 +17,7 @@ error_reporting(E_ALL);
     $tokenURL     = 'https://github.com/login/oauth/access_token';
     $apiURLBase   = 'https://api.github.com/';
 
-
+	$googleTrouble = 1;
     // Start the login process by sending the user to Github's authorization page
     if(get('action') == 'login') 
     {
@@ -67,7 +67,7 @@ error_reporting(E_ALL);
     }*/
 
 
-	if (session('access_token')) 
+	if (session('access_token') && $googleTrouble == 1;) 
 	  {
 	      echo '<h3>Git: Logged In</h3>';
 
