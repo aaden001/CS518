@@ -189,10 +189,17 @@ if(isset($_SESSION['avatarLink'])){
               <li>
               <a href='help.php'>Help</a>
               </li>
+            <?php   
+             if(isset($_SESSION['google'])){
+                 echo '<li>
+              <a onclick="myFunction()">Logout</a>
+              </li>';
+             }else{
+             ?>
               <li>
               <a href='logout.php'>Logout</a>
               </li>
-              
+            <?php  }?>  
         </nav>
         <!-- Page Content  -->
         <div id="content">
@@ -250,7 +257,11 @@ if(isset($_SESSION['avatarLink'])){
             </div>
      
      
-
+     <script>
+    function myFunction() {
+    location.href = 'https://accounts.google.com/Logout?&continue=http://aaden001.cs518.cs.odu.edu/index.php';
+    }
+    </script>
      <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <!-- Popper.JS -->
