@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
  
-$googleTrouble = 0;
+
 
   //credit: https://gist.github.com/asika32764/b204ff4799d577fd4eef
   function gitLogin()
@@ -32,7 +32,7 @@ $googleTrouble = 0;
         );
         // Redirect the user to Github's authorization page
         header('Location: ' . $authorizeURL . '?' . http_build_query($params));
-	    $googleTrouble = 1;
+	 
         die();
     }
 
@@ -68,7 +68,7 @@ $googleTrouble = 0;
     }*/
 
 
-	if (session('access_token') && $googleTrouble == 1) 
+	if (session('access_token') ) 
 	  {
 	      echo '<h3>Git: Logged In</h3>';
 
