@@ -264,7 +264,7 @@ if(isset($_SESSION['avatarLink'])){
      
      <script>
     function myFunction() {
-    location.href = 'logout.php';
+    location.href = 'http://aaden001.cs518.cs.odu.edu/logout.php';
     }
     </script>
      <!-- jQuery CDN - Slim version (=without AJAX) -->
