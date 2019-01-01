@@ -17,7 +17,7 @@ $googleTrouble = 0;
     $tokenURL     = 'https://github.com/login/oauth/access_token';
     $apiURLBase   = 'https://api.github.com/';
 
-	$googleTrouble = 1;
+	
     // Start the login process by sending the user to Github's authorization page
     if(get('action') == 'login') 
     {
@@ -32,6 +32,7 @@ $googleTrouble = 0;
         );
         // Redirect the user to Github's authorization page
         header('Location: ' . $authorizeURL . '?' . http_build_query($params));
+	    $googleTrouble = 1;
         die();
     }
 
@@ -67,7 +68,7 @@ $googleTrouble = 0;
     }*/
 
 
-	if (session('access_token') && $googleTrouble == 1;) 
+	if (session('access_token') && $googleTrouble == 1) 
 	  {
 	      echo '<h3>Git: Logged In</h3>';
 
