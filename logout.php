@@ -2,18 +2,7 @@
   ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-if(isset($_SESSION['googleSignedIn'])){
-<script>
-  window.onload = function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-</script>
 
-
-}
   echo "logging you out.... ";
  session_start();
     session_unset();
